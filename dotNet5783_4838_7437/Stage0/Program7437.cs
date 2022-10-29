@@ -1,23 +1,25 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace System
+using System;
+namespace stage0
 {
    partial class Program
     {
-       public static void main()
+        static void Main()
         {
-            welcome7437();
-            welcome4838();
-        }
-        static partial void welcome4838();
+            Welcome7437();
+            Welcome4838();
+            Console.ReadKey();
 
-        private static void welcome7437()
+        }
+        static partial void Welcome4838();
+        private static void Welcome7437()
         {
             Console.Write("Enter your name: ");
             string myName = Console.ReadLine();
             Console.WriteLine("{0}, welcome to my first application ", myName);
             Console.ReadKey();
         }
-         
+      
     }
     
 }
