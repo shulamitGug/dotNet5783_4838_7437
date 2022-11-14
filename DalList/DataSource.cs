@@ -97,7 +97,7 @@ namespace Dal;
     /// </summary>
     private static void CreateInitilaizeProduct()
     {
-        string[] arrProductName = { "Makup", "blush", "Primer", "silhouettes", "Rimmel", "Shimmer", "eye brush", "Brush blush", "Eyeliner", "Concealer", "lipstick", "powder", "Bronzer", "Blur brush","hh","ll","kk","ll","ll","kk","pp" };
+        string[] arrProductName = { "Makup", "blush", "Primer", "silhouettes", "Rimmel", "Shimmer", "eye brush", "Brush blush", "Eyeliner", "Concealer", "lipstick", "powder", "Bronzer", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush" };
         for (int i = 0; i < 20; i++)
         {
             int instock;
@@ -121,16 +121,20 @@ namespace Dal;
     /// </summary>
     private static void CreateInitilaizeOrderItem()
     {
+        double price;
+         int j;
         for (int i = 0; i < 40; i++)
         {
-            int product = s_rand.Next(20)+1;
+            int product = s_rand.Next(20)+1000000;
+            for ( j = 0; j < 20 && arrProducts[j].ID != product; j++) ;
+            price = arrProducts[j].Price;
             OrderItem oi = new OrderItem()
             {
                 ID = Config.GetNextOrderItemNumber(),
                 OrderId = s_rand.Next(10),
                 ProductId =product,
                 Amount = s_rand.Next(10) + 1,
-                Price = arrProducts[product].Price
+                Price = price
             };
             arrOrderItem[Config.nextOrderItemIndex++] =oi;
         }
