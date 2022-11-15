@@ -124,8 +124,9 @@ public class Program
                 break;
             case 1:
                 {
-                    Console.WriteLine("insert product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
+                    Console.WriteLine("insert product id, product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
                     //data reception
+                    int id=int.Parse(Console.ReadLine());  
                     string name = Console.ReadLine();
                     int price=int.Parse(Console.ReadLine());
                     int inStock=int.Parse(Console.ReadLine());
@@ -133,6 +134,7 @@ public class Program
                     //Creating a new object with the absorbed donors
                     Products p = new Products()
                     {
+                        ID=id,
                         Name = name,
                         CategoryP = (Category)category,
                         Price = price,
@@ -178,8 +180,6 @@ public class Program
                     int price = int.Parse(Console.ReadLine());
                     int inStock = int.Parse(Console.ReadLine());
                     int category=int.Parse(Console.ReadLine());
-                    if (name != "" && price != 0 && inStock != 0 && category != 0)
-                    {
                         //Creating a new object with the absorbed donors
                         Products newp = new Products()
                         {
@@ -190,7 +190,6 @@ public class Program
                             InStock = inStock,
                         };
                         dalp.UpdateProduct(newp);
-                    }
                 }
                 break;
             case 5:
@@ -226,14 +225,13 @@ public class Program
                     int amount = int.Parse(Console.ReadLine());
                     int product_id=int.Parse(Console.ReadLine());
                     int order_id = int.Parse(Console.ReadLine());
-                    double price = dalp.GetProduct(product_id).Price;
                     //Creating a new object with the absorbed donors
                     OrderItem oi = new OrderItem()
                     {
                         ProductId = product_id,
                         Amount = amount,
                         OrderId = order_id,
-                        Price = price,
+                        
                     };
                     Console.WriteLine(daloi.AddOrderItem(oi));
 

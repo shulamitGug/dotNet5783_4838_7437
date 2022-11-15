@@ -5,6 +5,7 @@ namespace Dal;
 /// </summary>
 public class DalOrder
 {
+    Order[] order = DataSource.arrOrders;
     /// <summary>
     /// add order to the array
     /// </summary>
@@ -14,6 +15,8 @@ public class DalOrder
     public int AddOrder(Order order)
     {
         order.ID = DataSource.Config.GetNextOrderNumber();
+        if (order.OrderDate > order.ShipDate|| order.ShipDate>order.DeliveryDate)
+            throw new Exception("not valid dates");
         if (DataSource.Config.nextOrderIndex >= DataSource.arrOrders.Length)
             throw new Exception("there is no place");
         DataSource.arrOrders[DataSource.Config.nextOrderIndex++] = order;
@@ -61,8 +64,8 @@ public class DalOrder
     {
         int i;
         //The loop goes through the elements of the array and stops when an product with the same id as the received id is found or until the end of the buffer
-        for ( i = 0; i < DataSource.arrOrders.Length && DataSource.arrOrders[i].ID != id; i++) ;
-        if(i>= DataSource.arrOrders.Length)
+        for ( i = 0; i <= DataSource.arrOrders.Length && DataSource.arrOrders[i].ID != id; i++) ;
+        if(i> DataSource.arrOrders.Length)
         throw new Exception("the order is not exist");
         //The loop starts with the element immediately after the order to be deleted and moves each order to the previous position in the array
         for (int j=i+1;j < DataSource.arrOrders.Length;j++)
@@ -81,6 +84,8 @@ public class DalOrder
     {
         if (order.CustomerName != "" && order.CustomerAdress != "" && order.CustomerEmail != "")
         {
+            if (order.OrderDate > order.ShipDate || order.ShipDate > order.DeliveryDate)
+                throw new Exception("not valid dates");
             int i;
             //Go through the database until the requested order
             for (i = 0; i < DataSource.arrOrders.Length && DataSource.arrOrders[i].ID != order.ID; i++) ;

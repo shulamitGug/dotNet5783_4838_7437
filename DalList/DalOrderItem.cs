@@ -6,6 +6,9 @@ namespace Dal;
 /// </summary>
 public class DalOrderItem
 {
+    OrderItem[] item = DataSource.arrOrderItem;
+    DalOrder dalo=new DalOrder();
+    DalProducts dalp=new DalProducts();
     /// <summary>
     /// The operation adds a member to the item pool in the order
     /// </summary>
@@ -13,11 +16,18 @@ public class DalOrderItem
     /// <returns>itemOrder.ID</returns>
     public int AddOrderItem(OrderItem itemOrder)
     {
-        itemOrder.ID = DataSource.Config.GetNextOrderItemNumber();
-        if (DataSource.Config.nextOrderItemIndex >= DataSource.arrOrderItem.Length)
-            throw new Exception("there is no place");
-        DataSource.arrOrderItem[DataSource.Config.nextOrderItemIndex++] = itemOrder;
-        return itemOrder.ID;
+        double price = dalp.GetProduct(itemOrder.ProductId).Price;
+        itemOrder.Price = price;
+        dalo.GetOrder(itemOrder.OrderId);
+        if (GetOrderItemByOrder(itemOrder.OrderId).Length < 4)
+        {
+            itemOrder.ID = DataSource.Config.GetNextOrderItemNumber();
+            if (DataSource.Config.nextOrderItemIndex >= DataSource.arrOrderItem.Length)
+                throw new Exception("there is no place");
+            DataSource.arrOrderItem[DataSource.Config.nextOrderItemIndex++] = itemOrder;
+            return itemOrder.ID;
+        }
+        throw new Exception("there are 4 items in this order");
     }
     /// <summary>
     /// The function returns the item data in the order with the received id
@@ -78,12 +88,18 @@ public class DalOrderItem
     {
         if (orderItem.Amount != 0 && orderItem.ProductId != 0 && orderItem.OrderId != 0)
         {
-            int i;
-            //Go through the database until the requested item in the order
-            for (i = 0; i < DataSource.arrOrderItem.Length && DataSource.arrOrderItem[i].ID != orderItem.ID; i++) ;
-            if (i >= DataSource.arrOrderItem.Length)
-                throw new Exception("the orderItem is not exist");
-            DataSource.arrOrderItem[i] = orderItem;
+            double price = dalp.GetProduct(orderItem.ProductId).Price;
+            orderItem.Price = price;
+            dalo.GetOrder(orderItem.OrderId);
+                int i;
+                //Go through the database until the requested item in the order
+                for (i = 0; i <= DataSource.arrOrderItem.Length && DataSource.arrOrderItem[i].ID != orderItem.ID; i++) ;
+                if (i > DataSource.arrOrderItem.Length)
+                    throw new Exception("the orderItem is not exist");
+            if (GetOrderItemByOrder(orderItem.OrderId).Length < 4 || orderItem.OrderId == DataSource.arrOrderItem[i].OrderId)
+                DataSource.arrOrderItem[i] = orderItem;
+            else
+                throw new Exception("this order have 4 items");
         }
     }
     /// <summary>
@@ -101,7 +117,7 @@ public class DalOrderItem
                 return DataSource.arrOrderItem[i];
         }
 
-        return new OrderItem();
+        throw new Exception ("this item is not exist");
     }
     /// <summary>
     /// The function returns all the items in the order according to the received id

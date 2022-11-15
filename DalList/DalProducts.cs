@@ -6,6 +6,7 @@ namespace Dal;
 /// </summary>
 public class DalProducts
 {
+    Products [] products = DataSource.arrProducts;
     /// <summary>
     /// add product to the array
     /// </summary>
@@ -14,10 +15,15 @@ public class DalProducts
     /// <exception cref="Exception">if there is no place</exception>
     public int AddProduct(Products product)
     {
-        product.ID = DataSource.Config.GetNextProductNumber();
+        for (int i = 0; i < DataSource.Config.nextProductIndex; i++)
+        {
+            if (product.ID == DataSource.arrProducts[i].ID)
+                throw new Exception("this id is already exist");
+            if (product.ID < 100000)
+                throw new Exception("the id is not valid");
+        }
         if (DataSource.Config.nextProductIndex >= DataSource.arrProducts.Length)
             throw new Exception("there is no place");
-        Console.WriteLine(DataSource.Config.nextProductIndex);
         DataSource.arrProducts[DataSource.Config.nextProductIndex++] = product;
         return product.ID;
     }
@@ -62,8 +68,8 @@ public class DalProducts
     {
         int i;
         //The loop goes through the elements of the array and stops when an product with the same id as the received id is found or until the end of the buffer
-        for (i = 0; i < DataSource.arrProducts.Length && DataSource.arrProducts[i].ID != id; i++) ;
-        if (i >= DataSource.arrProducts.Length)
+        for (i = 0; i <= DataSource.arrProducts.Length && DataSource.arrProducts[i].ID != id; i++) ;
+        if (i > DataSource.arrProducts.Length)
             throw new Exception("the product is not exist");
         //The loop starts with the element immediately after the product to be deleted and moves each product to the previous position in the array
         for (int j = i + 1; j < DataSource.arrProducts.Length; j++)
@@ -79,11 +85,14 @@ public class DalProducts
     /// <exception cref="Exception">the product is not exist</exception>
     public void UpdateProduct(Products product)
     {
-        int i;
-        for (i = 0; i < DataSource.arrProducts.Length && DataSource.arrProducts[i].ID != product.ID; i++) ;
-        if (i >= DataSource.arrProducts.Length)
-            throw new Exception("the product is not exist");
-        DataSource.arrProducts[i] = product;
+        if (product.Name != "" && product.Price != 0&& product.CategoryP != 0)
+        {
+            int i;
+            for (i = 0; i < DataSource.arrProducts.Length && DataSource.arrProducts[i].ID != product.ID; i++) ;
+            if (i >= DataSource.arrProducts.Length)
+                throw new Exception("the product is not exist");
+            DataSource.arrProducts[i] = product;
+        }
 
     }
 }

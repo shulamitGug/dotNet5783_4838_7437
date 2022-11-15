@@ -14,7 +14,6 @@ namespace Dal;
         /// id in automatic numbering
         /// </summary>
         private static int nextOrderNumber = 0;
-        private static int nextProductNumber = 1000000;
         private static int nextOrderItemNumber = 0;
         /// <summary>
         /// Saving the position of the last element in the array
@@ -30,10 +29,6 @@ namespace Dal;
         {
             nextOrderNumber++;
             return nextOrderNumber;
-        }
-        public static int GetNextProductNumber() {
-            nextProductNumber++;
-            return nextProductNumber;
         }
         public static int GetNextOrderItemNumber()
         {
@@ -97,6 +92,7 @@ namespace Dal;
     /// </summary>
     private static void CreateInitilaizeProduct()
     {
+        int cat;
         string[] arrProductName = { "Makup", "blush", "Primer", "silhouettes", "Rimmel", "Shimmer", "eye brush", "Brush blush", "Eyeliner", "Concealer", "lipstick", "powder", "Bronzer", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush" };
         for (int i = 0; i < 20; i++)
         {
@@ -105,11 +101,15 @@ namespace Dal;
                 instock = 0;
             else
                 instock = s_rand.Next(10) + 200;
+            if (i < 6)
+                cat = i+1;
+            else
+                cat = (i+1) % 6;
             Products p = new Products()
             {
-                ID = Config.GetNextProductNumber(),
+                ID = i+1000000,
                 Name = arrProductName[i],
-                CategoryP = (Category)(i%2),
+                CategoryP = (Category)(cat),
                 Price = s_rand.Next(10) + 450,
                 InStock =instock,
             };
@@ -131,7 +131,7 @@ namespace Dal;
             OrderItem oi = new OrderItem()
             {
                 ID = Config.GetNextOrderItemNumber(),
-                OrderId = s_rand.Next(10),
+                OrderId = (i/2),
                 ProductId =product,
                 Amount = s_rand.Next(10) + 1,
                 Price = price
