@@ -1,9 +1,10 @@
 ﻿using DO;
 namespace Dal;
+using System.Collections.Generic;
 /// <summary>
 /// all the data of the store
 /// </summary>
- internal static class DataSource
+internal static class DataSource
 {
     /// <summary>
     /// Internal class for automatic id calculation and also for index calculation
@@ -15,12 +16,7 @@ namespace Dal;
         /// </summary>
         private static int nextOrderNumber = 0;
         private static int nextOrderItemNumber = 0;
-        /// <summary>
-        /// Saving the position of the last element in the array
-        /// </summary>
-        internal static int nextOrderIndex = 0;
-        internal static int nextProductIndex = 0;
-        internal static int nextOrderItemIndex = 0;
+
         /// <summary>
         /// return the next id
         /// </summary>
@@ -39,9 +35,10 @@ namespace Dal;
     //random
     private static readonly Random s_rand = new();
     //data storage arrays
-    internal static Order[] arrOrders=new Order[100];
-    internal static Products[] arrProducts= new Products[50];
-    internal static OrderItem[] arrOrderItem = new OrderItem[200];
+    internal static List<Order> OrdersList = new List<Order>();
+    internal static List<Products> ProductsList = new List<Products>();
+    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
+    
      /// <summary>
      /// constructor
      /// </summary>
@@ -58,11 +55,10 @@ namespace Dal;
         string[] arrCustomerAdress = { "Gotlib 2", "ovadia 1", "hanasi 3", "rabbi akiva 23", "ahronovith 8", "Gordon 4", "Pinkas 77", "Dakar 2", "Tarfon 3", "Golomb 4" };
         string[] arrCustomerEmail = { "s@gmail.com", "m@gmail.com", "n@gmail.com", "t@gmail.com", "y@gmail.com", "a@gmail.com", "d@gmail.com", "w@gmail.com", "q@gmail.com", "p@gmail.com" };
 
-
         for (int i = 0; i < 10; i++)
         {
                 TimeSpan ts = new TimeSpan(s_rand.Next(5));
-                TimeSpan ts1 = new TimeSpan(s_rand.Next(20));
+                TimeSpan ts1 = new TimeSpan(s_rand.Next(200));
             DateTime d;
             if (i % 3 == 0)
             {
@@ -79,11 +75,11 @@ namespace Dal;
                 CustomerName = arrCustomerName[i],
                 CustomerAdress = arrCustomerAdress[i],
                 CustomerEmail = arrCustomerEmail[s_rand.Next(arrCustomerName.Length)],
-                OrderDate = DateTime.MinValue,
+                OrderDate = DateTime.Today,
                 ShipDate = d,
                 DeliveryDate = DateTime.MinValue + ts+ts1,
             };
-            arrOrders[Config.nextOrderIndex++] = o;
+            OrdersList.Add(o);
 
         }
     }
@@ -94,6 +90,7 @@ namespace Dal;
     {
         int cat;
         string[] arrProductName = { "Makup", "blush", "Primer", "silhouettes", "Rimmel", "Shimmer", "eye brush", "Brush blush", "Eyeliner", "Concealer", "lipstick", "powder", "Bronzer", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush" };
+        
         for (int i = 0; i < 20; i++)
         {
             int instock;
@@ -103,8 +100,10 @@ namespace Dal;
                 instock = s_rand.Next(10) + 200;
             if (i < 6)
                 cat = i+1;
+            else if((i + 1) % 6 == 0)
+                cat = (i+2) % 6;
             else
-                cat = (i+1) % 6;
+                cat = (i + 1) % 6;
             Products p = new Products()
             {
                 ID = i+1000000,
@@ -113,7 +112,7 @@ namespace Dal;
                 Price = s_rand.Next(10) + 450,
                 InStock =instock,
             };
-            arrProducts[Config.nextProductIndex++] = p;
+            ProductsList.Add (p);
         }
     }
     /// <summary>
@@ -121,22 +120,27 @@ namespace Dal;
     /// </summary>
     private static void CreateInitilaizeOrderItem()
     {
-        double price;
+        double price=0;
          int j;
         for (int i = 0; i < 40; i++)
         {
             int product = s_rand.Next(20)+1000000;
-            for ( j = 0; j < 20 && arrProducts[j].ID != product; j++) ;
-            price = arrProducts[j].Price;
+            foreach (var item in ProductsList)
+            {
+                if(item.ID==product)
+                    price = item.Price;
+            }
+            if (price == 0)
+                throw new Exception("the product is not exist");
             OrderItem oi = new OrderItem()
             {
                 ID = Config.GetNextOrderItemNumber(),
-                OrderId = (i/2),
-                ProductId =product,
+                OrderId = (i / 2),
+                ProductId = product,
                 Amount = s_rand.Next(10) + 1,
                 Price = price
             };
-            arrOrderItem[Config.nextOrderItemIndex++] =oi;
+            OrderItemList.Add(oi);
         }
     }
     /// <summary>
@@ -151,4 +155,16 @@ namespace Dal;
 
 
 }
-   
+
+//internal record struct NewStruct(object Item1, object Item2)
+////{
+////    public static implicit operator (object, object)(NewStruct value)
+////    {
+////        return (value.Item1, value.Item2);
+////    }
+
+////    public static implicit operator NewStruct((object, object) value)
+////    {
+////        return new NewStruct(value.Item1, value.Item2);
+////    }
+////}

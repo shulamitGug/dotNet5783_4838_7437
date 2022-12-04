@@ -1,17 +1,18 @@
 ﻿using DO;
 using Dal;
-
+using DalApi;
 public class Program
 {
     /// <summary>
     /// A function for all the actions you want to do on orders
     /// </summary>
+    static IDal idal = new Dallist();
     public static void OrderFunction()
     {
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add order,2 to get order by id,3 to get all orders,4 to delete order and 5 to update order");
         num2 = int.Parse(Console.ReadLine());
-        DalOrder dalO = new DalOrder();
+       
         //Checking the number and sending it to the appropriate action
         switch (num2)
         {
@@ -40,7 +41,7 @@ public class Program
                             ShipDate = dtShip,
                             DeliveryDate = dtDelivery,
                         };
-                        Console.WriteLine(dalO.AddOrder(o));
+                        Console.WriteLine(idal.Order.Add(o));
                 }
                 break;
             case 2:
@@ -50,17 +51,17 @@ public class Program
                     Console.WriteLine("insert id");
                     id=int.Parse(Console.ReadLine());
                     Order o = new Order();
-                    o = dalO.GetOrder(id);
+                    o = idal.Order.Get(id);
                     Console.WriteLine(o);
                 }
                 break;
             case 3:
                 {
                     //get all and print
-                    Order[] orders = dalO.GetAllOrders();
-                    for(int i = 0; i < orders.Length; i++)
+                    IEnumerable<Order> orders = idal.Order.GetAll();
+                    foreach (var item in orders)
                     {
-                        Console.WriteLine(orders[i]);
+                        Console.WriteLine(item);
                         Console.WriteLine();
                     }
                 }
@@ -72,7 +73,7 @@ public class Program
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
                     Order o = new Order();
-                    o = dalO.GetOrder(id);
+                    o = idal.Order.Get(id);
                     Console.WriteLine(o);
                     Console.WriteLine("insert customer name,adress,email,orderDate,shipDate,deliverydate");
                     string name = Console.ReadLine();
@@ -94,7 +95,7 @@ public class Program
                             ShipDate = dtShip,
                             DeliveryDate = dtDelivery,
                         };
-                        dalO.UpdateOrder(newO);                }
+                    idal.Order.Update(newO);                }
                 break;
             case 5:
                 {
@@ -102,7 +103,7 @@ public class Program
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
-                    dalO.DeleteOrder(id);
+                    idal.Order.Delete(id);
                 }
                 break;
         }
@@ -115,7 +116,6 @@ public class Program
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add product,2 to get product by id,3 to get all product,4 to delete product and 5 to update product");
         num2 = int.Parse(Console.ReadLine());
-        DalProducts dalp = new DalProducts();
         //Checking the number and sending it to the appropriate action
 
         switch (num2)
@@ -140,7 +140,7 @@ public class Program
                         Price = price,
                         InStock =inStock,
                     };
-                    Console.WriteLine(dalp.AddProduct(p));
+                    Console.WriteLine(idal.Product.Add(p));
 
                 }
                 break;
@@ -151,17 +151,17 @@ public class Program
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
                     Products p = new Products();
-                    p = dalp.GetProduct(id);
+                    p = idal.Product.Get(id);
                     Console.WriteLine(p);
                 }
                 break;
             case 3:
                 {
                     //get all products and print
-                    Products[] products = dalp.GetAllProduct();
-                    for (int i = 0; i < products.Length; i++)
+                    IEnumerable<Products> products = idal.Product.GetAll();
+                    foreach (var item in products)
                     {
-                        Console.WriteLine(products[i]);
+                        Console.WriteLine(item);
                         Console.WriteLine();
                     }
                 }
@@ -173,7 +173,7 @@ public class Program
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
                     Products p = new Products();
-                    p = dalp.GetProduct(id);
+                    p = idal.Product.Get(id);
                     Console.WriteLine(p);
                     Console.WriteLine("insert product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
                     string name = Console.ReadLine();
@@ -189,7 +189,7 @@ public class Program
                             Price = price,
                             InStock = inStock,
                         };
-                        dalp.UpdateProduct(newp);
+                    idal.Product.Update(newp);
                 }
                 break;
             case 5:
@@ -198,7 +198,7 @@ public class Program
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
-                    dalp.DeleteProduct(id);
+                    idal.Product.Delete(id);
                 }
                 break;
         }
@@ -211,8 +211,6 @@ public class Program
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add orderItem,2 to get orderItem by id,3 to get all orderItem,4 to delete orderItem and 5 to update orderItem,6 to get orderItem by order id and product id and 7 to get all the items in order by order id");
         num2 = int.Parse(Console.ReadLine());
-        DalOrderItem daloi = new DalOrderItem();
-        DalProducts dalp = new DalProducts();
         //Checking the number and sending it to the appropriate action
         switch (num2)
         {
@@ -233,7 +231,7 @@ public class Program
                         OrderId = order_id,
                         
                     };
-                    Console.WriteLine(daloi.AddOrderItem(oi));
+                    Console.WriteLine(idal.OrderItem.Add(oi));
 
                 }
                 break;
@@ -244,17 +242,17 @@ public class Program
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
                     OrderItem oi = new OrderItem();
-                    oi= daloi.GetOrderItem(id);
+                    oi= idal.OrderItem.Get(id);
                     Console.WriteLine(oi);
                 }
                 break;
             case 3:
                 {
                     //get all items in orders and print
-                    OrderItem[] ordersItem = daloi.GetAllOrderItem();
-                    for (int i = 0; i < ordersItem.Length; i++)
+                   IEnumerable<OrderItem> ordersItem = idal.OrderItem.GetAll();
+                   foreach(var item in ordersItem)       
                     {
-                        Console.WriteLine(ordersItem[i]);
+                        Console.WriteLine(item);
                         Console.WriteLine();
                     }
                 }
@@ -266,13 +264,13 @@ public class Program
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
                     OrderItem oi = new OrderItem();
-                    oi = daloi.GetOrderItem(id);
+                    oi = idal.OrderItem.Get(id);
                     Console.WriteLine(oi);
                     Console.WriteLine("insert product id,order id and amount");
                     int prod_id=int.Parse(Console.ReadLine());
                     int ord_id=int.Parse(Console.ReadLine());
                     int amount = int.Parse(Console.ReadLine());
-                    double price = dalp.GetProduct(prod_id).Price;
+                    double price = idal.Product.Get(prod_id).Price;
                     //Creating a new object with the absorbed donors
                     OrderItem newoi = new OrderItem()
                         {
@@ -282,7 +280,7 @@ public class Program
                             Amount = amount,
                             Price = price
                         };
-                        daloi.UpdateOrderItem(newoi);
+                    idal.OrderItem.Update(newoi);
                 }
                 break;
             case 5:
@@ -291,7 +289,7 @@ public class Program
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
-                    daloi.DeleteOrderItem(id);
+                    idal.OrderItem.Delete(id);
                 }
                 break;
             case 6:
@@ -300,7 +298,7 @@ public class Program
                     Console.WriteLine("enter product id,order id");
                     int prod=int.Parse(Console.ReadLine());
                     int ord=int.Parse(Console.ReadLine());
-                    Console.WriteLine(daloi.GetOrderItemByTwoValues(prod,ord));
+                    Console.WriteLine(idal.OrderItem.GetOrderItemByTwoValues(prod,ord));
                 }
                 break;
             case 7:
@@ -308,10 +306,10 @@ public class Program
                     //get by order id
                     Console.WriteLine("enter order id");
                     int ord = int.Parse(Console.ReadLine());
-                    OrderItem[] arr = daloi.GetOrderItemByOrder(ord);
-                    for(int i=0; i < arr.Length; i++)
+                    IEnumerable<OrderItem> itemList = idal.OrderItem.GetOrderItemByOrder(ord);
+                    foreach (var item in itemList)
                     {
-                        Console.WriteLine(arr[i]);
+                        Console.WriteLine(item);
                         Console.WriteLine();
                     }
                     break;

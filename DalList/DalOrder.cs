@@ -1,25 +1,27 @@
 ﻿using DO;
 namespace Dal;
+using DalApi;
+using System.Collections.Generic;
 /// <summary>
 /// order function
 /// </summary>
-public class DalOrder
+internal class DalOrder:IOrder
 {
-    Order[] order = DataSource.arrOrders;
     /// <summary>
     /// add order to the array
     /// </summary>
     /// <param name="order">get order object</param>
     /// <returns>if add return the id of this order</returns>
     /// <exception cref="Exception">id there is no place</exception>
-    public int AddOrder(Order order)
+    public int Add(Order order)
     {
+        foreach(var item in DataSource.OrdersList)
+        {
+            if (item.ID == order.ID)
+                throw new AlreadyExistException(order.ID,"order");
+        }
         order.ID = DataSource.Config.GetNextOrderNumber();
-        if (order.OrderDate > order.ShipDate|| order.ShipDate>order.DeliveryDate)
-            throw new Exception("not valid dates");
-        if (DataSource.Config.nextOrderIndex >= DataSource.arrOrders.Length)
-            throw new Exception("there is no place");
-        DataSource.arrOrders[DataSource.Config.nextOrderIndex++] = order;
+        DataSource.OrdersList.Add(order);
         return order.ID;
     }
     /// <summary>
@@ -28,29 +30,27 @@ public class DalOrder
     /// <param name="id">order id</param>
     /// <returns>order object</returns>
     /// <exception cref="Exception">if the order is not exist </exception>
-    public Order GetOrder(int id)
-
+    public Order Get(int id)
     {
         //look for the order with the same id
-        for(int i=0;i<DataSource.arrOrders.Length;i++)
+        foreach(Order order in DataSource.OrdersList)
         {
-            if(DataSource.arrOrders[i].ID == id)
-                return DataSource.arrOrders[i];
+            if(order.ID == id)
+                return order;
         }
-        throw new Exception("the order is not exist");     
+        throw new NotExistException(id,"order");     
     }
     /// <summary>
     /// return all the orders in the array
     /// </summary>
     /// <returns>array of orders</returns>
-    public Order[] GetAllOrders()
+    public IEnumerable<Order> GetAll()
     {
-        Order [] orders = DataSource.arrOrders;
-        Order[] newOrders = new Order[DataSource.Config.nextOrderIndex];  
+        List <Order> newOrders = new List<Order>();
         //copy to new arr all the orders that exist the arr
-        for (int i=0;i< DataSource.Config.nextOrderIndex; i++)
+        foreach (Order order in DataSource.OrdersList)
         {
-            newOrders[i]=orders[i];
+            newOrders.Add(order);
         }
         return newOrders;
     }
@@ -59,20 +59,21 @@ public class DalOrder
     /// </summary>
     /// <param name="id">id of order</param>
     /// <exception cref="Exception">the order is not exist</exception>
-    public void DeleteOrder(int id)
-
+    public void Delete(int id)
     {
-        int i;
-        //The loop goes through the elements of the array and stops when an product with the same id as the received id is found or until the end of the buffer
-        for ( i = 0; i <= DataSource.arrOrders.Length && DataSource.arrOrders[i].ID != id; i++) ;
-        if(i> DataSource.arrOrders.Length)
-        throw new Exception("the order is not exist");
-        //The loop starts with the element immediately after the order to be deleted and moves each order to the previous position in the array
-        for (int j=i+1;j < DataSource.arrOrders.Length;j++)
+        Order or;
+        foreach (Order order in DataSource.OrdersList)
         {
-            DataSource.arrOrders[j-1] = DataSource.arrOrders[j];
+            if (order.ID == id)
+            {
+                DataSource.OrdersList.Remove(order);
+                return;
+            }
         }
-        DataSource.Config.nextOrderIndex--;
+        //The loop goes through the elements of the array and stops when an product with the same id as the received id is found or until the end of the buffer
+        throw new NotExistException(id,"order");
+        //The loop starts with the element immediately after the order to be deleted and moves each order to the previous position in the array
+
 
     }
     /// <summary>
@@ -80,20 +81,22 @@ public class DalOrder
     /// </summary>
     /// <param name="order">order object</param>
     /// <exception cref="Exception">the order is not exist</exception>
-    public void UpdateOrder(Order order)
+    public void Update(Order order)
     {
-        if (order.CustomerName != "" && order.CustomerAdress != "" && order.CustomerEmail != "")
-        {
-            if (order.OrderDate > order.ShipDate || order.ShipDate > order.DeliveryDate)
-                throw new Exception("not valid dates");
-            int i;
-            //Go through the database until the requested order
-            for (i = 0; i < DataSource.arrOrders.Length && DataSource.arrOrders[i].ID != order.ID; i++) ;
-            if (i >= DataSource.arrOrders.Length)
-                throw new Exception("the order is not exist");
-            DataSource.arrOrders[i] = order;
-        }
-       
+        bool isExist = false;
+            foreach (Order or in DataSource.OrdersList)
+            {
+                if (or.ID == order.ID)
+                {
+                    isExist = true;
+                    DataSource.OrdersList.Remove(or);
+                    break;
+                }
+            }
+        //Go through the database until the requested order
+        if (!isExist)
+                throw new NotExistException(order.ID,"order");
+            DataSource.OrdersList.Add(order);
     }
 
 }

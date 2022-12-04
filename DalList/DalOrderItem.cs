@@ -1,12 +1,12 @@
 ﻿
 using DO;
 namespace Dal;
+using DalApi;
 /// <summary>
 /// The central department operates on an item in the order
 /// </summary>
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
-    OrderItem[] item = DataSource.arrOrderItem;
     DalOrder dalo=new DalOrder();
     DalProducts dalp=new DalProducts();
     /// <summary>
@@ -14,20 +14,29 @@ public class DalOrderItem
     /// </summary>
     /// <param name="itemOrder">order object</param>
     /// <returns>itemOrder.ID</returns>
-    public int AddOrderItem(OrderItem itemOrder)
+    public int Add(OrderItem itemOrder)
     {
-        double price = dalp.GetProduct(itemOrder.ProductId).Price;
+        foreach (var item in DataSource.OrderItemList)
+        {
+            if (item.ID == itemOrder.ID)
+                throw new AlreadyExistException(itemOrder.ID,"orderItem");
+        }
+        int count = 0;
+        double price = dalp.Get(itemOrder.ProductId).Price;
         itemOrder.Price = price;
-        dalo.GetOrder(itemOrder.OrderId);
-        if (GetOrderItemByOrder(itemOrder.OrderId).Length < 4)
+        foreach (var item in GetOrderItemByOrder(itemOrder.OrderId))
+        {
+            count++;
+        }
+        if (count < 4)
         {
             itemOrder.ID = DataSource.Config.GetNextOrderItemNumber();
-            if (DataSource.Config.nextOrderItemIndex >= DataSource.arrOrderItem.Length)
-                throw new Exception("there is no place");
-            DataSource.arrOrderItem[DataSource.Config.nextOrderItemIndex++] = itemOrder;
+            //if (DataSource.Config.nextOrderItemIndex >= DataSource.arrOrderItem.Length)
+            //    throw new Exception("there is no place");
+            DataSource.OrderItemList.Add(itemOrder);
             return itemOrder.ID;
         }
-        throw new Exception("there are 4 items in this order");
+           throw new Exception("there are 4 items in this order");
     }
     /// <summary>
     /// The function returns the item data in the order with the received id
@@ -35,28 +44,27 @@ public class DalOrderItem
     /// <param name="id">id of order item</param>
     /// <returns>all the details of this order item</returns>
     /// <exception cref="Exception"> if the id is not exsist throw an exception</exception>
-    public OrderItem GetOrderItem(int id)
+    public OrderItem Get(int id)
     {
         //The loop goes through the members of the database and looks for the item in the order with the received id
-        for (int i = 0; i < DataSource.arrOrderItem.Length; i++)
+        foreach (var orderItem in DataSource.OrderItemList)
         {
-            if (DataSource.arrOrderItem[i].ID == id)
-                return DataSource.arrOrderItem[i];
+            if (orderItem.ID == id)
+                return orderItem;
         }
-        throw new Exception("the OrderItem is not exist");
+        throw new NotExistException(id,"orderItem");
     }
     /// <summary>
     /// The function returns an array with all the items in the orders
     /// </summary>
     /// <returns> A repository with all the items in the orders</returns>
-    public OrderItem[] GetAllOrderItem()
+    public IEnumerable<OrderItem> GetAll()
     {
-        OrderItem[] items = DataSource.arrOrderItem;
-        OrderItem[] newItemOrders = new OrderItem[DataSource.Config.nextOrderItemIndex];
+        List<OrderItem> newItemOrders=new List<OrderItem>();
         //We created a new array and the loop copies the items in the orders into the new array
-        for (int i = 0; i < DataSource.Config.nextOrderItemIndex; i++)
+        foreach(var orderItem in DataSource.OrderItemList)
         {
-            newItemOrders[i] = items[i];
+            newItemOrders.Add(orderItem);
         }
         return newItemOrders;
     }
@@ -65,41 +73,58 @@ public class DalOrderItem
     /// </summary>
     /// <param name="id"> id of order item</param>
     /// <exception cref="Exception">if the id is not exsist throw an exception</exception>
-    public void DeleteOrderItem(int id)
+    public void Delete(int id)
     {
-        int i;
-        //The loop goes through the elements of the array and stops when an item with the same id as the received id is found or until the end of the buffer
-        for (i = 0; i < DataSource.arrOrderItem.Length && DataSource.arrOrderItem[i].ID != id; i++) ;
-        if (i >= DataSource.arrOrderItem.Length) 
-            throw new Exception("the OrderItem is not exist");
-        //The loop starts with the element immediately after the item to be deleted and moves each item to the previous position in the array
-        for (int j = i + 1; j < DataSource.arrOrderItem.Length; j++)
+        foreach (OrderItem orderItem in DataSource.OrderItemList)
         {
-            DataSource.arrOrderItem[j - 1] = DataSource.arrOrderItem[j];
+            if (orderItem.ID == id)
+            {
+                DataSource.OrderItemList.Remove(orderItem);
+                return;
+            }
         }
-        DataSource.Config.nextOrderItemIndex--;
+        throw new NotExistException(id,"orderItem");
     }
     /// <summary>
     /// the function update order item 
     /// </summary>
     /// <param name="orderItem">order item object </param>
     /// <exception cref="Exception">if the id is not exsist throw an exption</exception>
-    public void UpdateOrderItem(OrderItem orderItem)
+    public void Update(OrderItem orderItem)
     {
         if (orderItem.Amount != 0 && orderItem.ProductId != 0 && orderItem.OrderId != 0)
         {
-            double price = dalp.GetProduct(orderItem.ProductId).Price;
+            int id, count = 0;
+            double price = dalp.Get(orderItem.ProductId).Price;
             orderItem.Price = price;
-            dalo.GetOrder(orderItem.OrderId);
-                int i;
-                //Go through the database until the requested item in the order
-                for (i = 0; i <= DataSource.arrOrderItem.Length && DataSource.arrOrderItem[i].ID != orderItem.ID; i++) ;
-                if (i > DataSource.arrOrderItem.Length)
-                    throw new Exception("the orderItem is not exist");
-            if (GetOrderItemByOrder(orderItem.OrderId).Length < 4 || orderItem.OrderId == DataSource.arrOrderItem[i].OrderId)
-                DataSource.arrOrderItem[i] = orderItem;
-            else
-                throw new Exception("this order have 4 items");
+            //Go through the database until the requested item in the order
+            bool isExist = false;
+            foreach (var item in GetOrderItemByOrder(orderItem.OrderId))
+            {
+                count++;
+            }
+            if (count < 4)
+            {
+                foreach (OrderItem or in DataSource.OrderItemList)
+                {
+                    if (or.ID == orderItem.ID)
+                    {
+                        id = or.OrderId;
+                        isExist = true;
+                        DataSource.OrderItemList.Remove(or);
+                        break;
+                    }
+                }
+
+                //Go through the database until the requested order
+                if (!isExist)
+                    throw new NotExistException(orderItem.ID,"orderItem");
+                DataSource.OrderItemList.Add(orderItem);
+            }
+            //else
+            //{
+            //    throw new DO.fourItemInOrder("xx");
+            //}
         }
     }
     /// <summary>
@@ -110,38 +135,32 @@ public class DalOrderItem
     /// <returns> item on order</returns>
     public OrderItem GetOrderItemByTwoValues(int product_id,int order_id)
     {
-        //Go over the item pool
-        for (int i=0; i < DataSource.arrOrderItem.Length; i++)
-        {
-            if (DataSource.arrOrderItem[i].OrderId == order_id&& DataSource.arrOrderItem[i].ProductId ==product_id)
-                return DataSource.arrOrderItem[i];
+    //Go over the item pool
+    foreach (OrderItem or in DataSource.OrderItemList)
+    {
+            if (or.OrderId == order_id&& or.ProductId ==product_id)
+                return or;
         }
 
-        throw new Exception ("this item is not exist");
+        throw new NotExistException(product_id,$"product in order number {order_id}");
     }
     /// <summary>
     /// The function returns all the items in the order according to the received id
     /// </summary>
     /// <param name="order_id">id of order</param>
     /// <returns> all the items on this order</returns>
-    public OrderItem[] GetOrderItemByOrder(int order_id)
+    public IEnumerable<OrderItem> GetOrderItemByOrder(int order_id)
     {
-        OrderItem[] arr=new OrderItem[DataSource.arrOrderItem.Length];
-        int j = 0;
-        //During the loop, all the items in the received order are filled
-        for (int i = 0; i < DataSource.arrOrderItem.Length; i++)
-        {
-            if (DataSource.arrOrderItem[i].OrderId == order_id)
-                 arr[j++] = DataSource.arrOrderItem[i];
-        }
-        OrderItem[] newArr = new OrderItem[j];
-        //The loop goes through the array of items and shrinks spaces
-        for (int i = 0; i < newArr.Length; i++)
-        {
-            newArr[i]=arr[i];
-        }
-
-        return newArr;
+        List <OrderItem> newList= new List<OrderItem>();
+    //During the loop, all the items in the received order are filled
+    foreach (OrderItem or in DataSource.OrderItemList)
+    {
+        if (or.OrderId == order_id)
+            newList.Add(or);
+    }   
+      
+        return newList;
     }
-
 }
+
+
