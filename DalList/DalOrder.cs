@@ -17,7 +17,7 @@ internal class DalOrder:IOrder
     {
         foreach(var item in DataSource.OrdersList)
         {
-            if (item.ID == order.ID)
+            if (item?.ID == order.ID)
                 throw new AlreadyExistException(order.ID,"order");
         }
         order.ID = DataSource.Config.GetNextOrderNumber();
@@ -44,13 +44,14 @@ internal class DalOrder:IOrder
     /// return all the orders in the array
     /// </summary>
     /// <returns>array of orders</returns>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order> GetAll(Func<Order, bool>? check = null)
     {
         List <Order> newOrders = new List<Order>();
         //copy to new arr all the orders that exist the arr
         foreach (Order order in DataSource.OrdersList)
         {
-            newOrders.Add(order);
+            if ((check != null && check(order)) || check == null)
+                newOrders.Add(order);
         }
         return newOrders;
     }
@@ -97,6 +98,15 @@ internal class DalOrder:IOrder
         if (!isExist)
                 throw new NotExistException(order.ID,"order");
             DataSource.OrdersList.Add(order);
+    }
+    public Order GetByCondition(Func<Order, bool>? check)
+    {
+        foreach (Order or in DataSource.OrdersList)
+        {
+            if(check(or))
+                return or;
+        }
+        throw new DO.NotExistException(1,"order");
     }
 
 }

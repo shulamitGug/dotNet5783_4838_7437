@@ -9,9 +9,9 @@ namespace BO
     public class ProductForList
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public double price { get; set; }
-        public Category category { get; set; }
+        public Category? category { get; set; }
         public override string ToString()
         {
             return ToolStringClass.ToStringProperty(this);

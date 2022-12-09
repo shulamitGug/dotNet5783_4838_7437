@@ -18,11 +18,11 @@ internal class DalOrderItem:IOrderItem
     {
         foreach (var item in DataSource.OrderItemList)
         {
-            if (item.ID == itemOrder.ID)
+            if (item?.ID == itemOrder.ID)
                 throw new AlreadyExistException(itemOrder.ID,"orderItem");
         }
         int count = 0;
-        double price = dalp.Get(itemOrder.ProductId).Price;
+        double price = (dalp.Get(itemOrder.ProductId)?.Price) ?? 0;
         itemOrder.Price = price;
         foreach (var item in GetOrderItemByOrder(itemOrder.OrderId))
         {
@@ -44,12 +44,12 @@ internal class DalOrderItem:IOrderItem
     /// <param name="id">id of order item</param>
     /// <returns>all the details of this order item</returns>
     /// <exception cref="Exception"> if the id is not exsist throw an exception</exception>
-    public OrderItem Get(int id)
+    public OrderItem? Get(int id)
     {
         //The loop goes through the members of the database and looks for the item in the order with the received id
         foreach (var orderItem in DataSource.OrderItemList)
         {
-            if (orderItem.ID == id)
+            if (orderItem?.ID == id)
                 return orderItem;
         }
         throw new NotExistException(id,"orderItem");
@@ -58,13 +58,14 @@ internal class DalOrderItem:IOrderItem
     /// The function returns an array with all the items in the orders
     /// </summary>
     /// <returns> A repository with all the items in the orders</returns>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? check = null)
     {
         List<OrderItem> newItemOrders=new List<OrderItem>();
         //We created a new array and the loop copies the items in the orders into the new array
-        foreach(var orderItem in DataSource.OrderItemList)
+        foreach(DO.OrderItem orderItem in DataSource.OrderItemList)
         {
-            newItemOrders.Add(orderItem);
+            if ((check != null && check(orderItem)) || check == null)
+                newItemOrders.Add(orderItem);
         }
         return newItemOrders;
     }
@@ -95,7 +96,7 @@ internal class DalOrderItem:IOrderItem
         if (orderItem.Amount != 0 && orderItem.ProductId != 0 && orderItem.OrderId != 0)
         {
             int id, count = 0;
-            double price = dalp.Get(orderItem.ProductId).Price;
+            double price = dalp.Get(orderItem.ProductId)?.Price?? 0;
             orderItem.Price = price;
             //Go through the database until the requested item in the order
             bool isExist = false;
@@ -149,9 +150,9 @@ internal class DalOrderItem:IOrderItem
     /// </summary>
     /// <param name="order_id">id of order</param>
     /// <returns> all the items on this order</returns>
-    public IEnumerable<OrderItem> GetOrderItemByOrder(int order_id)
+    public IEnumerable<OrderItem?> GetOrderItemByOrder(int order_id)
     {
-        List <OrderItem> newList= new List<OrderItem>();
+        List <OrderItem?> newList= new List<OrderItem?>();
     //During the loop, all the items in the received order are filled
     foreach (OrderItem or in DataSource.OrderItemList)
     {
@@ -160,6 +161,15 @@ internal class DalOrderItem:IOrderItem
     }   
       
         return newList;
+    }
+    public OrderItem GetByCondition(Func<OrderItem?, bool>? check)
+    {
+        foreach (OrderItem or in DataSource.OrderItemList)
+        {
+            if (check(or))
+                return or;
+        }
+        throw new DO.NotExistException(1, "OrderItem");
     }
 }
 

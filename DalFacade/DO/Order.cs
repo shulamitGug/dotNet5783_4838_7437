@@ -13,27 +13,27 @@ public struct Order
     /// <summary>
     /// The name of the ordering customer
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     /// The email address of the ordering customer
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     /// Residential address of the ordering customer
     /// </summary>
-    public string CustomerAdress { get; set; }
+    public string? CustomerAdress { get; set; }
     /// <summary>
     /// Order Date
     /// </summary>
-    public DateTime OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
     /// <summary>
     /// Shipping departure date
     /// </summary>
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
     /// <summary>
     /// Arrival date of the shipment
     /// </summary>
-    public DateTime DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 
    public override string ToString() => $@"
 order ID={ID}

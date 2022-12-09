@@ -14,7 +14,7 @@ namespace BlImplementation
         /// this function build products of bo and copy the details of do product and return list
         /// </summary>
         /// <returns>list of bo product for list</returns>
-        public IEnumerable<BO.ProductForList> GetProductForList()
+        public IEnumerable<BO.ProductForList?> GetProductForList()
         {
             //new list
             List<BO.ProductForList> products = new List<BO.ProductForList>();
@@ -84,12 +84,12 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public void Delete(int id)
         {
-           IEnumerable<DO.OrderItem> orderItemList;
+           IEnumerable<DO.OrderItem?> orderItemList;
             IEnumerable<DO.Order> orderList = idal.Order.GetAll();
             //check if the product exsist in order
             foreach (DO.Order order in orderList)
             {
-                orderItemList = idal.OrderItem.GetOrderItemByOrder(order.ID);
+                orderItemList = idal.OrderItem.GetOrderItemByOrder(order.ID)?? null;
                 foreach (DO.OrderItem item in orderItemList)
                     if (item.ID == id)
                         throw new BO.AlreadyExistBlException("the product is exist in order cannot delete");
@@ -125,7 +125,7 @@ namespace BlImplementation
         /// get calaog to patient
         /// </summary>
         /// <returns>list of product to customer</returns>
-        public IEnumerable<BO.ProductItem> GetCatalog()
+        public IEnumerable<BO.ProductItem?> GetCatalog()
         {
            IEnumerable<DO.Products> doProduct = idal.Product.GetAll();
             List<BO.ProductItem> list = new List<BO.ProductItem>();

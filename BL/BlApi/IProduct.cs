@@ -7,12 +7,12 @@ namespace BlApi
 {
     public interface IProduct
     {
-        public IEnumerable<BO.ProductForList> GetProductForList();
+        public IEnumerable<BO.ProductForList?> GetProductForList();
         public BO.Product GetProductById(int id);
         public int Add(BO.Product product);
         public void Delete(int id);
         public void Update(BO.Product product);
-        public IEnumerable<BO.ProductItem> GetCatalog();
+        public IEnumerable<BO.ProductItem?> GetCatalog();
         public BO.ProductItem GetProductItemById(int id);
 
     }

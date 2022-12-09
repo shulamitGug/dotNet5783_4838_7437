@@ -15,11 +15,11 @@ namespace BlImplementation
         /// </summary>
         /// <param name="order"> The order we would like to check</param>
         /// <returns>order status</returns>
-        private BO.OrderStatus CheckStatus(DO.Order order)
+        private BO.OrderStatus? CheckStatus(DO.Order? order)
         {
-            if (order.DeliveryDate.Date != DateTime.MinValue.Date)
+            if (order?.DeliveryDate!=null)
                 return (BO.OrderStatus)3;
-            else if (order.ShipDate.Date != DateTime.MinValue.Date)
+            else if (order?.ShipDate!=null)
                 return  (BO.OrderStatus)2;
             else
                 return (BO.OrderStatus)1;
@@ -28,18 +28,18 @@ namespace BlImplementation
         /// Adding a product to the order
         /// </summary>
         /// <returns>List of ordered orders</returns>
-        public IEnumerable<BO.OrderForList> GetOrders()
+        public IEnumerable<BO.OrderForList?> GetOrders()
         {
             double price = 0;
             int count = 0;
             IEnumerable<DO.Order> orders = idal.Order.GetAll();
-            IEnumerable<DO.OrderItem> orderItems;
-            List<BO.OrderForList> ordersForList=new List<BO.OrderForList>();
+            IEnumerable<DO.OrderItem?> orderItems;
+            List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
             foreach (DO.Order order in orders)
             {
                 try
                 {
-                    orderItems = idal.OrderItem.GetOrderItemByOrder(order.ID);
+                    orderItems = idal.OrderItem.GetOrderItemByOrder(order.ID)??null;
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +78,7 @@ namespace BlImplementation
             BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,status= CheckStatus(doOrder) };
             boOrder.items=new List<BO.OrderItem>();
             IEnumerable<DO.Products> productsList=idal.Product.GetAll();
-            IEnumerable<DO.OrderItem> doItems = idal.OrderItem.GetOrderItemByOrder(id);
+            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
             //A loop that goes through the order details and enters them into the bo data type
             foreach (DO.OrderItem item in doItems)
             {
@@ -117,7 +117,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            if (doOrder.ShipDate.Date<DateTime.Now.Date)
+            if (doOrder.ShipDate?.Date<DateTime.Now.Date)
             {
                 doOrder.ShipDate=DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -145,7 +145,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            if (doOrder.DeliveryDate.Date < DateTime.Now.Date)
+            if (doOrder.DeliveryDate?.Date < DateTime.Now.Date)
             {
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -161,7 +161,7 @@ namespace BlImplementation
         /// <returns> </returns>
         public BO.OrderTracking StatusOrder(int id)
         {
-            DO.Order doOrder;
+            DO.Order? doOrder;
             try
             {
                 doOrder = idal.Order.Get(id);
@@ -170,20 +170,18 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            int x=DateTime.Compare(doOrder.DeliveryDate.Date, DateTime.MinValue.Date);
-            int y = DateTime.Compare(doOrder.ShipDate.Date, DateTime.MinValue.Date);
-            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder.ID, status = CheckStatus(doOrder) };
-            trackingOrder.Tracking = new List<Tuple<DateTime, string>>();
-            Tuple<DateTime, string> newTuple = new Tuple<DateTime, string>(doOrder.OrderDate, "approved");
+            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder?.ID?? 0, status = CheckStatus(doOrder) };
+            trackingOrder.Tracking = new List<Tuple<DateTime?, string?>>();
+            Tuple<DateTime?, string?> newTuple = new Tuple<DateTime?, string?>(doOrder?.OrderDate, "approved");
             trackingOrder.Tracking.Add(newTuple);
-            if (y > 0)
+            if (doOrder?.DeliveryDate != null)
             {
-                newTuple = new Tuple<DateTime, string>(doOrder.ShipDate, "sent");
+                newTuple = new Tuple<DateTime?, string>(doOrder?.ShipDate?? null, "sent");
                 trackingOrder.Tracking.Add(newTuple);
             }
-             if (x > 0)
+             if (doOrder?.DeliveryDate != null)
             {
-                newTuple = new Tuple<DateTime, string>(doOrder.DeliveryDate, "provided");
+                newTuple = new Tuple<DateTime?, string>(doOrder?.DeliveryDate, "provided");
                 trackingOrder.Tracking.Add(newTuple);
             }
             return trackingOrder;
