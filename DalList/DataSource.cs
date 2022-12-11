@@ -35,9 +35,9 @@ internal static class DataSource
     //random
     private static readonly Random s_rand = new();
     //data storage arrays
-    internal static List<Order?> OrdersList = new List<Order?>();
-    internal static List<Products?> ProductsList = new List<Products?>();
-    internal static List<OrderItem?> OrderItemList = new List<OrderItem?>();
+    internal static List<Order> OrdersList = new List<Order>();
+    internal static List<Product> ProductsList = new List<Product>();
+    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
     
      /// <summary>
      /// constructor
@@ -64,6 +64,7 @@ internal static class DataSource
             {
                  d = new DateTime();
             }
+
             else
             {
                  d = DateTime.MinValue + ts;
@@ -104,7 +105,7 @@ internal static class DataSource
                 cat = (i+2) % 6;
             else
                 cat = (i + 1) % 6;
-            Products p = new Products()
+            Product p = new Product()
             {
                 ID = i+1000000,
                 Name = arrProductName[i],
@@ -127,8 +128,8 @@ internal static class DataSource
             int product = s_rand.Next(20)+1000000;
             foreach (var item in ProductsList)
             {
-                if(item?.ID==product)
-                    price = item?.Price?? 0;
+                if(item.ID==product)
+                    price = item.Price;
             }
             if (price == 0)
                 throw new Exception("the product is not exist");
@@ -155,16 +156,3 @@ internal static class DataSource
 
 
 }
-
-//internal record struct NewStruct(object Item1, object Item2)
-////{
-////    public static implicit operator (object, object)(NewStruct value)
-////    {
-////        return (value.Item1, value.Item2);
-////    }
-
-////    public static implicit operator NewStruct((object, object) value)
-////    {
-////        return new NewStruct(value.Item1, value.Item2);
-////    }
-////}

@@ -15,11 +15,11 @@ namespace BlImplementation
         /// </summary>
         /// <param name="order"> The order we would like to check</param>
         /// <returns>order status</returns>
-        private BO.OrderStatus? CheckStatus(DO.Order? order)
+        private BO.OrderStatus CheckStatus(DO.Order order)
         {
-            if (order?.DeliveryDate!=null)
+            if (order.DeliveryDate!=null)
                 return (BO.OrderStatus)3;
-            else if (order?.ShipDate!=null)
+            else if (order.ShipDate!=null)
                 return  (BO.OrderStatus)2;
             else
                 return (BO.OrderStatus)1;
@@ -28,18 +28,18 @@ namespace BlImplementation
         /// Adding a product to the order
         /// </summary>
         /// <returns>List of ordered orders</returns>
-        public IEnumerable<BO.OrderForList?> GetOrders()
+        public IEnumerable<BO.OrderForList> GetOrders()
         {
             double price = 0;
             int count = 0;
             IEnumerable<DO.Order> orders = idal.Order.GetAll();
-            IEnumerable<DO.OrderItem?> orderItems;
-            List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
+            IEnumerable<DO.OrderItem> orderItems;
+            List<BO.OrderForList> ordersForList=new List<BO.OrderForList?>();
             foreach (DO.Order order in orders)
             {
                 try
                 {
-                    orderItems = idal.OrderItem.GetOrderItemByOrder(order.ID)??null;
+                    orderItems = idal.OrderItem.GetOrderItemByOrder(order.ID);
                 }
                 catch (Exception ex)
                 {
@@ -50,7 +50,7 @@ namespace BlImplementation
                     price+=item.Price*item.Amount;
                     count+=item.Amount;
                 }
-                BO.OrderForList boOrder = new BO.OrderForList() { customerName=order.CustomerName,ID=order.ID,totalPrice=price,amountOfItems=count,status= CheckStatus(order) };
+                BO.OrderForList boOrder = new BO.OrderForList() { CustomerName=order.CustomerName,ID=order.ID,TotalPrice=price,AmountOfItems=count,Status= CheckStatus(order) };
                 ordersForList.Add(boOrder);
             }
             return ordersForList;
@@ -75,27 +75,27 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,status= CheckStatus(doOrder) };
-            boOrder.items=new List<BO.OrderItem>();
-            IEnumerable<DO.Products> productsList=idal.Product.GetAll();
-            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
+            BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
+            boOrder.Items=new List<BO.OrderItem>();
+            IEnumerable<DO.Product> productsList=idal.Product.GetAll();
+            IEnumerable<DO.OrderItem> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
             //A loop that goes through the order details and enters them into the bo data type
             foreach (DO.OrderItem item in doItems)
             {
-                BO.OrderItem boItem = new BO.OrderItem() { orderItemId = item.ID, productId = item.ProductId, totalPrice = item.Price * item.Amount, amount = item.Amount };
+                BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item.ID, ProductId = item.ProductId, TotalPrice = item.Price * item.Amount, Amount = item.Amount };
                 //A loop that goes through the products in the order and updates the price of the order
                 foreach (var product in productsList)
                 {
                     if(product.ID==item.ProductId)
                     {
-                        boItem.productName = product.Name;
+                        boItem.ProductName = product.Name;
                         break;
                     }
                 }
-                boOrder.items.Add(boItem);
-                price += boItem.totalPrice;
+                boOrder.Items.Add(boItem);
+                price += boItem.TotalPrice;
             }
-            boOrder.totalPrice = price;
+            boOrder.TotalPrice = price;
             return boOrder;
         }
         /// <summary>
@@ -117,13 +117,13 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            if (doOrder.ShipDate?.Date<DateTime.Now.Date)
+            if (doOrder.ShipDate.Date<DateTime.Now.Date)
             {
                 doOrder.ShipDate=DateTime.Now;
                 idal.Order.Update(doOrder);
             }
             BO.Order newOrder = GetOrderDetails(id);
-            newOrder.status =(BO.OrderStatus)2;
+            newOrder.Status =(BO.OrderStatus)2;
             return newOrder;
         }
         /// <summary>
@@ -145,13 +145,13 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            if (doOrder.DeliveryDate?.Date < DateTime.Now.Date)
+            if (doOrder.DeliveryDate.Date < DateTime.Now.Date)
             {
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
             }
             BO.Order newOrder = GetOrderDetails(id);
-            newOrder.status = (BO.OrderStatus)3;
+            newOrder.Status = (BO.OrderStatus)3;
             return newOrder;
         }
         /// <summary>
@@ -161,7 +161,7 @@ namespace BlImplementation
         /// <returns> </returns>
         public BO.OrderTracking StatusOrder(int id)
         {
-            DO.Order? doOrder;
+            DO.Order doOrder;
             try
             {
                 doOrder = idal.Order.Get(id);
@@ -170,18 +170,18 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder?.ID?? 0, status = CheckStatus(doOrder) };
-            trackingOrder.Tracking = new List<Tuple<DateTime?, string?>>();
-            Tuple<DateTime?, string?> newTuple = new Tuple<DateTime?, string?>(doOrder?.OrderDate, "approved");
+            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder.ID, Status = CheckStatus(doOrder) };
+            trackingOrder.Tracking = new List<Tuple<DateTime, string>>();
+            Tuple<DateTime, string> newTuple = new Tuple<DateTime, string>(doOrder.OrderDate, "approved");
             trackingOrder.Tracking.Add(newTuple);
-            if (doOrder?.DeliveryDate != null)
+            if (doOrder.ShipDate.Date<DateTime.MinValue)
             {
-                newTuple = new Tuple<DateTime?, string>(doOrder?.ShipDate?? null, "sent");
+                newTuple = new Tuple<DateTime, string>(doOrder.ShipDate, "sent");
                 trackingOrder.Tracking.Add(newTuple);
             }
-             if (doOrder?.DeliveryDate != null)
+             if (doOrder.DeliveryDate.Date <DateTime.MinValue)
             {
-                newTuple = new Tuple<DateTime?, string>(doOrder?.DeliveryDate, "provided");
+                newTuple = new Tuple<DateTime, string>(doOrder.DeliveryDate, "provided");
                 trackingOrder.Tracking.Add(newTuple);
             }
             return trackingOrder;

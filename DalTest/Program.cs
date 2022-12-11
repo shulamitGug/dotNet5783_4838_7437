@@ -18,6 +18,7 @@ public class Program
         {
             case 0:
                 break;
+            
             case 1:
                 {
                     //data reception
@@ -44,6 +45,7 @@ public class Program
                         Console.WriteLine(idal.Order.Add(o));
                 }
                 break;
+            
             case 2:
                 {
                     //get by id and print
@@ -55,6 +57,7 @@ public class Program
                     Console.WriteLine(o);
                 }
                 break;
+            
             case 3:
                 {
                     //get all and print
@@ -66,6 +69,7 @@ public class Program
                     }
                 }
                 break;
+            
             case 4:
                 {
                     //update
@@ -97,6 +101,7 @@ public class Program
                         };
                     idal.Order.Update(newO);                }
                 break;
+            
             case 5:
                 {
                     //delete order
@@ -122,6 +127,7 @@ public class Program
         {
             case 0:
                 break;
+            
             case 1:
                 {
                     Console.WriteLine("insert product id, product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
@@ -132,7 +138,7 @@ public class Program
                     int inStock=int.Parse(Console.ReadLine());
                     int category=int.Parse(Console.ReadLine());
                     //Creating a new object with the absorbed donors
-                    Products p = new Products()
+                    Product p = new Product()
                     {
                         ID=id,
                         Name = name,
@@ -144,21 +150,23 @@ public class Program
 
                 }
                 break;
+            
             case 2:
                 {
                     //get product by id and print
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
-                    Products p = new Products();
+                    Product p = new Product();
                     p = idal.Product.Get(id);
                     Console.WriteLine(p);
                 }
                 break;
+            
             case 3:
                 {
                     //get all products and print
-                    IEnumerable<Products> products = idal.Product.GetAll();
+                    IEnumerable<Product> products = idal.Product.GetAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -166,13 +174,14 @@ public class Program
                     }
                 }
                 break;
+            
             case 4:
                 {
                     //update product
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine());
-                    Products p = new Products();
+                    Product p = new Product();
                     p = idal.Product.Get(id);
                     Console.WriteLine(p);
                     Console.WriteLine("insert product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
@@ -181,7 +190,7 @@ public class Program
                     int inStock = int.Parse(Console.ReadLine());
                     int category=int.Parse(Console.ReadLine());
                         //Creating a new object with the absorbed donors
-                        Products newp = new Products()
+                        Product newp = new Product()
                         {
                             ID = id,
                             Name = name,
@@ -192,6 +201,7 @@ public class Program
                     idal.Product.Update(newp);
                 }
                 break;
+            
             case 5:
                 {
                     //delete product
@@ -216,6 +226,7 @@ public class Program
         {
             case 0:
                 break;
+            
             case 1:
                 {
                     Console.WriteLine("inser amount, productId,orderId");
@@ -235,6 +246,7 @@ public class Program
 
                 }
                 break;
+            
             case 2:
                 {
                     //get item in order by id and print
@@ -246,6 +258,7 @@ public class Program
                     Console.WriteLine(oi);
                 }
                 break;
+           
             case 3:
                 {
                     //get all items in orders and print
@@ -257,6 +270,7 @@ public class Program
                     }
                 }
                 break;
+            
             case 4:
                 {
                     //update
@@ -283,6 +297,7 @@ public class Program
                     idal.OrderItem.Update(newoi);
                 }
                 break;
+            
             case 5:
                 {
                     //delete
@@ -292,6 +307,7 @@ public class Program
                     idal.OrderItem.Delete(id);
                 }
                 break;
+            
             case 6:
                 {
                     //get by order id and product id
@@ -301,6 +317,7 @@ public class Program
                     Console.WriteLine(idal.OrderItem.GetOrderItemByTwoValues(prod,ord));
                 }
                 break;
+            
             case 7:
                 {
                     //get by order id
@@ -328,10 +345,13 @@ public class Program
             {
                 if (num == 1)//product
                     ProductFunction();
+                
                 else if (num == 2)//order
                     OrderFunction();
+                
                 else if (num == 3)//order item
                     OrderItemFunction();
+                
                 Console.WriteLine("insert 1 to product,2 to order and 3 to orderItem and 0 to stop");
                 num = int.Parse(Console.ReadLine());
             }

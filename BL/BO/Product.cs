@@ -15,7 +15,7 @@ namespace BO
         /// <summary>
         /// Product Name
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// product price
         /// </summary>
@@ -23,7 +23,7 @@ namespace BO
         /// <summary>
         /// Belonging to a certain category
         /// </summary>
-        public Category? CategoryP { get; set; }
+        public Category CategoryP { get; set; }
         /// <summary>
         /// The amount of products in stock
         /// </summary>

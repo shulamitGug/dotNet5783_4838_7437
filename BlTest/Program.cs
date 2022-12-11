@@ -164,7 +164,7 @@
         string name = Console.ReadLine();
         string email = Console.ReadLine();
         string adress = Console.ReadLine();
-        BO.Cart boCart = new BO.Cart() { customerName = name, customerEmail = email, customerAdress = adress, items = new List<BO.OrderItem>(), totalPrice = 0 };
+        BO.Cart boCart = new BO.Cart() { CustomerName = name, CustomerEmail = email, CustomerAdress = adress, Items = new List<BO.OrderItem>(), TotalPrice = 0 };
         switch (num)
         {
             case 1:

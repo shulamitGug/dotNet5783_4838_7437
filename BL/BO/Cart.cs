@@ -8,11 +8,11 @@ namespace BO
 {
     public class Cart
     {
-        public string? customerName { get; set; }
-        public string? customerEmail { get; set; }
-        public string? customerAdress { get; set; }
-        public List<OrderItem?>? items { get; set; }
-        public double totalPrice { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerAdress { get; set; }
+        public List<OrderItem> Items { get; set; }
+        public double TotalPrice { get; set; }
         public override string ToString()
         {
             return ToolStringClass.ToStringProperty(this);

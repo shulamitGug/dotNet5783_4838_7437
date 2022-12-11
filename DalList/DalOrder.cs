@@ -17,7 +17,7 @@ internal class DalOrder:IOrder
     {
         foreach(var item in DataSource.OrdersList)
         {
-            if (item?.ID == order.ID)
+            if (item.ID == order.ID)
                 throw new AlreadyExistException(order.ID,"order");
         }
         order.ID = DataSource.Config.GetNextOrderNumber();
@@ -44,13 +44,12 @@ internal class DalOrder:IOrder
     /// return all the orders in the array
     /// </summary>
     /// <returns>array of orders</returns>
-    public IEnumerable<Order> GetAll(Func<Order, bool>? check = null)
+    public IEnumerable<Order> GetAll()
     {
         List <Order> newOrders = new List<Order>();
         //copy to new arr all the orders that exist the arr
         foreach (Order order in DataSource.OrdersList)
         {
-            if ((check != null && check(order)) || check == null)
                 newOrders.Add(order);
         }
         return newOrders;
@@ -74,8 +73,6 @@ internal class DalOrder:IOrder
         //The loop goes through the elements of the array and stops when an product with the same id as the received id is found or until the end of the buffer
         throw new NotExistException(id,"order");
         //The loop starts with the element immediately after the order to be deleted and moves each order to the previous position in the array
-
-
     }
     /// <summary>
     /// update order
@@ -87,7 +84,8 @@ internal class DalOrder:IOrder
         bool isExist = false;
             foreach (Order or in DataSource.OrdersList)
             {
-                if (or.ID == order.ID)
+                
+            if (or.ID == order.ID)
                 {
                     isExist = true;
                     DataSource.OrdersList.Remove(or);
@@ -97,7 +95,8 @@ internal class DalOrder:IOrder
         //Go through the database until the requested order
         if (!isExist)
                 throw new NotExistException(order.ID,"order");
-            DataSource.OrdersList.Add(order);
+           
+        DataSource.OrdersList.Add(order);
     }
     public Order GetByCondition(Func<Order, bool>? check)
     {

@@ -11,23 +11,23 @@ namespace BO
         /// <summary>
         /// Unique ID of  OrderItem
         /// </summary>
-        public int orderItemId { get; set; }
-        public string? productName { get; set; }
+        public int OrderItemId { get; set; }
+        public string ProductName { get; set; }
         /// <summary>
         /// Product ID number
         /// </summary>
-        public int productId { get; set; }
+        public int ProductId { get; set; }
         /// <summary>
         /// Price per unit
         /// </summary>
         /// <summary>
         /// Quantity
         /// </summary>
-        public int amount { get; set; }
+        public int Amount { get; set; }
         /// <summary>
         /// The total price of the orderItems
         /// </summary>
-        public double totalPrice { get; set; }
+        public double TotalPrice { get; set; }
         /// <summary>
         /// Overriding method of the ToString
         /// </summary>
