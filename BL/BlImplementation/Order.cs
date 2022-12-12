@@ -32,8 +32,8 @@ namespace BlImplementation
         {
             double price = 0;
             int count = 0;
-            IEnumerable<DO.Order> orders = idal.Order.GetAll();
-            IEnumerable<DO.OrderItem> orderItems;
+            IEnumerable<DO.Order?> orders = idal.Order.GetAll();
+            IEnumerable<DO.OrderItem?> orderItems;
             List<BO.OrderForList> ordersForList=new List<BO.OrderForList?>();
             foreach (DO.Order order in orders)
             {
@@ -77,8 +77,8 @@ namespace BlImplementation
             }
             BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
             boOrder.Items=new List<BO.OrderItem>();
-            IEnumerable<DO.Product> productsList=idal.Product.GetAll();
-            IEnumerable<DO.OrderItem> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
+            IEnumerable<DO.Product?> productsList=idal.Product.GetAll();
+            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
             //A loop that goes through the order details and enters them into the bo data type
             foreach (DO.OrderItem item in doItems)
             {
@@ -86,9 +86,9 @@ namespace BlImplementation
                 //A loop that goes through the products in the order and updates the price of the order
                 foreach (var product in productsList)
                 {
-                    if(product.ID==item.ProductId)
+                    if(product?.ID==item.ProductId)
                     {
-                        boItem.ProductName = product.Name;
+                        boItem.ProductName = product?.Name;
                         break;
                     }
                 }
@@ -117,7 +117,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            if (doOrder.ShipDate.Date<DateTime.Now.Date)
+            if (doOrder.ShipDate!=null)
             {
                 doOrder.ShipDate=DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -145,7 +145,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            if (doOrder.DeliveryDate.Date < DateTime.Now.Date)
+            if (doOrder.DeliveryDate!=null)
             {
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -171,17 +171,17 @@ namespace BlImplementation
                 throw new BO.NotExistBlException("order not exist", ex);
             }
             BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder.ID, Status = CheckStatus(doOrder) };
-            trackingOrder.Tracking = new List<Tuple<DateTime, string>>();
-            Tuple<DateTime, string> newTuple = new Tuple<DateTime, string>(doOrder.OrderDate, "approved");
+            trackingOrder.Tracking = new List<Tuple<DateTime?, string?>>();
+            Tuple<DateTime?, string?> newTuple = new Tuple<DateTime?, string?>(doOrder.OrderDate, "approved");
             trackingOrder.Tracking.Add(newTuple);
-            if (doOrder.ShipDate.Date<DateTime.MinValue)
+            if (doOrder.ShipDate!=null)
             {
-                newTuple = new Tuple<DateTime, string>(doOrder.ShipDate, "sent");
+                newTuple = new Tuple<DateTime?, string?>(doOrder.ShipDate, "sent");
                 trackingOrder.Tracking.Add(newTuple);
             }
-             if (doOrder.DeliveryDate.Date <DateTime.MinValue)
+             if (doOrder.DeliveryDate!=null)
             {
-                newTuple = new Tuple<DateTime, string>(doOrder.DeliveryDate, "provided");
+                newTuple = new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "provided");
                 trackingOrder.Tracking.Add(newTuple);
             }
             return trackingOrder;

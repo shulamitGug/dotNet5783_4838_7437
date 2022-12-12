@@ -12,7 +12,7 @@ namespace BO
         /// Unique ID of  OrderItem
         /// </summary>
         public int OrderItemId { get; set; }
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
         /// <summary>
         /// Product ID number
         /// </summary>

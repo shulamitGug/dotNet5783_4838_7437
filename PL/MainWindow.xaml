@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
+        <Button Height="100" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />
 
     </Grid>
 </Window>

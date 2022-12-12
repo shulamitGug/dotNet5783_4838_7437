@@ -20,9 +20,15 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        private BlApi.IBl bl = new BlImplementation.Bl(); 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ShowProductsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductListWindow(bl).Show();
         }
     }
 }

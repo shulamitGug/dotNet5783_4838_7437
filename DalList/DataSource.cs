@@ -35,9 +35,9 @@ internal static class DataSource
     //random
     private static readonly Random s_rand = new();
     //data storage arrays
-    internal static List<Order> OrdersList = new List<Order>();
-    internal static List<Product> ProductsList = new List<Product>();
-    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
+    internal static List<Order?> OrdersList = new List<Order?>();
+    internal static List<Product?> ProductsList = new List<Product?>();
+    internal static List<OrderItem?> OrderItemList = new List<OrderItem?>();
     
      /// <summary>
      /// constructor
@@ -122,14 +122,13 @@ internal static class DataSource
     private static void CreateInitilaizeOrderItem()
     {
         double price=0;
-         int j;
         for (int i = 0; i < 40; i++)
         {
             int product = s_rand.Next(20)+1000000;
             foreach (var item in ProductsList)
             {
-                if(item.ID==product)
-                    price = item.Price;
+                if(item?.ID==product)
+                    price = item?.Price??0;
             }
             if (price == 0)
                 throw new Exception("the product is not exist");

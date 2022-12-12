@@ -61,7 +61,7 @@ public class Program
             case 3:
                 {
                     //get all and print
-                    IEnumerable<Order> orders = idal.Order.GetAll();
+                    IEnumerable<Order?> orders = idal.Order.GetAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -166,7 +166,7 @@ public class Program
             case 3:
                 {
                     //get all products and print
-                    IEnumerable<Product> products = idal.Product.GetAll();
+                    IEnumerable<Product?> products = idal.Product.GetAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -262,7 +262,7 @@ public class Program
             case 3:
                 {
                     //get all items in orders and print
-                   IEnumerable<OrderItem> ordersItem = idal.OrderItem.GetAll();
+                   IEnumerable<OrderItem?> ordersItem = idal.OrderItem.GetAll();
                    foreach(var item in ordersItem)       
                     {
                         Console.WriteLine(item);
@@ -323,7 +323,7 @@ public class Program
                     //get by order id
                     Console.WriteLine("enter order id");
                     int ord = int.Parse(Console.ReadLine());
-                    IEnumerable<OrderItem> itemList = idal.OrderItem.GetOrderItemByOrder(ord);
+                    IEnumerable<OrderItem?> itemList = idal.OrderItem.GetOrderItemByOrder(ord);
                     foreach (var item in itemList)
                     {
                         Console.WriteLine(item);

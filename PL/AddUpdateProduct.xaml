@@ -1,0 +1,44 @@
+﻿<Window x:Class="PL.AddUpdateProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="AddUpdateProduct" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
+                
+                <Label Grid.Column="0" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions >
+            </Grid>
+
+            <Label  HorizontalAlignment="left" Margin="5" Padding="5" Grid.Row="1" Name="IdProd_lbl" Content="ID: " />
+            <TextBox  HorizontalAlignment="Right" Margin="5" Padding="5" Grid.Row="1" x:Name="idProd_txt"/>
+            <Label  HorizontalAlignment="Left" Margin="1" Padding="5" Grid.Row="2" Name="CategoryProd_lbl" Content="Category: " />
+            <ComboBox  HorizontalAlignment="Right"  Padding="5" Grid.Row="2" x:Name="CategoryProd_selector"/>
+            <Label HorizontalAlignment="left"  Padding="5" Grid.Row="3" Name="NameProd_lbl" Content="Name: " />
+            <TextBox HorizontalAlignment="Right"  Padding="5" Grid.Row="3" x:Name="NameProd_txt"/>
+            <Label HorizontalAlignment="left"  Padding="5" Grid.Row="4" Name="PriceProd_lbl" Content="Price: " />
+            <TextBox HorizontalAlignment="Right"  Padding="5" Grid.Row="4" x:Name="PriceProd_txt"/>
+            <Label HorizontalAlignment="left"  Padding="5" Grid.Row="5" Name="InStockProd_lbl" Content="InStock: "  />
+            <TextBox HorizontalAlignment="Right"  Padding="5" Grid.Row="5" x:Name="InStockProd_txt"/>
+            <Button HorizontalAlignment="Center"  Padding="5" Grid.Row="7" x:Name="OkayBtn" Content="okay" Click="OkayBtn_Click"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/> 
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+        </Grid>
+    </Grid>
+</Window>

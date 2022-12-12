@@ -14,11 +14,8 @@ internal class DalProducts:IProduct
     /// <returns>if add return the id of this product</returns>
     public int Add(Product product)
     {
-        foreach (var item in DataSource.ProductsList)
-        {
-            if (item.ID == product.ID)
-                throw new AlreadyExistException(product.ID, "product");
-        }
+        if (CheckProduct(product.ID) )
+            throw new AlreadyExistException(product.ID, "product");
         DataSource.ProductsList.Add(product);
         return product.ID;
     }
@@ -31,26 +28,22 @@ internal class DalProducts:IProduct
     public Product Get(int id)
     {
         //look for the product with the same id
-        foreach (var item in DataSource.ProductsList)
-            {
-                if (item.ID == id)
-                    return item;
-            }
-        throw new NotExistException(id, "product", "alreadyExsist");
+      return DataSource.ProductsList.FirstOrDefault(x => x?.ID ==id)??throw new NotExistException(id, "product", "alreadyExsist");
     }
     /// <summary>
     /// return all the product in the array
     /// </summary>
     /// <returns>array of product</returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? check = null)
     {
-            List<Product> newProduct = new List<Product>();
-            //copy to new arr all the products that exist the arr
-            foreach (DO.Product item in DataSource.ProductsList)
-            {
-                newProduct.Add(item);
-            }
-            return newProduct;
+        //copy to new arr all the products that exist the arr
+        if (check != null)
+            //    return from prod in DataSource.ProductsList
+            //           where check(prod) select prod;
+            return DataSource.ProductsList.FindAll(x => check(x));
+        else
+            return from prod in DataSource.ProductsList
+                   select prod; 
     }
     /// <summary>
     /// the function delete product from arr
@@ -59,16 +52,9 @@ internal class DalProducts:IProduct
     /// <exception cref="Exception">the product is not exist</exception>
     public void Delete(int id)
     {
-        foreach (Product product in DataSource.ProductsList)
-        {
-            if (product.ID == id)
-            {
-                DataSource.ProductsList.Remove(product);
-                return;
-            }
-        }
-
-        throw new NotExistException(id,"product");
+        int count = DataSource.ProductsList.RemoveAll(prod => prod?.ID == id);
+        if (count == 0)
+            throw new NotExistException(id, "product");
     }
     /// <summary>
     /// update product
@@ -77,32 +63,20 @@ internal class DalProducts:IProduct
     /// <exception cref="Exception">the product is not exist</exception>
     public void Update(Product product)
     {
-        bool isExist = false;
-        //look for the product
-        foreach (Product prod in DataSource.ProductsList)
-        {
-            if (prod.ID == product.ID)
-            {
-                isExist = true;
-                DataSource.ProductsList.Remove(prod);
-                break;
-            }
-        }
+        int count = DataSource.ProductsList.RemoveAll(prod => product.ID == prod?.ID);
+        if (count == 0)
+            throw new NotExistException(product.ID, "product");
 
-        //Go through the database until the requested order
-        if (!isExist)
-            throw new NotExistException(product.ID,"product");
-        
         DataSource.ProductsList.Add(product);
-
+        //Go through the database until the requested order
     }
-    public Product GetByCondition(Func<Product, bool>? check)
+    public Product GetByCondition(Func<Product?, bool>? check)
     {
-        foreach (Product prod in DataSource.ProductsList)
-        {
-            if (check(prod))
-                return prod;
-        }
-        throw new DO.NotExistException(1, "order");
+        return DataSource.ProductsList.Find(x=>check(x))??  
+        throw new DO.NotExistException(1,"product does not exist");
+    }
+    private bool CheckProduct(int id)
+    {
+        return DataSource.ProductsList.Any(prod => prod?.ID == id);
     }
 }

@@ -19,9 +19,10 @@ namespace BlImplementation
             //new list
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
-                foreach (var item in idal.Product.GetAll())
+                foreach (DO.Product? item in idal.Product.GetAll())
+
                 {
-                    BO.ProductForList pr = new BO.ProductForList() { Name = item.Name, Price = item.Price, Category = (BO.Category)item.CategoryP, ID = item.ID };
+                    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category)item?.CategoryP, ID = item?.ID??0 };
                     products.Add(pr);
                 }
             return products;
@@ -59,7 +60,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("the id can not be negative");
             if (boProduct.ID < 100000)
                 throw new BO.NotValidException("the id must be bigger");
-            if (boProduct.Price < 0)
+            if (boProduct.Price <= 0)
                 throw new BO.NotValidException("the price can not be negative");
             if (boProduct.InStock < 0)
                 throw new BO.NotValidException("the amount can not be nagative");
@@ -73,7 +74,7 @@ namespace BlImplementation
             }
             catch (Exception ex)
             {
-                throw new BO.AlreadyExistBlException("product is already exist");
+                throw new BO.AlreadyExistBlException("product is already exist",ex);
             }
             return id;
         }
@@ -84,8 +85,8 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public void Delete(int id)
         {
-           IEnumerable<DO.OrderItem> orderItemList;
-            IEnumerable<DO.Order> orderList = idal.Order.GetAll();
+           IEnumerable<DO.OrderItem?> orderItemList;
+            IEnumerable<DO.Order?> orderList = idal.Order.GetAll();
             //check if the product exsist in order
             foreach (DO.Order order in orderList)
             {
@@ -127,7 +128,7 @@ namespace BlImplementation
         /// <returns>list of product to customer</returns>
         public IEnumerable<BO.ProductItem?> GetCatalog()
         {
-           IEnumerable<DO.Product> doProduct = idal.Product.GetAll();
+           IEnumerable<DO.Product?> doProduct = idal.Product.GetAll();
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
             foreach (DO.Product item in doProduct)
@@ -167,6 +168,18 @@ namespace BlImplementation
             else
                 boProduct.InStock = false;
             return boProduct;
+        }
+        public IEnumerable<BO.ProductForList?> GetProductForListByCondition(Func<DO.Product?,bool>? check)
+        {
+           IEnumerable<DO.Product?> prod= idal.Product.GetAll(check);
+            List<BO.ProductForList> products = new List<BO.ProductForList>();
+            //the loop go at all products
+            foreach (DO.Product? item in prod)
+            {
+                BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category)item?.CategoryP, ID = item?.ID ?? 0 };
+                products.Add(pr);
+            }
+            return products;
         }
 
     }
