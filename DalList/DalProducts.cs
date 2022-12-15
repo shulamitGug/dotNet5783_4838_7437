@@ -72,7 +72,7 @@ internal class DalProducts:IProduct
     }
     public Product GetByCondition(Func<Product?, bool>? check)
     {
-        return DataSource.ProductsList.Find(x=>check(x))??  
+        return DataSource.ProductsList.Find(x=>check!(x))??  
         throw new DO.NotExistException(1,"product does not exist");
     }
     private bool CheckProduct(int id)

@@ -21,10 +21,10 @@ namespace BO
             foreach (PropertyInfo item in t.GetType().GetProperties())
             {
                 //if list
-                if (!(item.GetValue(t, null) is string) && item.GetValue(t,null) is IEnumerable<object>)
+                if (!(item.GetValue(t, null) is string) && item.GetValue(t,null) is IEnumerable<object?>)
                 {
-                    foreach (var item2 in (IEnumerable<object>)item.GetValue(t, null))
-                        str += item2.ToString();
+                    foreach (var item2 in (IEnumerable<object?>)(item.GetValue(t, null)))
+                        str += item2?.ToString();
                 }
                 else
                 {

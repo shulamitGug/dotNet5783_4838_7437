@@ -28,29 +28,29 @@ namespace BlImplementation
         /// Adding a product to the order
         /// </summary>
         /// <returns>List of ordered orders</returns>
-        public IEnumerable<BO.OrderForList> GetOrders()
+        public IEnumerable<BO.OrderForList?> GetOrders()
         {
             double price = 0;
             int count = 0;
             IEnumerable<DO.Order?> orders = idal.Order.GetAll();
             IEnumerable<DO.OrderItem?> orderItems;
-            List<BO.OrderForList> ordersForList=new List<BO.OrderForList?>();
-            foreach (DO.Order order in orders)
+            List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
+            foreach (DO.Order? order in orders)
             {
                 try
                 {
-                    orderItems = idal.OrderItem.GetOrderItemByOrder(order.ID);
+                    orderItems = idal.OrderItem.GetAll(x => x?.OrderId == order?.ID);
                 }
                 catch (Exception ex)
                 {
-                    throw new BO.NotExistBlException("orderitem is not exist-", ex);
+                    throw new BO.NotExistBlException("orderItem is not exist-", ex);
                 }
-                foreach (DO.OrderItem item in orderItems)
+                foreach (DO.OrderItem? item in orderItems)
                 {
-                    price+=item.Price*item.Amount;
-                    count+=item.Amount;
+                    price+=item?.Price*item?.Amount??0;
+                    count+=item?.Amount??0;
                 }
-                BO.OrderForList boOrder = new BO.OrderForList() { CustomerName=order.CustomerName,ID=order.ID,TotalPrice=price,AmountOfItems=count,Status= CheckStatus(order) };
+                BO.OrderForList boOrder = new BO.OrderForList() { CustomerName=order?.CustomerName,ID=order?.ID??0,TotalPrice=price,AmountOfItems=count,Status= CheckStatus(order??throw new Exception("")) };
                 ordersForList.Add(boOrder);
             }
             return ordersForList;
@@ -76,17 +76,17 @@ namespace BlImplementation
                 throw new BO.NotExistBlException("notExist ", ex);
             }
             BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
-            boOrder.Items=new List<BO.OrderItem>();
+            boOrder.Items=new List<BO.OrderItem?>();
             IEnumerable<DO.Product?> productsList=idal.Product.GetAll();
-            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetOrderItemByOrder(id)?? null;
+            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetAll(x => x?.OrderId ==id);
             //A loop that goes through the order details and enters them into the bo data type
-            foreach (DO.OrderItem item in doItems)
+            foreach (DO.OrderItem? item in doItems)
             {
-                BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item.ID, ProductId = item.ProductId, TotalPrice = item.Price * item.Amount, Amount = item.Amount };
+                BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item?.ID??0, ProductId = item?.ProductId??0, TotalPrice = item?.Price * item?.Amount??0, Amount = item?.Amount??0 };
                 //A loop that goes through the products in the order and updates the price of the order
                 foreach (var product in productsList)
                 {
-                    if(product?.ID==item.ProductId)
+                    if(product?.ID==item?.ProductId)
                     {
                         boItem.ProductName = product?.Name;
                         break;

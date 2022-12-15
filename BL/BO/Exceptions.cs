@@ -34,7 +34,7 @@ namespace BO
     //Exception because user didnot insert enough details
     public class NotEnoughDetailsException : Exception
     {
-        string fieldName;
+        string? fieldName;
         public NotEnoughDetailsException() : base() { }
 
         public NotEnoughDetailsException(string _fieldName) : base()
@@ -56,7 +56,7 @@ namespace BO
     //Exception that user insert invalid field
     public class NotValidException : Exception
     {
-        string fieldName;
+        string? fieldName;
         public NotValidException() : base() { }
 
         public NotValidException(string _fieldName) : base()

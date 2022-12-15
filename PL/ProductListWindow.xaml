@@ -9,6 +9,7 @@
     <Grid Name="MainGrid">
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
+            <Label Content="category"/>
             <ComboBox Name="CategoriesSelector"
 Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged"/>
             <Label Grid.Column="0" />
@@ -17,7 +18,7 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions >
         </Grid>
-        <ListView Grid.Row="1" x:Name="ProductListview"/>
+        <ListView Grid.Row="1" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick"/>
         <Button x:Name="AddProductBtn" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProductBtn_Click"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>

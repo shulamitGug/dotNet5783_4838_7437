@@ -18,7 +18,6 @@ namespace BlImplementation
         public BO.Cart AddProduct(BO.Cart boCart, int id)
         {
             DO.Product doProduct;
-            bool exist = false;
             try
             {
                doProduct = idal.Product.Get(id);
@@ -27,24 +26,23 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist",ex);
             }
+            if (boCart.Items == null)
+                throw new Exception("cart is empty");
             //if this product exist in the cart -add one to the amount 
-            foreach(var item in boCart.Items)
+            BO.OrderItem? ord= boCart.Items!.FirstOrDefault(x=>x?.ProductId==id);
+            if (ord != null)
             {
-                if(item.ProductId == id)
-                {
-                    exist = true;
-                    item.Amount += 1;
-                    item.TotalPrice += doProduct.Price;
-                    break;
-                }
+                ord.Amount += 1;
+                ord.TotalPrice += doProduct.Price;
             }
             //if not exixt add the product to the cart
-            if(!exist)
+            else
             {
-                BO.OrderItem item = new BO.OrderItem() { ProductId = id , ProductName = doProduct.Name, Amount = 1 , TotalPrice = doProduct.Price };
+                BO.OrderItem item = new BO.OrderItem() { ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
                 //item.orderItemId=
                 boCart.Items.Add(item);
             }
+            
             boCart.TotalPrice += doProduct.Price;
             return boCart;
         }
@@ -57,7 +55,6 @@ namespace BlImplementation
         /// <exception cref="Exception">if the produnt does not exist in cart</exception>
         public void UpdateAmountOfProduct(BO.Cart boCart, int id,int amount)
         {
-            bool exist = false;
             int itemAmount=0;
             DO.Product doProduct;
             try
@@ -69,29 +66,22 @@ namespace BlImplementation
                 throw new BO.NotExistBlException("product does not exist", ex);
             }
             //search the product in cart
-            foreach(var item in boCart.Items)
-            {
-                if(item.ProductId == id)
-                {
-                    exist = true;
-                    itemAmount = item.Amount;
-                }
-            }
-            if (!exist)
+            if (boCart.Items == null)
+                throw new Exception("the cart is empty");
+            BO.OrderItem? o = boCart.Items!.FirstOrDefault(x => x?.ProductId == id);
+            if (o == null)
                 throw new BO.NotExistBlException($"the product number {id} doesnot exist in this cart");
+            itemAmount = o.Amount;
             if (amount > itemAmount)//check if there is enough in the stock
                 if (amount - itemAmount > doProduct.InStock)
-                    throw new BO.NotInStockException(id,doProduct.Name);
+                    throw new BO.NotInStockException(id,doProduct.Name??"");
             //update
-             foreach (var item in boCart.Items)
-            {
-                if (item.ProductId == id)
-                {
-                   item.Amount = amount;
-                }
-            }
 
+                   o.Amount = amount;
+                
         }
+
+    
         /// <summary>
         /// An action that checks the details of the cart and confirms it
         /// </summary>
@@ -106,21 +96,21 @@ namespace BlImplementation
             if (boCart.CustomerName == "")
                 throw new BO.NotEnoughDetailsException("customerName");
             //A loop that goes through the details of the cart and checks their correctness
-            foreach (var item in boCart.Items)
+            foreach (BO.OrderItem? item in boCart.Items!)
             {
-                if (item.Amount < 0)
+                if (item?.Amount < 0)
                     throw new BO.NotValidException("amount");
                 DO.Product doProduct;
                 try
                 {
-                    doProduct = idal.Product.Get(item.ProductId);
+                    doProduct = idal.Product.Get(item?.ProductId??0);
                 }
                 catch(DO.NotExistException ex)
                 {
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
-                if (doProduct.InStock - item.Amount < 0)
-                    throw new BO.NotInStockException(doProduct.ID,doProduct.Name);
+                if (doProduct.InStock - item?.Amount < 0)
+                    throw new BO.NotInStockException(doProduct.ID,doProduct.Name!);
             }
             DO.Order doOrder=new DO.Order() { CustomerAdress=boCart.CustomerAdress, CustomerName=boCart.CustomerName,CustomerEmail=boCart.CustomerEmail,ShipDate=DateTime.MinValue,DeliveryDate=DateTime.MinValue,OrderDate=DateTime.Now };
             int id;
@@ -134,18 +124,18 @@ namespace BlImplementation
             }
             DO.OrderItem doOrderItem;
             //The loop creates a cart datatype of type do and adds it
-            foreach (var boItem in boCart.Items)
+            foreach (BO.OrderItem? boItem in boCart.Items)
             {
                 DO.Product doProduct;
                 try
                 {
-                    doProduct = idal.Product.Get(boItem.ProductId);
+                    doProduct = idal.Product.Get(boItem?.ProductId??0);
                 }
                 catch (DO.NotExistException ex)
                 {
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
-                doProduct.InStock -= boItem.Amount;
+                doProduct.InStock -= boItem?.Amount??0;
                 try
                 {
                     idal.Product.Update(doProduct);
@@ -154,7 +144,7 @@ namespace BlImplementation
                 {
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
-                doOrderItem = new DO.OrderItem() { Amount = boItem.Amount, ProductId = boItem.ProductId, OrderId = id, Price = boItem.TotalPrice };
+                doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = boItem.TotalPrice };
                 try
                 {
                     idal.OrderItem.Add(doOrderItem);

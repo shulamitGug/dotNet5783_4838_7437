@@ -28,6 +28,7 @@ namespace PL
             products = bl.Product.GetProductForList();
             ProductListview.ItemsSource = products;
             CategoriesSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            
         }
 
         private void CategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -39,8 +40,22 @@ namespace PL
 
         private void AddProductBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddUpdateProduct(bl,"add").Show();
+            new AddUpdateProduct(bl).ShowDialog();
+            products = bl.Product.GetProductForList();
+            ProductListview.ItemsSource = products;
+        }
 
+        private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int id=((BO.ProductForList)((System.Windows.Controls.ListView)sender).SelectedItem).ID;
+            new AddUpdateProduct(bl, id).ShowDialog();
+            products = bl.Product.GetProductForList();
+            ProductListview.ItemsSource = products;
         }
     }
 }

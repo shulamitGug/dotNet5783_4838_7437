@@ -72,8 +72,8 @@ internal class DalOrder:IOrder
     }
     public Order GetByCondition(Func<Order?, bool>? check)
     {
-        return DataSource.OrdersList.Find(x => check(x)) ??
+        return DataSource.OrdersList.Find(x => check!(x)) ??
         throw new DO.NotExistException(1,"order");
     }
-
+    
 }

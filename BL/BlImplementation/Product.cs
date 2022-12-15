@@ -20,13 +20,11 @@ namespace BlImplementation
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
                 foreach (DO.Product? item in idal.Product.GetAll())
-
                 {
-                    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category)item?.CategoryP, ID = item?.ID??0 };
+                    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID??0 };
                     products.Add(pr);
                 }
             return products;
-
         }
         /// <summary>
         /// this function return all the detail of this product id
@@ -44,7 +42,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist",ex);
             }
-            BO.Product boProduct=new BO.Product() { Name = doProduct.Name, Price = doProduct.Price, ID = doProduct.ID, CategoryP = (BO.Category)doProduct.CategoryP, InStock = doProduct.InStock  };
+            BO.Product boProduct=new BO.Product() { Name = doProduct.Name, Price = doProduct.Price, ID = doProduct.ID, CategoryP = (BO.Category?)doProduct.CategoryP, InStock = doProduct.InStock  };
             return boProduct;
         }
         /// <summary>
@@ -66,7 +64,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("the amount can not be nagative");
             if (boProduct.Name == "")
                 throw new BO.NotEnoughDetailsException("name");
-            DO.Product doProduct=new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category)boProduct.CategoryP };
+            DO.Product doProduct=new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
             int id;
             try
             {
@@ -88,12 +86,12 @@ namespace BlImplementation
            IEnumerable<DO.OrderItem?> orderItemList;
             IEnumerable<DO.Order?> orderList = idal.Order.GetAll();
             //check if the product exsist in order
-            foreach (DO.Order order in orderList)
+            foreach (DO.Order? order in orderList)
             {
-                orderItemList = idal.OrderItem.GetOrderItemByOrder(order.ID);
-                foreach (DO.OrderItem item in orderItemList)
-                    if (item.ID == id)
-                        throw new BO.AlreadyExistBlException("the product is exist in order cannot delete");
+                orderItemList = idal.OrderItem.GetAll(x => x?.OrderId == order?.ID);
+                foreach (DO.OrderItem? item in orderItemList)
+                    if (item?.ProductId == id)
+                        throw new BO.AlreadyExistBlException("the product is exist in orders so it cannot delete");
             }
             try
             {
@@ -119,7 +117,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("the amount can not be nagative");
             if (boProduct.Name == "")
                 throw new BO.NotEnoughDetailsException("the name can not be empty");
-            DO.Product doProduct = new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category)boProduct.CategoryP };
+            DO.Product doProduct = new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
             idal.Product.Update(doProduct);
         }
         /// <summary>
@@ -131,10 +129,10 @@ namespace BlImplementation
            IEnumerable<DO.Product?> doProduct = idal.Product.GetAll();
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
-            foreach (DO.Product item in doProduct)
+            foreach (DO.Product? item in doProduct)
             {
-                BO.ProductItem boProd=new BO.ProductItem() { Id = item.ID , Name = item.Name, Price = item.Price, Amount = item.InStock,Category=(BO.Category)item.CategoryP};
-                if(item.InStock > 0)
+                BO.ProductItem boProd=new BO.ProductItem() { Id = item?.ID??0 , Name = item?.Name, Price = item?.Price??0, Amount = item?.InStock??0,Category=(BO.Category?)item?.CategoryP};
+                if(item?.InStock > 0)
                 {
                     boProd.InStock = true;
                 }
@@ -160,7 +158,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist", ex);
             }
-            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Name = doProduct.Name, Price = doProduct.Price, Amount = doProduct.InStock,Category=(BO.Category)doProduct.CategoryP };
+            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Name = doProduct.Name, Price = doProduct.Price, Amount = doProduct.InStock,Category=(BO.Category?)doProduct.CategoryP };
             if (doProduct.InStock > 0)
             {
                 boProduct.InStock = true;
@@ -176,7 +174,7 @@ namespace BlImplementation
             //the loop go at all products
             foreach (DO.Product? item in prod)
             {
-                BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category)item?.CategoryP, ID = item?.ID ?? 0 };
+                BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
                 products.Add(pr);
             }
             return products;

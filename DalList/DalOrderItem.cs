@@ -1,5 +1,4 @@
-﻿
-using DO;
+﻿using DO;
 namespace Dal;
 using DalApi;
 /// <summary>
@@ -14,8 +13,6 @@ internal class DalOrderItem:IOrderItem
     /// <returns>itemOrder.ID</returns>
     public int Add(OrderItem itemOrder)
     {
-
-        int count = 0;
         double price = DataSource.ProductsList.FirstOrDefault(x=>x?.ID== itemOrder.ProductId)?.Price??throw new DO.NotExistException(itemOrder.ProductId,"product");
         itemOrder.Price = price;
             itemOrder.ID = DataSource.Config.GetNextOrderItemNumber();
@@ -81,13 +78,8 @@ internal class DalOrderItem:IOrderItem
     /// <returns> item on order</returns>
     public OrderItem GetOrderItemByTwoValues(int product_id,int order_id)
     {
-    //Go over the item pool
-    foreach (OrderItem or in DataSource.OrderItemList)
-    {
-            if (or.OrderId == order_id&& or.ProductId ==product_id)
-                return or;
-    }
-
+        //Go over the item pool
+       return DataSource.OrderItemList.FirstOrDefault(or=> or?.OrderId == order_id && or?.ProductId == product_id)??
         throw new NotExistException(product_id,$"product in order number {order_id}");
     }
 
@@ -96,21 +88,9 @@ internal class DalOrderItem:IOrderItem
     /// </summary>
     /// <param name = "order_id" > id of order</param>
     /// <returns> all the items on this order</returns>
-    public IEnumerable<OrderItem?> GetOrderItemByOrder(int order_id)
-    {
-        List<OrderItem?> newList = new List<OrderItem?>();
-        //During the loop, all the items in the received order are filled
-        foreach (OrderItem or in DataSource.OrderItemList)
-        {
-            if (or.OrderId == order_id)
-                newList.Add(or);
-        }
-
-        return newList;
-    }
     public OrderItem GetByCondition(Func<OrderItem?, bool>? check)
     {
-        return DataSource.OrderItemList.Find(x => check(x)) ??
+        return DataSource.OrderItemList.Find(x => check!(x)) ??
         throw new DO.NotExistException(1, "OrderItem");
     }
 }
