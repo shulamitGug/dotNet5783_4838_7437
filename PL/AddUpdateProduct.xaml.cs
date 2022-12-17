@@ -15,28 +15,32 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for AddUpdareProduct.xaml
+    /// Interaction logic for AddUpdateProduct.xaml
     /// </summary>
     public partial class AddUpdateProduct : Window
     {
         private string state;
         private BlApi.IBl bl = new BlImplementation.Bl();
         private int productId;
-        public AddUpdateProduct(BlApi.IBl _bl)
+        public AddUpdateProduct()
         {
             InitializeComponent();
             deleteProdBtn.Visibility = Visibility.Hidden;
-            bl = _bl;
             state = "add";
             OkayBtn.Content = state;
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
-        public AddUpdateProduct(BlApi.IBl _bl, int id)
+        /// <summary>
+        /// An operation that receives a product id and updates its details
+        /// </summary>
+        /// <param name="_bl"> bl param from type BlApi.IBl</param>
+        /// <param name="id"> Product id</param>
+        public AddUpdateProduct( int id)
         {
             InitializeComponent();
+            idProd_txt.IsEnabled = false;
             productId = id;
             deleteProdBtn.Visibility = Visibility.Visible;
-            bl = _bl;
             state = "update";
             OkayBtn.Content = state;
             BO.ProductItem product = bl.Product.GetProductItemById(id);
@@ -47,7 +51,11 @@ namespace PL
             PriceProd_txt.Text = product.Price.ToString();
             CategoryProd_selector.SelectedItem=product.Category;
         }
-
+        /// <summary>
+        /// Action that happens while clicking the confirmation button and updates or adds the product respectively
+        /// </summary>
+        /// <param name="sender">sender runtime variable</param>
+        /// <param name="e">A variable of the type of event that happens</param>
         private void OkayBtn_Click(object sender, RoutedEventArgs e)
         {
             if (idProd_txt.Text == "" || InStockProd_txt.Text == "" || NameProd_txt.Text == "" || PriceProd_txt.Text == "" )
@@ -77,7 +85,11 @@ namespace PL
                 
             }
         }
-
+        /// <summary>
+        /// Action that happens while clicking the delete button and deletes the requested product
+        /// </summary>
+        /// <param name="sender">sender runtime variable</param>
+        /// <param name="e">A variable of the type of event that happens</param>
         private void deleteProdBtn_Click(object sender, RoutedEventArgs e)
         {
             try

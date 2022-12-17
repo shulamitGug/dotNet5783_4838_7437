@@ -22,14 +22,17 @@ namespace BlImplementation
             {
                doProduct = idal.Product.Get(id);
             }
+
             catch(Exception ex)
             {
                 throw new BO.NotExistBlException("product does not exist",ex);
             }
+
             if (boCart.Items == null)
                 throw new Exception("cart is empty");
             //if this product exist in the cart -add one to the amount 
-            BO.OrderItem? ord= boCart.Items!.FirstOrDefault(x=>x?.ProductId==id);
+            BO.OrderItem? ord= boCart.Items.FirstOrDefault(x=>x?.ProductId==id);
+            
             if (ord != null)
             {
                 ord.Amount += 1;
@@ -39,7 +42,6 @@ namespace BlImplementation
             else
             {
                 BO.OrderItem item = new BO.OrderItem() { ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
-                //item.orderItemId=
                 boCart.Items.Add(item);
             }
             
@@ -53,35 +55,36 @@ namespace BlImplementation
         /// <param name="id">product id</param>
         /// <param name="amount"></param>
         /// <exception cref="Exception">if the produnt does not exist in cart</exception>
-        public void UpdateAmountOfProduct(BO.Cart boCart, int id,int amount)
+        public void UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
         {
-            int itemAmount=0;
+            int itemAmount = 0;
             DO.Product doProduct;
             try
             {
-                 doProduct = idal.Product.Get(id);
+                doProduct = idal.Product.Get(id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new BO.NotExistBlException("product does not exist", ex);
             }
             //search the product in cart
             if (boCart.Items == null)
                 throw new Exception("the cart is empty");
-            BO.OrderItem? o = boCart.Items!.FirstOrDefault(x => x?.ProductId == id);
-            if (o == null)
+
+            BO.OrderItem? orderItem = boCart.Items.FirstOrDefault(x => x?.ProductId == id);
+
+            if (orderItem == null)
                 throw new BO.NotExistBlException($"the product number {id} doesnot exist in this cart");
-            itemAmount = o.Amount;
+            itemAmount = orderItem.Amount;
+
             if (amount > itemAmount)//check if there is enough in the stock
                 if (amount - itemAmount > doProduct.InStock)
-                    throw new BO.NotInStockException(id,doProduct.Name??"");
+                    throw new BO.NotInStockException(id, doProduct.Name ?? "");
             //update
 
-                   o.Amount = amount;
-                
+            orderItem.Amount = amount;
         }
 
-    
         /// <summary>
         /// An action that checks the details of the cart and confirms it
         /// </summary>
@@ -89,9 +92,9 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public void OrderConfirmation(BO.Cart boCart)
         {
-            if (boCart.CustomerAdress == "") 
+            if (boCart.CustomerAdress == "")
                 throw new BO.NotEnoughDetailsException("customerAsress");
-            if(boCart.CustomerEmail=="")
+            if (boCart.CustomerEmail == "")
                 throw new BO.NotEnoughDetailsException("customerEmail");
             if (boCart.CustomerName == "")
                 throw new BO.NotEnoughDetailsException("customerName");
@@ -103,39 +106,40 @@ namespace BlImplementation
                 DO.Product doProduct;
                 try
                 {
-                    doProduct = idal.Product.Get(item?.ProductId??0);
-                }
-                catch(DO.NotExistException ex)
-                {
-                    throw new BO.NotExistBlException("product does not exist-", ex);
-                }
-                if (doProduct.InStock - item?.Amount < 0)
-                    throw new BO.NotInStockException(doProduct.ID,doProduct.Name!);
-            }
-            DO.Order doOrder=new DO.Order() { CustomerAdress=boCart.CustomerAdress, CustomerName=boCart.CustomerName,CustomerEmail=boCart.CustomerEmail,ShipDate=DateTime.MinValue,DeliveryDate=DateTime.MinValue,OrderDate=DateTime.Now };
-            int id;
-            try
-            {
-                 id = idal.Order.Add(doOrder);
-            }
-            catch(DO.AlreadyExistException ex)
-            {
-                throw new BO.AlreadyExistBlException("order alredy exist cannot add- ", ex);
-            }
-            DO.OrderItem doOrderItem;
-            //The loop creates a cart datatype of type do and adds it
-            foreach (BO.OrderItem? boItem in boCart.Items)
-            {
-                DO.Product doProduct;
-                try
-                {
-                    doProduct = idal.Product.Get(boItem?.ProductId??0);
+                    doProduct = idal.Product.Get(item?.ProductId ?? 0);
                 }
                 catch (DO.NotExistException ex)
                 {
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
-                doProduct.InStock -= boItem?.Amount??0;
+                if (doProduct.InStock - item?.Amount < 0)
+                    throw new BO.NotInStockException(doProduct.ID, doProduct.Name!);
+            }
+            DO.Order doOrder = new DO.Order() { CustomerAdress = boCart.CustomerAdress, CustomerName = boCart.CustomerName, CustomerEmail = boCart.CustomerEmail, ShipDate = null, DeliveryDate = null, OrderDate = DateTime.Now };
+            int id;
+            try
+            {
+                id = idal.Order.Add(doOrder);
+            }
+            catch (DO.AlreadyExistException ex)
+            {
+                throw new BO.AlreadyExistBlException("order alredy exist cannot add- ", ex);
+            }
+            DO.OrderItem doOrderItem;
+            //The loop creates a cart datatype of type do and adds it
+
+            foreach (BO.OrderItem? boItem in boCart.Items)
+            {
+                DO.Product doProduct;
+                try
+                {
+                    doProduct = idal.Product.Get(boItem?.ProductId ?? 0);
+                }
+                catch (DO.NotExistException ex)
+                {
+                    throw new BO.NotExistBlException("product does not exist-", ex);
+                }
+                doProduct.InStock -= boItem?.Amount ?? 0;
                 try
                 {
                     idal.Product.Update(doProduct);
@@ -145,14 +149,10 @@ namespace BlImplementation
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
                 doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = boItem.TotalPrice };
-                try
-                {
-                    idal.OrderItem.Add(doOrderItem);
-                }
-                catch(DO.AlreadyExistException ex)
-                {
-                    throw new BO.AlreadyExistBlException("orderItem is already exist", ex);
-                }
+
+
+                idal.OrderItem.Add(doOrderItem);
+
             }
         }
 

@@ -20,12 +20,19 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BlApi.IBl bl = new BlImplementation.Bl(); 
+        private BlApi.IBl bl = new BlImplementation.Bl();
+        /// <summary>
+        /// Constructor action for mainWindow
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// A function to display the products
+        /// </summary>
+        /// <param name="sender">sender runtime variable</param>
+        /// <param name="e">A variable of the type of event that happens</param>
         private void ShowProductsBtn_Click(object sender, RoutedEventArgs e)
         {
             new ProductListWindow(bl).Show();

@@ -19,8 +19,10 @@ namespace BlImplementation
         {
             if (order.DeliveryDate!=null)
                 return (BO.OrderStatus)3;
+            
             else if (order.ShipDate!=null)
                 return  (BO.OrderStatus)2;
+            
             else
                 return (BO.OrderStatus)1;
         }
@@ -45,11 +47,13 @@ namespace BlImplementation
                 {
                     throw new BO.NotExistBlException("orderItem is not exist-", ex);
                 }
+                
                 foreach (DO.OrderItem? item in orderItems)
                 {
                     price+=item?.Price*item?.Amount??0;
                     count+=item?.Amount??0;
                 }
+                
                 BO.OrderForList boOrder = new BO.OrderForList() { CustomerName=order?.CustomerName,ID=order?.ID??0,TotalPrice=price,AmountOfItems=count,Status= CheckStatus(order??throw new Exception("")) };
                 ordersForList.Add(boOrder);
             }
