@@ -29,6 +29,7 @@ namespace PL
             state = "add";
             OkayBtn.Content = state;
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            CategoryProd_selector.SelectedItem = (BO.Category)7;
         }
         /// <summary>
         /// An operation that receives a product id and updates its details
@@ -58,8 +59,8 @@ namespace PL
         /// <param name="e">A variable of the type of event that happens</param>
         private void OkayBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (idProd_txt.Text == "" || InStockProd_txt.Text == "" || NameProd_txt.Text == "" || PriceProd_txt.Text == "" )
-                MessageBox.Show("empty");
+            if (idProd_txt.Text == "" || InStockProd_txt.Text == "" || NameProd_txt.Text == "" || PriceProd_txt.Text == "")
+                MessageBox.Show("Not enough data has been entered");
             else
             {
                 try

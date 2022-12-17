@@ -35,7 +35,7 @@ namespace PL
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
         /// <summary>
-        /// 
+        /// Filter by category
         /// </summary>
         /// <param name="sender"> sender runtime variable</param>
         /// <param name="e">A variable of the type of event that happens </param>
