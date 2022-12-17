@@ -13,6 +13,7 @@ namespace BO
         public string? CustomerAdress { get; set; }
         public List<OrderItem?>? Items { get; set; }
         public double TotalPrice { get; set; }
+        
         public override string ToString()
         {
             return ToolStringClass.ToStringProperty(this);
