@@ -19,13 +19,13 @@ namespace PL
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private BlApi.IBl bl = new BlImplementation.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
         IEnumerable<BO.ProductForList?> products;
         /// <summary>
         /// A function that returns the list of products to display
         /// </summary>
         /// <param name="_bl"> bl param from type BlApi.IBl</param>
-        public ProductListWindow(BlApi.IBl _bl)
+        public ProductListWindow(BlApi.IBl? _bl)
         {
             InitializeComponent();
             bl = _bl;

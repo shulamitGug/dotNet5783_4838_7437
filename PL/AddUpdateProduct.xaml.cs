@@ -20,7 +20,8 @@ namespace PL
     public partial class AddUpdateProduct : Window
     {
         private string state;
-        private BlApi.IBl bl = new BlImplementation.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
         private int productId;
         public AddUpdateProduct()
         {

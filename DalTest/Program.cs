@@ -1,12 +1,10 @@
 ﻿using DO;
-using Dal;
-using DalApi;
 public class Program
 {
     /// <summary>
     /// A function for all the actions you want to do on orders
     /// </summary>
-    static IDal idal = new Dallist();
+    static DalApi.IDal? idal = DalApi.Factory.Get();
     public static void OrderFunction()
     {
         int num2;
@@ -99,7 +97,7 @@ public class Program
                             ShipDate = dtShip,
                             DeliveryDate = dtDelivery,
                         };
-                    idal.Order.Update(newO);                }
+                    idal?.Order.Update(newO);                }
                 break;
             
             case 5:
@@ -108,7 +106,7 @@ public class Program
                     int id;
                     Console.WriteLine("insert id");
                     id = int.Parse(Console.ReadLine()??throw new Exception("cannot be empty"));
-                    idal.Order.Delete(id);
+                    idal?.Order.Delete(id);
                 }
                 break;
         }
@@ -323,7 +321,7 @@ public class Program
                     //get by order id
                     Console.WriteLine("enter order id");
                     int ord = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    IEnumerable<OrderItem?> itemList = idal.OrderItem.GetOrderItemByOrder(ord);
+                    IEnumerable<OrderItem?> itemList = idal.OrderItem.GetAll(x=>x?.OrderId==ord);
                     foreach (var item in itemList)
                     {
                         Console.WriteLine(item);

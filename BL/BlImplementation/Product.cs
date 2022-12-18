@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
-using Dal;
 namespace BlImplementation
 {
     internal class Product:BlApi.IProduct
     {
-        IDal idal = new Dallist();
+        DalApi.IDal? idal = DalApi.Factory.Get();
+
         /// <summary>
         /// this function build products of bo and copy the details of do product and return list
         /// </summary>

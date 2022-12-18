@@ -1,6 +1,7 @@
 ﻿class program
 {
-    static BlApi.IBl ibl = new BlImplementation.Bl();
+    static BlApi.IBl? ibl = BlApi.Factory.Get();
+    
     ///all the function to order
     public static void OrderFunction()
     {

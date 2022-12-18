@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
-using Dal;
 namespace BlImplementation
 {
     internal class Order:BlApi.IOrder
     {
-        IDal idal = new Dallist();
+        DalApi.IDal? idal = DalApi.Factory.Get();
         /// <summary>
         /// Checking the status of the order
         /// </summary>

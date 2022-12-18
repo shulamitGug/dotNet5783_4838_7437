@@ -57,4 +57,10 @@ namespace DO
         public override string ToString() =>
             $"{name} number {id} Already exist";
     }
+    [Serializable]
+    public class DalConfigException : Exception
+    {
+        public DalConfigException(string msg) : base(msg) { }
+        public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+    }
 }
