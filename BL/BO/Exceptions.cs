@@ -98,6 +98,24 @@ namespace BO
         public override string ToString() =>
             $"product number {id} name: {name} does not have enough in stock";
     }
+    public class EmptyInputBlException:Exception
+    {
+        string field;
+        public EmptyInputBlException(string _field)
+        {
+            field = _field;
+        }
+        public EmptyInputBlException(string _field,string massege):base(massege)
+        {
+            field = _field;
+        }
+        public EmptyInputBlException(string _field, string massege,Exception innerException) : base(massege, innerException)
+            {
+            field = _field;
+        }
+        public override string ToString() =>
+        $"No values have been entered in the field {field}";
+    }
 }
 
 

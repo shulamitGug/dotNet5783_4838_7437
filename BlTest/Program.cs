@@ -1,4 +1,5 @@
-﻿class program
+﻿using BO;
+class program
 {
     static BlApi.IBl? ibl = BlApi.Factory.Get();
     
@@ -7,13 +8,13 @@
     {
         int num;
         Console.WriteLine("enter 1 to get all orders, 2 to get order by id,3 to update Sending Date,4 to Update Provide Date,5 to get order status");
-        num=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num=int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("num"));
         switch(num)
         {
             case 1:
                 {
                     ///get all orders and print
-                    foreach (var item in ibl.Order.GetOrders())
+                    foreach (var item in ibl!.Order.GetOrders())
                     {
                         Console.WriteLine(item);
                     }
@@ -24,8 +25,8 @@
                     //get order by id and print the details
                     int id;
                     Console.WriteLine("enter id");
-                    id=int.Parse(Console.ReadLine()?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Order.GetOrderDetails(id));
+                    id=int.Parse(Console.ReadLine()?? throw new EmptyInputBlException("id"));
+                    Console.WriteLine(ibl!.Order.GetOrderDetails(id));
                     break;
                 }
             case 3:
@@ -33,8 +34,8 @@
                     //update the sending date and print the order after update
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Order.updateSendingDate(id));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    Console.WriteLine(ibl!.Order.updateSendingDate(id));
                     break;
                 }
             case 4:
@@ -42,8 +43,8 @@
                     //update the provide date and print the order after update
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Order.UpdateProvideDate(id));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    Console.WriteLine(ibl!.Order.UpdateProvideDate(id));
                     break;
                 }
             case 5:
@@ -51,8 +52,8 @@
                     //print the stauus of the order with id 
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Order.StatusOrder(id));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    Console.WriteLine(ibl!.Order.StatusOrder(id));
                     break;
                 }
         }
@@ -65,13 +66,13 @@
     {
         int num;
         Console.WriteLine("enter 1 to get all product,2 to get product by id,3 to delete product,4 to update,5 to get catalog,6 to get product item by id,7 to add product");
-        num = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("num"));
         switch (num)
         {
             case 1:
                 {
                     //get all products for list
-                    foreach (var item in ibl.Product.GetProductForList())
+                    foreach (var item in ibl!.Product.GetProductForList())
                     {
                         Console.WriteLine(item);
                     }
@@ -82,8 +83,8 @@
                     //get all the details of product with spesific id
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Product.GetProductById(id));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    Console.WriteLine(ibl!.Product.GetProductById(id));
                     break;
                 }
             case 3:
@@ -91,8 +92,8 @@
                     //delete product
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    ibl.Product.Delete(id);
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    ibl!.Product.Delete(id);
                     break;
                 }
             case 4:
@@ -104,19 +105,19 @@
                     int _CategoryP;
                     int _InStock;
                     Console.WriteLine("enter id,price,name,and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories,inStock");
-                    _id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _price=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _name=Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    _CategoryP = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _InStock =int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    _id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_id"));
+                    _price=int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_price"));
+                    _name=Console.ReadLine() ?? throw new EmptyInputBlException("_name");
+                    _CategoryP = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_CategoryP"));
+                    _InStock =int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_InStock"));
                     BO.Product boProduct = new BO.Product() { ID = _id, Price = _price, Name = _name, CategoryP = (BO.Category)_CategoryP, InStock = _InStock };
-                    ibl.Product.Update(boProduct);
+                    ibl!.Product.Update(boProduct);
                     break;
                 }
             case 5:
                 {
                     //get catalog of product
-                    foreach (var item in ibl.Product.GetCatalog())
+                    foreach (var item in ibl!.Product.GetCatalog())
                     {
                         Console.WriteLine(item);
                     }
@@ -127,8 +128,8 @@
                     //get product item by id
                     int id;
                     Console.WriteLine("enter id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(ibl.Product.GetProductItemById(id));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_id"));
+                    Console.WriteLine(ibl!.Product.GetProductItemById(id));
                     break ;
                 }
             case 7:
@@ -140,13 +141,13 @@
                     int _CategoryP;
                     int _InStock;
                     Console.WriteLine("enter id,price,name,and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories,inStock");
-                    _id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _price = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _name = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    _CategoryP = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    _InStock = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    _id = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_id"));
+                    _price = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_price"));
+                    _name = Console.ReadLine() ?? throw new EmptyInputBlException("_name");
+                    _CategoryP = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_CategoryP"));
+                    _InStock = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("_InStock"));
                     BO.Product boProduct = new BO.Product() { ID = _id, Price = _price, Name = _name, CategoryP = (BO.Category)_CategoryP, InStock = _InStock };
-                    Console.WriteLine(ibl.Product.Add(boProduct));
+                    Console.WriteLine(ibl!.Product.Add(boProduct));
                     break;
                 }
         }
@@ -160,7 +161,7 @@
         //insert all the details of cart
         int num;
         Console.WriteLine("enter 1 to add product to cart,2 to update amount of product,3 to  confirmation Order");
-        num = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("num"));
         Console.WriteLine("insert customer name,email,adress");
         string? name = Console.ReadLine();
         string? email = Console.ReadLine();
@@ -172,17 +173,17 @@
                 {
                     //add product to cart
                     Console.WriteLine("insert product id");
-                    int id=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                        Console.WriteLine(ibl.Cart.AddProduct(boCart,id));
+                    int id=int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                        Console.WriteLine(ibl!.Cart.AddProduct(boCart,id));
                     break;
                 }
             case 2:
                 {
                     //update amount of product in cart
                     
-                    int id=int .Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int amount=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    ibl.Cart.UpdateAmountOfProduct(boCart,id,amount);
+                    int id=int .Parse(Console.ReadLine() ?? throw new EmptyInputBlException("id"));
+                    int amount=int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("amount"));
+                    ibl!.Cart.UpdateAmountOfProduct(boCart,id,amount);
                     break;
                 }
             case 3:
@@ -190,7 +191,7 @@
                     //to confirmation Order
                     Console.WriteLine("insert customer name,email,adress");
                     
-                    ibl.Cart.OrderConfirmation(boCart);
+                    ibl!.Cart.OrderConfirmation(boCart);
                     break;
                 }
         }
@@ -199,7 +200,7 @@
     {   
         int num;
         Console.WriteLine("insert 1 to product,2 to order and 3 to Cart and 0 to stop");
-        num = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num = int.Parse(Console.ReadLine() ?? throw new EmptyInputBlException("num"));
         try
         {
             while (num != 0)
@@ -211,7 +212,7 @@
                 else if (num == 3)//cart
                     CartFunction();
                 Console.WriteLine("insert 1 to product,2 to order and 3 to Cart and 0 to stop");
-                num = int.Parse(Console.ReadLine()??throw new Exception("cannot be empty"));
+                num = int.Parse(Console.ReadLine()??throw new EmptyInputBlException("num"));
             }
         }
         catch (Exception ex)

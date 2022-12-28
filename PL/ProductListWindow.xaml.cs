@@ -29,7 +29,7 @@ namespace PL
         {
             InitializeComponent();
             bl = _bl;
-            products = bl.Product.GetProductForList();
+            products = bl!.Product.GetProductForList();
             ProductListview.ItemsSource = products;
             CategoriesSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoriesSelector.SelectedItem = (BO.Category)7;
@@ -44,9 +44,9 @@ namespace PL
         {
             BO.Category categories = (BO.Category)CategoriesSelector.SelectedItem;
             if(categories== (BO.Category)7)
-                products = bl.Product.GetProductForList();
+                products = bl!.Product.GetProductForList();
             else 
-            products = bl.Product.GetProductForListByCondition(x => x?.CategoryP== (DO.Category)categories);
+            products = bl!.Product.GetProductForListByCondition(x => x?.CategoryP== (DO.Category)categories);
             ProductListview.ItemsSource = products;
         }
         /// <summary>
@@ -57,7 +57,7 @@ namespace PL
         private void AddProductBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddUpdateProduct().ShowDialog();
-            products = bl.Product.GetProductForList();
+            products = bl!.Product.GetProductForList();
             ProductListview.ItemsSource = products;
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
@@ -70,7 +70,7 @@ namespace PL
         {
             int id = ((BO.ProductForList)((System.Windows.Controls.ListView)sender).SelectedItem).ID;
             new AddUpdateProduct(id).ShowDialog();
-            products = bl.Product.GetProductForList();
+            products = bl!.Product.GetProductForList();
             ProductListview.ItemsSource = products;
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }

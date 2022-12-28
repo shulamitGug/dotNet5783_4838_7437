@@ -33,14 +33,14 @@ namespace BlImplementation
         {
             double price = 0;
             int count = 0;
-            IEnumerable<DO.Order?> orders = idal.Order.GetAll();
+            IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
             IEnumerable<DO.OrderItem?> orderItems;
             List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
             foreach (DO.Order? order in orders)
             {
                 try
                 {
-                    orderItems = idal.OrderItem.GetAll(x => x?.OrderId == order?.ID);
+                    orderItems = idal!.OrderItem.GetAll(x => x?.OrderId == order?.ID);
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +72,7 @@ namespace BlImplementation
             DO.Order doOrder;
             try
             {
-                 doOrder = idal.Order.Get(id);
+                 doOrder = idal!.Order.Get(id);
             }
             catch(Exception ex)
             {
@@ -80,8 +80,8 @@ namespace BlImplementation
             }
             BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
             boOrder.Items=new List<BO.OrderItem?>();
-            IEnumerable<DO.Product?> productsList=idal.Product.GetAll();
-            IEnumerable<DO.OrderItem?> doItems = idal.OrderItem.GetAll(x => x?.OrderId ==id);
+            IEnumerable<DO.Product?> productsList=idal?.Product.GetAll()?? throw new Exception("there is no connect to data base");
+            IEnumerable<DO.OrderItem?> doItems = idal?.OrderItem.GetAll(x => x?.OrderId ==id)?? throw new Exception("there is no connect to data base");
             //A loop that goes through the order details and enters them into the bo data type
             foreach (DO.OrderItem? item in doItems)
             {
@@ -114,7 +114,7 @@ namespace BlImplementation
             DO.Order doOrder;
             try
             {
-                doOrder = idal.Order.Get(id);
+                doOrder = idal!.Order.Get(id);
             }
             catch (Exception ex)
             {
@@ -142,7 +142,7 @@ namespace BlImplementation
             DO.Order doOrder;
             try
             {
-                doOrder = idal.Order.Get(id);
+                doOrder = idal!.Order.Get(id);
             }
             catch(Exception ex)
             {
@@ -167,7 +167,7 @@ namespace BlImplementation
             DO.Order doOrder;
             try
             {
-                doOrder = idal.Order.Get(id);
+                doOrder = idal!.Order.Get(id);
             }
             catch (Exception ex)
             {

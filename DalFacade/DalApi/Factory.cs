@@ -2,7 +2,7 @@
 using System.Reflection;
 using static DalApi.DalConfig;
 using DO;
-public static class Factory
+public static class Factory 
 {
     public static IDal? Get()
     {
@@ -10,7 +10,9 @@ public static class Factory
             ?? throw new DalConfigException($"DAL name is not extracted from the configuration");
         string dal = s_dalPackages[dalType]
            ?? throw new DalConfigException($"Package for {dalType} is not found in packages list");
-
+        string nameSpaceDal = s_dalNameSpaces[dalType]
+          ?? throw new DalConfigException($"namespace for {dalType} is not found ");
+       
         try
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
@@ -20,7 +22,7 @@ public static class Factory
             throw new DalConfigException("Failed to load {dal}.dll package");
         }
 
-        Type? type = Type.GetType($"Dal.{dal}, {dal}")
+        Type? type = Type.GetType($"{nameSpaceDal}.{dal}, {dal}")
             ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
 
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?

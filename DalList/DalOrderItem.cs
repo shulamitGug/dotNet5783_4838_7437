@@ -13,8 +13,7 @@ internal class DalOrderItem:IOrderItem
     /// <returns>itemOrder.ID</returns>
     public int Add(OrderItem itemOrder)
     {
-        double price = DataSource.ProductsList.FirstOrDefault(x=>x?.ID== itemOrder.ProductId)?.Price??throw new DO.NotExistException(itemOrder.ProductId,"product");
-        itemOrder.Price = price;
+        itemOrder.Price = itemOrder.Price;
             itemOrder.ID = DataSource.Config.GetNextOrderItemNumber();
             DataSource.OrderItemList.Add(itemOrder);
             return itemOrder.ID;

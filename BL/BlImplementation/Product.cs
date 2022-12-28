@@ -8,7 +8,7 @@ namespace BlImplementation
 {
     internal class Product:BlApi.IProduct
     {
-        DalApi.IDal? idal = DalApi.Factory.Get();
+        DalApi.IDal? idal = DalApi.Factory.Get()!;
 
         /// <summary>
         /// this function build products of bo and copy the details of do product and return list
@@ -19,7 +19,7 @@ namespace BlImplementation
             //new list
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
-                foreach (DO.Product? item in idal.Product.GetAll())
+                foreach (DO.Product? item in idal!.Product.GetAll())
                 {
                     BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID??0 };
                     products.Add(pr);
@@ -36,7 +36,7 @@ namespace BlImplementation
             DO.Product doProduct;
             try
             {
-                 doProduct = idal.Product.Get(id);
+                 doProduct = idal!.Product.Get(id);
             }
             catch(DO.NotExistException ex)
             {
@@ -68,7 +68,7 @@ namespace BlImplementation
             int id;
             try
             {
-                 id = idal.Product.Add(doProduct);
+                 id = idal!.Product.Add(doProduct);
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace BlImplementation
         public void Delete(int id)
         {
            IEnumerable<DO.OrderItem?> orderItemList;
-            IEnumerable<DO.Order?> orderList = idal.Order.GetAll();
+            IEnumerable<DO.Order?> orderList = idal!.Order.GetAll();
             //check if the product exsist in order
             foreach (DO.Order? order in orderList)
             {
@@ -118,7 +118,7 @@ namespace BlImplementation
             if (boProduct.Name == "")
                 throw new BO.NotEnoughDetailsException("the name can not be empty");
             DO.Product doProduct = new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
-            idal.Product.Update(doProduct);
+            idal?.Product.Update(doProduct);
         }
         /// <summary>
         /// get calaog to patient
@@ -126,7 +126,7 @@ namespace BlImplementation
         /// <returns>list of product to customer</returns>
         public IEnumerable<BO.ProductItem?> GetCatalog()
         {
-           IEnumerable<DO.Product?> doProduct = idal.Product.GetAll();
+           IEnumerable<DO.Product?> doProduct = idal!.Product.GetAll();
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
             foreach (DO.Product? item in doProduct)
@@ -152,7 +152,7 @@ namespace BlImplementation
             DO.Product doProduct;
             try
             {
-                doProduct = idal.Product.Get(id);
+                doProduct = idal!.Product.Get(id) ;
             }
             catch (DO.NotExistException ex)
             {
@@ -169,7 +169,7 @@ namespace BlImplementation
         }
         public IEnumerable<BO.ProductForList?> GetProductForListByCondition(Func<DO.Product?,bool>? check)
         {
-           IEnumerable<DO.Product?> prod= idal.Product.GetAll(check);
+           IEnumerable<DO.Product?> prod= idal!.Product.GetAll(check);
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
             foreach (DO.Product? item in prod)

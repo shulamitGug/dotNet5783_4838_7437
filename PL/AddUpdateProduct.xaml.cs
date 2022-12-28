@@ -43,9 +43,9 @@ namespace PL
             idProd_txt.IsEnabled = false;
             productId = id;
             deleteProdBtn.Visibility = Visibility.Visible;
-            state = "update";
+            state ="update";
             OkayBtn.Content = state;
-            BO.ProductItem product = bl.Product.GetProductItemById(id);
+            BO.ProductItem product = bl!.Product.GetProductItemById(id);
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             idProd_txt.Text = product.Id.ToString();
             InStockProd_txt.Text = product.Amount.ToString();
@@ -70,12 +70,12 @@ namespace PL
 
                     if (state == "add")
                     {
-                        bl.Product.Add(newProduct);
+                        bl!.Product.Add(newProduct);
                         MessageBox.Show("the product added");
                     }
                     else
                     {
-                        bl.Product.Update(newProduct);
+                        bl!.Product.Update(newProduct);
                         MessageBox.Show("the product updated");
                     }
                     this.Close();
@@ -96,7 +96,7 @@ namespace PL
         {
             try
             {
-                bl.Product.Delete(productId);
+                bl!.Product.Delete(productId);
                 MessageBox.Show($"the product with {productId} id deleted");
                 this.Close();
             }

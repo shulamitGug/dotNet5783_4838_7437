@@ -20,7 +20,7 @@ namespace BlImplementation
             DO.Product doProduct;
             try
             {
-               doProduct = idal.Product.Get(id);
+               doProduct = idal!.Product.Get(id);
             }
 
             catch(Exception ex)
@@ -61,7 +61,7 @@ namespace BlImplementation
             DO.Product doProduct;
             try
             {
-                doProduct = idal.Product.Get(id);
+                doProduct = idal!.Product.Get(id);
             }
             catch (Exception ex)
             {
@@ -106,7 +106,7 @@ namespace BlImplementation
                 DO.Product doProduct;
                 try
                 {
-                    doProduct = idal.Product.Get(item?.ProductId ?? 0);
+                    doProduct = idal!.Product.Get(item!.ProductId);
                 }
                 catch (DO.NotExistException ex)
                 {
@@ -119,7 +119,7 @@ namespace BlImplementation
             int id;
             try
             {
-                id = idal.Order.Add(doOrder);
+                id = idal!.Order.Add(doOrder);
             }
             catch (DO.AlreadyExistException ex)
             {
@@ -133,7 +133,7 @@ namespace BlImplementation
                 DO.Product doProduct;
                 try
                 {
-                    doProduct = idal.Product.Get(boItem?.ProductId ?? 0);
+                    doProduct = idal!.Product.Get(boItem?.ProductId ?? 0);
                 }
                 catch (DO.NotExistException ex)
                 {
@@ -142,7 +142,7 @@ namespace BlImplementation
                 doProduct.InStock -= boItem?.Amount ?? 0;
                 try
                 {
-                    idal.Product.Update(doProduct);
+                    idal!.Product.Update(doProduct);
                 }
                 catch (DO.NotExistException ex)
                 {

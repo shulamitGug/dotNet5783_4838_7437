@@ -63,4 +63,22 @@ namespace DO
         public DalConfigException(string msg) : base(msg) { }
         public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
     }
+    public class EmptyInputException : Exception
+    {
+        string field;
+        public EmptyInputException(string _field)
+        {
+            field = _field;
+        }
+        public EmptyInputException(string _field, string massege) : base(massege)
+        {
+            field = _field;
+        }
+        public EmptyInputException(string _field, string massege, Exception innerException) : base(massege, innerException)
+        {
+            field = _field;
+        }
+        public override string ToString() =>
+        $"No values have been entered in the field {field}";
+    }
 }

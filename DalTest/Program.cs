@@ -9,7 +9,7 @@ public class Program
     {
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add order,2 to get order by id,3 to get all orders,4 to delete order and 5 to update order");
-        num2 = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num2 = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("number for choose"));
        
         //Checking the number and sending it to the appropriate action
         switch (num2)
@@ -21,12 +21,12 @@ public class Program
                 {
                     //data reception
                     Console.WriteLine("insert customer name,adress,email,order date,ship date,delivery date");
-                    string name = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string adress = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string email = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string ordDate = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string shipDate = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string deliveryDate = Console.ReadLine() ?? throw new Exception("cannot be empty");
+                    string name = Console.ReadLine() ?? throw new EmptyInputException("name");
+                    string adress = Console.ReadLine() ?? throw new EmptyInputException("adress");
+                    string email = Console.ReadLine() ?? throw new EmptyInputException("email");
+                    string ordDate = Console.ReadLine() ?? throw new EmptyInputException("order date");
+                    string shipDate = Console.ReadLine() ?? throw new EmptyInputException("ship date");
+                    string deliveryDate = Console.ReadLine() ?? throw new EmptyInputException("delivery date");
                     DateTime.TryParse(ordDate, out DateTime dtOrder);
                     DateTime.TryParse(shipDate, out DateTime dtShip);
                     DateTime.TryParse(deliveryDate, out DateTime dtDelivery);
@@ -40,7 +40,7 @@ public class Program
                             ShipDate = dtShip,
                             DeliveryDate = dtDelivery,
                         };
-                        Console.WriteLine(idal.Order.Add(o));
+                        Console.WriteLine(idal?.Order.Add(o));
                 }
                 break;
             
@@ -49,9 +49,9 @@ public class Program
                     //get by id and print
                     int id;
                     Console.WriteLine("insert id");
-                    id=int.Parse(Console.ReadLine()??throw new Exception("cannot be empty"));
+                    id=int.Parse(Console.ReadLine()??throw new EmptyInputException("id"));
                     Order o = new Order();
-                    o = idal.Order.Get(id);
+                    o = idal!.Order.Get(id);
                     Console.WriteLine(o);
                 }
                 break;
@@ -59,7 +59,7 @@ public class Program
             case 3:
                 {
                     //get all and print
-                    IEnumerable<Order?> orders = idal.Order.GetAll();
+                    IEnumerable<Order?> orders = idal!.Order.GetAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -73,17 +73,17 @@ public class Program
                     //update
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
                     Order o = new Order();
-                    o = idal.Order.Get(id);
+                    o = idal!.Order.Get(id);
                     Console.WriteLine(o);
                     Console.WriteLine("insert customer name,adress,email,orderDate,shipDate,deliverydate");
-                    string name = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string adress = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string email = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string ordDate= Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string shipDate= Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    string deliveryDate= Console.ReadLine() ?? throw new Exception("cannot be empty");
+                    string name = Console.ReadLine() ?? throw new EmptyInputException("name");
+                    string adress = Console.ReadLine() ?? throw new EmptyInputException("adress");
+                    string email = Console.ReadLine() ?? throw new EmptyInputException("email");
+                    string ordDate= Console.ReadLine() ?? throw new EmptyInputException("order date");
+                    string shipDate= Console.ReadLine() ?? throw new EmptyInputException("ship date");
+                    string deliveryDate= Console.ReadLine() ?? throw new EmptyInputException("delivery date");
                     DateTime.TryParse(ordDate, out DateTime dtOrder);
                     DateTime.TryParse(shipDate, out DateTime dtShip);
                     DateTime.TryParse(deliveryDate, out DateTime dtDelivery);
@@ -105,7 +105,7 @@ public class Program
                     //delete order
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine()??throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine()??throw new EmptyInputException("id"));
                     idal?.Order.Delete(id);
                 }
                 break;
@@ -118,7 +118,7 @@ public class Program
     {
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add product,2 to get product by id,3 to get all product,4 to delete product and 5 to update product");
-        num2 = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num2 = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("choose number"));
         //Checking the number and sending it to the appropriate action
 
         switch (num2)
@@ -130,11 +130,11 @@ public class Program
                 {
                     Console.WriteLine("insert product id, product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
                     //data reception
-                    int id=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));  
-                    string name = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    int price=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int inStock=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int category=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    int id=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("cannot be empty"));  
+                    string name = Console.ReadLine() ?? throw new EmptyInputException("name");
+                    int price=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("price"));
+                    int inStock=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("instock"));
+                    int category=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("category"));
                     //Creating a new object with the absorbed donors
                     Product p = new Product()
                     {
@@ -144,7 +144,7 @@ public class Program
                         Price = price,
                         InStock =inStock,
                     };
-                    Console.WriteLine(idal.Product.Add(p));
+                    Console.WriteLine(idal!.Product.Add(p));
 
                 }
                 break;
@@ -154,9 +154,9 @@ public class Program
                     //get product by id and print
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
                     Product p = new Product();
-                    p = idal.Product.Get(id);
+                    p = idal!.Product.Get(id);
                     Console.WriteLine(p);
                 }
                 break;
@@ -164,7 +164,7 @@ public class Program
             case 3:
                 {
                     //get all products and print
-                    IEnumerable<Product?> products = idal.Product.GetAll();
+                    IEnumerable<Product?> products = idal!.Product.GetAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -178,15 +178,15 @@ public class Program
                     //update product
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
                     Product p = new Product();
-                    p = idal.Product.Get(id);
+                    p = idal!.Product.Get(id);
                     Console.WriteLine(p);
                     Console.WriteLine("insert product name,price,in stock and category 1- FacialMakeup, 2-EyeMakeup, 3-LipMakeup,4- makeUpBrushes, 5-cultivation, 6-accessories");
-                    string name = Console.ReadLine() ?? throw new Exception("cannot be empty");
-                    int price = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int inStock = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int category=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    string name = Console.ReadLine() ?? throw new EmptyInputException("name");
+                    int price = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("price"));
+                    int inStock = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("instock"));
+                    int category=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("category"));
                         //Creating a new object with the absorbed donors
                         Product newp = new Product()
                         {
@@ -205,8 +205,8 @@ public class Program
                     //delete product
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    idal.Product.Delete(id);
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
+                    idal!.Product.Delete(id);
                 }
                 break;
         }
@@ -218,7 +218,7 @@ public class Program
     {
         int num2;
         Console.WriteLine("insert number 0 to exit,1 to add orderItem,2 to get orderItem by id,3 to get all orderItem,4 to delete orderItem and 5 to update orderItem,6 to get orderItem by order id and product id and 7 to get all the items in order by order id");
-        num2 = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num2 = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("choose number"));
         //Checking the number and sending it to the appropriate action
         switch (num2)
         {
@@ -229,9 +229,9 @@ public class Program
                 {
                     Console.WriteLine("inser amount, productId,orderId");
                     //data reception
-                    int amount = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int product_id=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int order_id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    int amount = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("amount"));
+                    int product_id=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("product id"));
+                    int order_id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("order id"));
                     //Creating a new object with the absorbed donors
                     OrderItem oi = new OrderItem()
                     {
@@ -240,7 +240,7 @@ public class Program
                         OrderId = order_id,
                         
                     };
-                    Console.WriteLine(idal.OrderItem.Add(oi));
+                    Console.WriteLine(idal!.OrderItem.Add(oi));
 
                 }
                 break;
@@ -250,9 +250,9 @@ public class Program
                     //get item in order by id and print
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
                     OrderItem oi = new OrderItem();
-                    oi= idal.OrderItem.Get(id);
+                    oi= idal!.OrderItem.Get(id);
                     Console.WriteLine(oi);
                 }
                 break;
@@ -260,7 +260,7 @@ public class Program
             case 3:
                 {
                     //get all items in orders and print
-                   IEnumerable<OrderItem?> ordersItem = idal.OrderItem.GetAll();
+                   IEnumerable<OrderItem?> ordersItem = idal!.OrderItem.GetAll();
                    foreach(var item in ordersItem)       
                     {
                         Console.WriteLine(item);
@@ -274,14 +274,14 @@ public class Program
                     //update
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
                     OrderItem oi = new OrderItem();
-                    oi = idal.OrderItem.Get(id);
+                    oi = idal!.OrderItem.Get(id);
                     Console.WriteLine(oi);
                     Console.WriteLine("insert product id,order id and amount");
-                    int prod_id=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int ord_id=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int amount = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                    int prod_id=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("product id"));
+                    int ord_id=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("order id"));
+                    int amount = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("amount"));
                     double price = idal.Product.Get(prod_id).Price;
                     //Creating a new object with the absorbed donors
                     OrderItem newoi = new OrderItem()
@@ -301,8 +301,8 @@ public class Program
                     //delete
                     int id;
                     Console.WriteLine("insert id");
-                    id = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    idal.OrderItem.Delete(id);
+                    id = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("id"));
+                    idal!.OrderItem.Delete(id);
                 }
                 break;
             
@@ -310,9 +310,9 @@ public class Program
                 {
                     //get by order id and product id
                     Console.WriteLine("enter product id,order id");
-                    int prod=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    int ord=int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    Console.WriteLine(idal.OrderItem.GetOrderItemByTwoValues(prod,ord));
+                    int prod=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("product id"));
+                    int ord=int.Parse(Console.ReadLine() ?? throw new EmptyInputException("order id"));
+                    Console.WriteLine(idal!.OrderItem.GetOrderItemByTwoValues(prod,ord));
                 }
                 break;
             
@@ -320,8 +320,8 @@ public class Program
                 {
                     //get by order id
                     Console.WriteLine("enter order id");
-                    int ord = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
-                    IEnumerable<OrderItem?> itemList = idal.OrderItem.GetAll(x=>x?.OrderId==ord);
+                    int ord = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("order id"));
+                    IEnumerable<OrderItem?> itemList = idal!.OrderItem.GetAll(x=>x?.OrderId==ord);
                     foreach (var item in itemList)
                     {
                         Console.WriteLine(item);
@@ -336,7 +336,7 @@ public class Program
         
         int num;
         Console.WriteLine("insert 1 to product,2 to order and 3 to orderItem and 0 to stop");
-        num = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+        num = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("choose number"));
         try
         {
             while (num != 0)
@@ -351,11 +351,15 @@ public class Program
                     OrderItemFunction();
                 
                 Console.WriteLine("insert 1 to product,2 to order and 3 to orderItem and 0 to stop");
-                num = int.Parse(Console.ReadLine() ?? throw new Exception("cannot be empty"));
+                num = int.Parse(Console.ReadLine() ?? throw new EmptyInputException("choose number"));
             }
         }
+        catch (EmptyInputException ex)
+        {
+            Console.WriteLine(ex);
+        }
         catch (Exception ex)
-        { Console.WriteLine(ex.Message); }
+        { Console.WriteLine(ex); }
 
         
     }
