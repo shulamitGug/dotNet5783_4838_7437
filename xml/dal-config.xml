@@ -3,6 +3,6 @@
 	<dal>list</dal>
 	<dal-packages>
 		<list namespace="Dal" class="Dallist">Dallist</list>
-		<xml namespace="Dal">DalXml</xml>
+		<xml namespace="Dal" class="DalXml">DalXml</xml>
 	</dal-packages>
 </config>	
