@@ -38,5 +38,10 @@ namespace PL
         {
             new ProductListWindow(bl).Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new OrderListWindow(bl).Show();
+        }
     }
 }

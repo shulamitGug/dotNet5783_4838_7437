@@ -31,13 +31,13 @@ namespace BlImplementation
         /// <returns>List of ordered orders</returns>
         public IEnumerable<BO.OrderForList?> GetOrders()
         {
-            double price = 0;
             int count = 0;
             IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
             IEnumerable<DO.OrderItem?> orderItems;
             List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
             foreach (DO.Order? order in orders)
             {
+                double price = 0;
                 try
                 {
                     orderItems = idal!.OrderItem.GetAll(x => x?.OrderId == order?.ID);
@@ -120,7 +120,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            if (doOrder.ShipDate!=null)
+            if (doOrder.ShipDate==null)
             {
                 doOrder.ShipDate=DateTime.Now;
                 idal.Order.Update(doOrder);

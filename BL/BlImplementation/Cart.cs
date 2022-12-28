@@ -149,8 +149,6 @@ namespace BlImplementation
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
                 doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = boItem.TotalPrice };
-
-
                 idal.OrderItem.Add(doOrderItem);
 
             }

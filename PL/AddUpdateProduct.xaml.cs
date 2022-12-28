@@ -67,16 +67,27 @@ namespace PL
                 try
                 {
                     BO.Product newProduct = new BO.Product() { ID = Convert.ToInt32(idProd_txt.Text), CategoryP = (BO.Category)CategoryProd_selector.SelectedItem, Price = Convert.ToInt32(PriceProd_txt.Text), InStock = Convert.ToInt32(InStockProd_txt.Text), Name = NameProd_txt.Text };
+                    try
+                    {
+                        if (state == "add")
+                        {
+                            bl!.Product.Add(newProduct);
+                            MessageBox.Show("the product added");
+                        }
 
-                    if (state == "add")
-                    {
-                        bl!.Product.Add(newProduct);
-                        MessageBox.Show("the product added");
+                        else
+                        {
+                            bl!.Product.Update(newProduct);
+                            MessageBox.Show("the product updated");
+                        }
                     }
-                    else
+                    catch (BO.AlreadyExistBlException ex)
                     {
-                        bl!.Product.Update(newProduct);
-                        MessageBox.Show("the product updated");
+                        MessageBox.Show("the product is already exist");
+                    }
+                    catch(BO.NotExistBlException ex)
+                    {
+                        MessageBox.Show("the product is not exist");
                     }
                     this.Close();
                 }
@@ -100,9 +111,9 @@ namespace PL
                 MessageBox.Show($"the product with {productId} id deleted");
                 this.Close();
             }
-            catch(Exception ex)
+            catch (BO.NotExistBlException ex)
             {
-                MessageBox.Show(ex+"");
+                MessageBox.Show("the product is not exist");
             }
         }
     }

@@ -59,10 +59,10 @@ internal static class DataSource
         {
                 TimeSpan ts = new TimeSpan(s_rand.Next(5));
                 TimeSpan ts1 = new TimeSpan(s_rand.Next(200));
-            DateTime d;
-            if (i % 3 == 0)
+            DateTime? d;
+            if (i % 2 == 0)
             {
-                 d = new DateTime();
+                 d = null;
             }
 
             else
