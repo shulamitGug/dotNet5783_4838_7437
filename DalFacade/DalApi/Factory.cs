@@ -12,7 +12,7 @@ public static class Factory
            ?? throw new DalConfigException($"Package for {dalType} is not found in packages list");
         string nameSpaceDal = s_dalNameSpaces[dalType]
           ?? throw new DalConfigException($"namespace for {dalType} is not found ");
-       
+        string classDal = s_dalClass[dalType];
         try
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
@@ -23,10 +23,10 @@ public static class Factory
         }
 
         Type? type = Type.GetType($"{nameSpaceDal}.{dal}, {dal}")
-            ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
+            ?? throw new DalConfigException($"{classDal}.{dal} was not found in {dal}.dll");
 
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
                    .GetValue(null) as IDal
-            ?? throw new DalConfigException($"Class {dal} is not singleton or Instance property not found");
+            ?? throw new DalConfigException($"{classDal} {dal} is not singleton or Instance property not found");
     }
 }

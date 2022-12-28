@@ -6,6 +6,8 @@ static class DalConfig
     internal static string? s_dalName;
     internal static Dictionary<string, string> s_dalPackages;
     internal static Dictionary<string, string> s_dalNameSpaces;
+    internal static Dictionary<string, string> s_dalClass;
+
     static DalConfig()
     {
         XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml")
@@ -16,5 +18,7 @@ static class DalConfig
             ?? throw new DalConfigException("<dal-packages> element is missing");
         s_dalPackages = packages.ToDictionary(p => "" + p.Name, p => p.Value);
         s_dalNameSpaces = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x => x.Name == "namespace").Value) ;
+        s_dalClass = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x => x.Name == "class").Value);
+
     }
 }
