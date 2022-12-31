@@ -124,21 +124,24 @@ namespace BlImplementation
         /// get calaog to patient
         /// </summary>
         /// <returns>list of product to customer</returns>
-        public IEnumerable<BO.ProductItem?> GetCatalog()
+        public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null)
         {
            IEnumerable<DO.Product?> doProduct = idal!.Product.GetAll();
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
             foreach (DO.Product? item in doProduct)
             {
-                BO.ProductItem boProd=new BO.ProductItem() { Id = item?.ID??0 , Name = item?.Name, Price = item?.Price??0, Amount = item?.InStock??0,Category=(BO.Category?)item?.CategoryP};
-                if(item?.InStock > 0)
+                if (check == null || check(item))
                 {
-                    boProd.InStock = true;
+                    BO.ProductItem boProd = new BO.ProductItem() { Id = item?.ID ?? 0, Name = item?.Name, Price = item?.Price ?? 0, Amount = item?.InStock ?? 0, Category = (BO.Category?)item?.CategoryP };
+                    if (item?.InStock > 0)
+                    {
+                        boProd.InStock = true;
+                    }
+                    else
+                        boProd.InStock = false;
+                    list.Add(boProd);
                 }
-                else
-                    boProd.InStock = false;
-                list.Add(boProd);
             }
             return list;
         }
@@ -167,9 +170,9 @@ namespace BlImplementation
                 boProduct.InStock = false;
             return boProduct;
         }
-        public IEnumerable<BO.ProductForList?> GetProductForListByCondition(Func<DO.Product?,bool>? check)
+        public IEnumerable<BO.ProductForList?> GetProductForListByCategory(BO.Category? category)
         {
-           IEnumerable<DO.Product?> prod= idal!.Product.GetAll(check);
+           IEnumerable<DO.Product?> prod= idal!.Product.GetAll(x => x?.CategoryP == (DO.Category?)category);
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
             foreach (DO.Product? item in prod)

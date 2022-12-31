@@ -10,6 +10,7 @@
     <Grid>
         <Button Height="100" Content="show all products" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />
         <Button Click="Button_Click" Content="btnShowOrder" HorizontalAlignment="Left" Margin="210,282,0,0" VerticalAlignment="Top"/>
+        <Button Content="order" HorizontalAlignment="Left" Margin="570,293,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

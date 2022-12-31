@@ -1,0 +1,56 @@
+﻿<Window x:Class="PL.AddNewOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        DataContext="{Binding Path=products, RelativeSource={RelativeSource Mode=Self}}"
+        mc:Ignorable="d"
+        Title="AddNewOrderWindow" Height="450" Width="800">
+    <Grid>
+        <ListView
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            ItemsSource="{Binding}"
+            x:Name="ListView1">
+            <ListView.View>
+                <GridView x:Name="gridView">
+                    <GridViewColumn>
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="inStock" >In stock</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Tag="InStock" IsEnabled="False" IsChecked="{Binding InStock}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Width="70">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="id" >product id</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Header ="Price" DisplayMemberBinding="{Binding Price}" Width="70"/>
+                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="100"/>
+                    <GridViewColumn Header="amount in stock" DisplayMemberBinding="{Binding Amount}" Width="120"/>
+                    <GridViewColumn Header="order" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  Content="add" x:Name="addBtn" Click="addBtn_Click"></Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+        <Button x:Name="shopCartBtn" Click="shopCartBtn_Click" Content="מעבר לסל הקניות" HorizontalAlignment="Left" Margin="647,25,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" HorizontalAlignment="Left" Margin="627,113,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="סינון על פי קטגוריה" HorizontalAlignment="Left" Margin="627,71,0,0" VerticalAlignment="Top" Height="37" Width="120"/>
+    </Grid>
+</Window>

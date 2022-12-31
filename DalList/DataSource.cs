@@ -135,7 +135,7 @@ internal static class DataSource
             OrderItem oi = new OrderItem()
             {
                 ID = Config.GetNextOrderItemNumber(),
-                OrderId = (i / 2),
+                OrderId = (i / 4),
                 ProductId = product,
                 Amount = s_rand.Next(10) + 1,
                 Price = price

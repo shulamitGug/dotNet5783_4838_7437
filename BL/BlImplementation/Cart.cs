@@ -27,11 +27,8 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist",ex);
             }
-
-            if (boCart.Items == null)
-                throw new Exception("cart is empty");
             //if this product exist in the cart -add one to the amount 
-            BO.OrderItem? ord= boCart.Items.FirstOrDefault(x=>x?.ProductId==id);
+            BO.OrderItem? ord= boCart.Items?.FirstOrDefault(x=>x?.ProductId==id);
             
             if (ord != null)
             {
@@ -41,8 +38,12 @@ namespace BlImplementation
             //if not exixt add the product to the cart
             else
             {
-                BO.OrderItem item = new BO.OrderItem() { ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
-                boCart.Items.Add(item);
+                if (boCart.Items == null)
+                    boCart.Items = new List<BO.OrderItem?>();
+                DO.OrderItem item= new DO.OrderItem() { ProductId = id,Price = doProduct.Price,Amount=1 };
+                int idOrd = idal.OrderItem.Add(item);
+                BO.OrderItem boItem = new BO.OrderItem() {OrderItemId=idOrd, ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
+                boCart.Items.Add(boItem);
             }
             
             boCart.TotalPrice += doProduct.Price;
@@ -83,6 +84,9 @@ namespace BlImplementation
             //update
 
             orderItem.Amount = amount;
+            boCart.TotalPrice -= orderItem.TotalPrice;
+            orderItem.TotalPrice=amount*doProduct.Price;
+            boCart.TotalPrice += orderItem.TotalPrice;
         }
 
         /// <summary>
@@ -148,10 +152,17 @@ namespace BlImplementation
                 {
                     throw new BO.NotExistBlException("product does not exist-", ex);
                 }
-                doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = boItem.TotalPrice };
-                idal.OrderItem.Add(doOrderItem);
+                doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = doProduct.Price };
+                int i1d=idal.OrderItem.Add(doOrderItem);
 
             }
+        }
+        public BO.Cart deleteProduct(BO.Cart boCart, int id)
+        {
+            idal!.OrderItem.Delete(id);
+            boCart.TotalPrice -= boCart.Items!.FirstOrDefault(x => x?.OrderItemId == id)!.TotalPrice;
+            boCart.Items!.RemoveAll(x => x?.OrderItemId == id);
+            return boCart;
         }
 
     }

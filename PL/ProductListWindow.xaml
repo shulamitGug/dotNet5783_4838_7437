@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding Path=products, RelativeSource={RelativeSource Mode=Self}}"
         Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
@@ -18,7 +19,7 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions >
         </Grid>
-        <ListView Grid.Row="1" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick"/>
+        <ListView ItemsSource="{Binding}"  Grid.Row="1" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick"/>
         <Button x:Name="AddProductBtn" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProductBtn_Click"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>

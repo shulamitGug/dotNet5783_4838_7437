@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DalApi;
 namespace BlImplementation
 {
-    internal class Order:BlApi.IOrder
+    internal class Order : BlApi.IOrder
     {
         DalApi.IDal? idal = DalApi.Factory.Get();
         /// <summary>
@@ -16,12 +16,12 @@ namespace BlImplementation
         /// <returns>order status</returns>
         private BO.OrderStatus CheckStatus(DO.Order order)
         {
-            if (order.DeliveryDate!=null)
+            if (order.DeliveryDate != null)
                 return (BO.OrderStatus)3;
-            
-            else if (order.ShipDate!=null)
-                return  (BO.OrderStatus)2;
-            
+
+            else if (order.ShipDate != null)
+                return (BO.OrderStatus)2;
+
             else
                 return (BO.OrderStatus)1;
         }
@@ -29,35 +29,33 @@ namespace BlImplementation
         /// Adding a product to the order
         /// </summary>
         /// <returns>List of ordered orders</returns>
-        public IEnumerable<BO.OrderForList?> GetOrders()
+        public IEnumerable<BO.OrderForList> GetOrders()
         {
-            int count = 0;
-            IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
-            IEnumerable<DO.OrderItem?> orderItems;
-            List<BO.OrderForList?> ordersForList=new List<BO.OrderForList?>();
-            foreach (DO.Order? order in orders)
+            try
             {
-                double price = 0;
-                try
-                {
-                    orderItems = idal!.OrderItem.GetAll(x => x?.OrderId == order?.ID);
-                }
-                catch (Exception ex)
-                {
-                    throw new BO.NotExistBlException("orderItem is not exist-", ex);
-                }
-                
-                foreach (DO.OrderItem? item in orderItems)
-                {
-                    price+=item?.Price*item?.Amount??0;
-                    count+=item?.Amount??0;
-                }
-                
-                BO.OrderForList boOrder = new BO.OrderForList() { CustomerName=order?.CustomerName,ID=order?.ID??0,TotalPrice=price,AmountOfItems=count,Status= CheckStatus(order??throw new Exception("")) };
-                ordersForList.Add(boOrder);
+                IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
+                var ordersForList = from order in orders
+                                    let orderItems = idal.OrderItem.GetAll(orderitem2 => orderitem2?.OrderId == order?.ID)
+                                    let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
+                                    let totalPrice = orderItems.Sum(o => ((DO.OrderItem)o!).Amount * ((DO.OrderItem)o!).Price)
+                                    select new BO.OrderForList
+                                    {
+                                        ID = ((DO.Order)order!).ID,
+                                        CustomerName = ((DO.Order)order!).CustomerName,
+                                        AmountOfItems = amount,
+                                        TotalPrice = totalPrice,
+                                        Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
+                                      BO.OrderStatus.provided : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
+                                      BO.OrderStatus.sent : BO.OrderStatus.approved
+                                    };
+                return ordersForList;
             }
-            return ordersForList;
-        }
+            catch (DO.NotExistException ex)
+            {
+                throw new BO.NotExistBlException("order doesnot exist", ex);
+            }
+        } 
+
         /// <summary>
         /// The function returns order details according to order id
         /// </summary>

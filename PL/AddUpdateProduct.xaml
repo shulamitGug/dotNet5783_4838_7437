@@ -4,30 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        DataContext="{Binding Path=product, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="AddUpdateProduct" Background="Beige" Height="450" Width="800">
-    <Grid>
-        <Grid>
+    <Grid x:Name="bigGrid">
+        <Grid x:Name="stackPanel">
             <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
-
                 <Label Grid.Column="0" />
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions >
             </Grid>
-            <Button HorizontalAlignment="Left"  Padding="5" Grid.Row="6" x:Name="OkayBtn" Click="OkayBtn_Click" RenderTransformOrigin="-7,0.377" Margin="239,0,0,0"/>
+            <Button Content="add" HorizontalAlignment="Left"  Padding="5" Grid.Row="6" x:Name="OkayBtn" Click="OkayBtn_Click" RenderTransformOrigin="-7,0.377" Margin="239,0,0,0"/>
             <Label Name="IdProd_lbl" Content="ID: " HorizontalAlignment="Left" Margin="157,10,0,4" RenderTransformOrigin="-0.79,1.196" Grid.Row="1"/>
             <Label Name="CategoryProd_lbl" Content="Category: "  HorizontalAlignment="Left" Margin="157,2,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.042"/>
             <Label Name="NameProd_lbl" Content="Name: " HorizontalAlignment="Left" Margin="157,0,0,0" Grid.Row="3" VerticalAlignment="Top"/>
             <Label Name="PriceProd_lbl" Content="Price: " HorizontalAlignment="Left" Margin="157,0,0,0" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="-0.948,0.427"/>
             <Label Name="InStockProd_lbl" Content="InStock: " HorizontalAlignment="Left" Margin="157,34,0,0" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="-0.053,0.157" Grid.RowSpan="2"/>
-            <TextBox x:Name="idProd_txt" HorizontalAlignment="Left" Margin="259,13,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="CategoryProd_selector" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="120"/>
-            <TextBox x:Name="NameProd_txt" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Width="120"/>
-            <TextBox x:Name="PriceProd_txt" HorizontalAlignment="Left" Margin="259,2,0,0" Grid.Row="4" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="InStockProd_txt" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="5" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+            <TextBox Text="{Binding Path=ID}" x:Name="idProd_txt" HorizontalAlignment="Left" Margin="259,13,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+            <ComboBox SelectedItem="{Binding Path=CategoryP}" x:Name="CategoryProd_selector" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="120"/>
+            <TextBox Text="{Binding Path=Name}" x:Name="NameProd_txt" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Width="120"/>
+            <TextBox Text="{Binding Path=Price}" x:Name="PriceProd_txt" HorizontalAlignment="Left" Margin="259,2,0,0" Grid.Row="4" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+            <TextBox Text="{Binding Path=InStock}" x:Name="InStockProd_txt" HorizontalAlignment="Left" Margin="259,0,0,0" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
             <Button x:Name="deleteProdBtn" Content="delete" Click="deleteProdBtn_Click" HorizontalAlignment="Left" Margin="30,20,0,0" Grid.Row="6" VerticalAlignment="Top"/>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -38,7 +38,7 @@ VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-
         </Grid>
+            
     </Grid>
 </Window>

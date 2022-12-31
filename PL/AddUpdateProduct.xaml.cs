@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Globalization;
 namespace PL
 {
     /// <summary>
@@ -19,16 +19,26 @@ namespace PL
     /// </summary>
     public partial class AddUpdateProduct : Window
     {
-        private string state;
+        string state;
         BlApi.IBl? bl = BlApi.Factory.Get();
+        public BO.Product product
+        {
+            get { return (BO.Product)GetValue(productProperty); }
+            set { SetValue(productProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for product.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productProperty =
+            DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
 
         private int productId;
         public AddUpdateProduct()
         {
             InitializeComponent();
-            deleteProdBtn.Visibility = Visibility.Hidden;
             state = "add";
-            OkayBtn.Content = state;
+            OkayBtn.Content = "add";
+            product = new BO.Product();
+            deleteProdBtn.Visibility = Visibility.Hidden;
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoryProd_selector.SelectedItem = (BO.Category)7;
         }
@@ -37,21 +47,17 @@ namespace PL
         /// </summary>
         /// <param name="_bl"> bl param from type BlApi.IBl</param>
         /// <param name="id"> Product id</param>
-        public AddUpdateProduct( int id)
+        public AddUpdateProduct(int id)
         {
             InitializeComponent();
+            //bigGrid.DataContext = state;
             idProd_txt.IsEnabled = false;
             productId = id;
             deleteProdBtn.Visibility = Visibility.Visible;
             state ="update";
-            OkayBtn.Content = state;
-            BO.ProductItem product = bl!.Product.GetProductItemById(id);
+            OkayBtn.Content = "update";
+            product = bl!.Product.GetProductById(id);
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            idProd_txt.Text = product.Id.ToString();
-            InStockProd_txt.Text = product.Amount.ToString();
-            NameProd_txt.Text = product.Name;
-            PriceProd_txt.Text = product.Price.ToString();
-            CategoryProd_selector.SelectedItem=product.Category;
         }
         /// <summary>
         /// Action that happens while clicking the confirmation button and updates or adds the product respectively
@@ -66,19 +72,19 @@ namespace PL
             {
                 try
                 {
-                    BO.Product newProduct = new BO.Product() { ID = Convert.ToInt32(idProd_txt.Text), CategoryP = (BO.Category)CategoryProd_selector.SelectedItem, Price = Convert.ToInt32(PriceProd_txt.Text), InStock = Convert.ToInt32(InStockProd_txt.Text), Name = NameProd_txt.Text };
+                    //BO.Product newProduct = new BO.Product() { ID = Convert.ToInt32(idProd_txt.Text), CategoryP = (BO.Category)CategoryProd_selector.SelectedItem, Price = Convert.ToInt32(PriceProd_txt.Text), InStock = Convert.ToInt32(InStockProd_txt.Text), Name = NameProd_txt.Text };
                     try
                     {
-                        if (state == "add")
+                       
+                         if(state =="update")
                         {
-                            bl!.Product.Add(newProduct);
-                            MessageBox.Show("the product added");
+                            bl!.Product.Update(product);
+                            MessageBox.Show("the product updated");
                         }
-
                         else
                         {
-                            bl!.Product.Update(newProduct);
-                            MessageBox.Show("the product updated");
+                            bl!.Product.Add(product);
+                            MessageBox.Show("the product added");
                         }
                     }
                     catch (BO.AlreadyExistBlException ex)
@@ -93,7 +99,7 @@ namespace PL
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(""+ex);
                 }    
                 
             }
@@ -115,6 +121,27 @@ namespace PL
             {
                 MessageBox.Show("the product is not exist");
             }
+        }
+    }
+    public class NotBooleanToVisibilityConverter : IValueConverter
+    {
+        //convert from source property type to target property type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool boolValue = (bool)value;
+            if (boolValue)
+            {
+                return Visibility.Hidden; //Visibility.Collapsed;
+            }
+            else
+            {
+                return Visibility.Visible;
+            }
+        }
+        //convert from target property type to source property type
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

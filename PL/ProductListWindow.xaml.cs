@@ -21,7 +21,20 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        IEnumerable<BO.ProductForList?> products;
+        //IEnumerable<BO.ProductForList?> products;
+
+
+        public ObservableCollection<BO.ProductForList?> products
+        {
+            get { return (ObservableCollection<BO.ProductForList?>)GetValue(productsProperty); }
+            set { SetValue(productsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty productsProperty =
+            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
+
+
         /// <summary>
         /// A function that returns the list of products to display
         /// </summary>
@@ -30,8 +43,9 @@ namespace PL
         {
             InitializeComponent();
             bl = _bl;
-            products = bl!.Product.GetProductForList();
-            ProductListview.ItemsSource = products;
+            var tmp = bl!.Product.GetProductForList(); 
+            products = tmp == null ? new():new(tmp);
+            //ProductListview.ItemsSource = products;
             CategoriesSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
@@ -44,11 +58,19 @@ namespace PL
         private void CategoriesSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Category categories = (BO.Category)CategoriesSelector.SelectedItem;
-            if(categories== (BO.Category)7)
-                products = bl!.Product.GetProductForList();
-            else 
-            products = bl!.Product.GetProductForListByCondition(x => x?.CategoryP== (DO.Category)categories);
-            ProductListview.ItemsSource = products;
+            if (categories == (BO.Category)7)
+            {
+                var tmp = bl!.Product.GetProductForList();
+                products = tmp == null ? new() : new(tmp);
+            }
+            // products = bl!.Product.GetProductForList();
+            else
+            {
+                //   products = bl!.Product.GetProductForListByCondition(x => x?.CategoryP == (DO.Category)categories);
+                var tmp = bl!.Product.GetProductForListByCategory(categories);
+                products = tmp == null ? new() : new(tmp);
+            }
+              //  ProductListview.ItemsSource = products;
         }
         /// <summary>
         /// Adding a product
@@ -58,8 +80,9 @@ namespace PL
         private void AddProductBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddUpdateProduct().ShowDialog();
-            products = bl!.Product.GetProductForList();
-            ProductListview.ItemsSource = products;
+            var tmp = bl!.Product.GetProductForList();
+            products = tmp == null ? new() : new(tmp);
+            //products = bl!.Product.GetProductForList();
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
         /// <summary>
@@ -71,8 +94,9 @@ namespace PL
         {
             int id = ((BO.ProductForList)((System.Windows.Controls.ListView)sender).SelectedItem).ID;
             new AddUpdateProduct(id).ShowDialog();
-            products = bl!.Product.GetProductForList();
-            ProductListview.ItemsSource = products;
+            //products = bl!.Product.GetProductForList();
+            var tmp = bl!.Product.GetProductForList();
+            products = tmp == null ? new() : new(tmp);
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
 

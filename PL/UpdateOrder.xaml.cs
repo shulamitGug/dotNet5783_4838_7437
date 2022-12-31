@@ -20,13 +20,21 @@ namespace PL
     public partial class UpdateOrder : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        BO.Order newOrder;
+        public BO.Order? newOrder
+        {
+            get { return (BO.Order)GetValue(newOrderProperty); }
+            set { SetValue(newOrderProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for newOrder.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty newOrderProperty =
+            DependencyProperty.Register("newOrder", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
+
 
         public UpdateOrder(int id)
         {
             InitializeComponent();
            newOrder= bl!.Order.GetOrderDetails(id);
-            stackPanel.DataContext = newOrder;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -41,16 +49,14 @@ namespace PL
 
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            stackPanel.DataContext = newOrder;
-            newOrder = bl!.Order.updateSendingDate(newOrder.ID);
+            BO.Order o = bl!.Order.updateSendingDate(newOrder.ID);
+            newOrder.ShipDate = o.ShipDate;
             MessageBox.Show("" + newOrder);
 
         }
         private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            stackPanel.DataContext = newOrder;
-            newOrder = bl!.Order.UpdateProvideDate(newOrder.ID);
-
+            newOrder=bl!.Order.UpdateProvideDate(newOrder.ID);
         }
     }
 }

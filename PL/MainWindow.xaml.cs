@@ -43,5 +43,10 @@ namespace PL
         {
             new OrderListWindow(bl).Show();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new AddNewOrderWindow().Show();
+        }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        DataContext="{Binding Path=newOrder, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="UpdateOrder" Height="592" Width="1035">
     <Grid x:Name="stackPanel" RenderTransformOrigin="0.747,0.398">
@@ -19,8 +20,8 @@
         <TextBox IsEnabled="false" Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="309,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.477,0.585" Height="22"/>
         <TextBox IsEnabled="false" Text="{Binding Path=Status}" HorizontalAlignment="Left" Margin="309,182,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
         <TextBox IsEnabled="false" Text="{Binding Path=CustomerAdress}" HorizontalAlignment="Left" Margin="309,235,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.632,0.504" Height="22"/>
-        <TextBox IsEnabled="false" Text="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="309,281,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.664,0.611" Height="22"/>
-        <Label Content="update product" FontSize="20" HorizontalAlignment="Left" Margin="222,23,0,0" VerticalAlignment="Top" Height="36" Width="337"/>
+        <TextBox  Text="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="309,281,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.664,0.611" Height="22"/>
+        <Label Content="update order" FontSize="20" HorizontalAlignment="Left" Margin="222,23,0,0" VerticalAlignment="Top" Height="36" Width="337"/>
         <Button  Click="updateShipDateBtn_Click" Name="updateShipDateBtn" Content="update" HorizontalAlignment="Left" Margin="753,506,0,0" VerticalAlignment="Top" Height="23" Width="44" RenderTransformOrigin="7.045,5.437"/>
         <Label Content="customer email" HorizontalAlignment="Left" Margin="99,319,0,0" VerticalAlignment="Top" Height="26" Width="126" RenderTransformOrigin="0.5,0.271"/>
         <Label Content="payment date" HorizontalAlignment="Left" Margin="133,350,0,0" VerticalAlignment="Top"/>
