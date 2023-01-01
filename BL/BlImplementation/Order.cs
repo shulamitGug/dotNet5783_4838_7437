@@ -64,7 +64,6 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.Order GetOrderDetails(int id)
         {
-            double price = 0;
             if (id < 0)
                 throw new BO.NotValidException("id canot be negative");
             DO.Order doOrder;
@@ -78,25 +77,38 @@ namespace BlImplementation
             }
             BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
             boOrder.Items=new List<BO.OrderItem?>();
-            IEnumerable<DO.Product?> productsList=idal?.Product.GetAll()?? throw new Exception("there is no connect to data base");
-            IEnumerable<DO.OrderItem?> doItems = idal?.OrderItem.GetAll(x => x?.OrderId ==id)?? throw new Exception("there is no connect to data base");
+            IEnumerable<DO.Product?> productsList=idal!.Product.GetAll();
+            IEnumerable<DO.OrderItem?> doItems = idal!.OrderItem.GetAll(x => x?.OrderId ==id);
             //A loop that goes through the order details and enters them into the bo data type
-            foreach (DO.OrderItem? item in doItems)
-            {
-                BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item?.ID??0, ProductId = item?.ProductId??0, TotalPrice = item?.Price * item?.Amount??0, Amount = item?.Amount??0 };
-                //A loop that goes through the products in the order and updates the price of the order
-                foreach (var product in productsList)
-                {
-                    if(product?.ID==item?.ProductId)
+            IEnumerable<BO.OrderItem?> x = from itemQuery in doItems
+                    let prodName = productsList.FirstOrDefault(x => x?.ID == ((DO.OrderItem)itemQuery!).ProductId)?.Name
+                    select new BO.OrderItem
                     {
-                        boItem.ProductName = product?.Name;
-                        break;
-                    }
-                }
-                boOrder.Items.Add(boItem);
-                price += boItem.TotalPrice;
-            }
-            boOrder.TotalPrice = price;
+                        OrderItemId = ((DO.OrderItem)itemQuery!).ID,
+                        ProductId = ((DO.OrderItem)itemQuery!).ProductId,
+                        ProductName = prodName,
+                        TotalPrice = ((DO.OrderItem)itemQuery!).Price * ((DO.OrderItem)itemQuery!).Amount,
+                        Amount = ((DO.OrderItem)itemQuery!).Amount
+                    };
+            if(x!=null)
+                boOrder.Items = x.ToList();
+
+                boOrder.TotalPrice = boOrder.Items.Sum(o => ((BO.OrderItem)o!).TotalPrice);
+            //foreach (DO.OrderItem? item in doItems)
+            //{
+            //    BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item?.ID ?? 0, ProductId = item?.ProductId ?? 0, TotalPrice = item?.Price * item?.Amount ?? 0, Amount = item?.Amount ?? 0 };
+            //    //A loop that goes through the products in the order and updates the price of the order
+            //    foreach (var product in productsList)
+            //    {
+            //        if (product?.ID == item?.ProductId)
+            //        {
+            //            boItem.ProductName = product?.Name;
+            //            break;
+            //        }
+            //    }
+            //    boOrder.Items.Add(boItem);
+            //    price += boItem.TotalPrice;
+            //}
             return boOrder;
         }
         /// <summary>

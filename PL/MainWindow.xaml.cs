@@ -34,19 +34,39 @@ namespace PL
         /// </summary>
         /// <param name="sender">sender runtime variable</param>
         /// <param name="e">A variable of the type of event that happens</param>
-        private void ShowProductsBtn_Click(object sender, RoutedEventArgs e)
+        //private void ShowProductsBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    new ProductListWindow(bl).Show();
+        //}
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    new OrderListWindow(bl).Show();
+        //}
+
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    new AddNewOrderWindow().Show();
+        //}
+
+        //private void Button_Click_2(object sender, RoutedEventArgs e)
+        //{
+        //    new Order_Tracking(10).Show();
+        //}
+
+        private void addNewOrd_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow(bl).Show();
+            new CustomerDetails().Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void managerWindow_Click(object sender, RoutedEventArgs e)
         {
-            new OrderListWindow(bl).Show();
+            new ManagerWindow().Show(); 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void orderTracking_Click(object sender, RoutedEventArgs e)
         {
-            new AddNewOrderWindow().Show();
+            new Order_Tracking(2).Show();
         }
     }
 }

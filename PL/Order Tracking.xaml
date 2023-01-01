@@ -1,0 +1,16 @@
+﻿<Window x:Class="PL.Order_Tracking"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        DataContext="{Binding Path=orderTracking, RelativeSource={RelativeSource self}}"
+        mc:Ignorable="d"
+        Title="Order_Tracking" Height="450" Width="800">
+    <Grid>
+        <ListView ItemsSource="{Binding Tracking}" Margin="0,0,314,150"/>
+        <TextBox Text="{Binding Status}"/>
+        <TextBlock Text="{Binding ID}" HorizontalAlignment="Left" Margin="667,25,0,0" VerticalAlignment="Top"/>
+        <!--<Button Content="צפיה בפרטי הזמנה" x:Name="ShowBtn" Click="ShowBtn_Click"/>-->
+    </Grid>
+</Window>

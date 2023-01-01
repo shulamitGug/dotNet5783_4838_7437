@@ -8,9 +8,13 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Button Height="100" Content="show all products" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />
-        <Button Click="Button_Click" Content="btnShowOrder" HorizontalAlignment="Left" Margin="210,282,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="managerWindow" Click="managerWindow_Click" Content="מסך מנהל" HorizontalAlignment="Left" Margin="63,0,0,0" VerticalAlignment="Center" Height="99" Width="149"/>
+        <Button x:Name="addNewOrd" Click="addNewOrd_Click"  Content="תצוגת הזמנה חדשה" HorizontalAlignment="Left" Margin="286,0,0,0" VerticalAlignment="Center" Height="99" Width="150"/>
+        <Button x:Name="orderTracking" Click="orderTracking_Click" Content="תצוגת מעקב אחרי הזמנות" HorizontalAlignment="Left" Margin="504,0,0,0" VerticalAlignment="Center" Height="99" Width="159"/>
+        <!--<Button Height="100" Content="show all products" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />-->
+        <!--<Button Click="Button_Click" Content="btnShowOrder" HorizontalAlignment="Left" Margin="210,282,0,0" VerticalAlignment="Top"/>
         <Button Content="order" HorizontalAlignment="Left" Margin="570,293,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="tracking" Click="Button_Click_2" HorizontalAlignment="Left" Margin="118,328,0,0" VerticalAlignment="Top"/>-->
 
     </Grid>
 </Window>

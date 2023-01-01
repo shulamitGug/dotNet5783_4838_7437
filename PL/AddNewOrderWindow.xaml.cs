@@ -19,24 +19,25 @@ namespace PL
     /// </summary>
     public partial class AddNewOrderWindow : Window
     {
-        public ObservableCollection<BO.ProductItem?> products
+        public ObservableCollection<BO.ProductItem?> catalogProducts
         {
-            get { return (ObservableCollection<BO.ProductItem?>)GetValue(productsProperty); }
-            set { SetValue(productsProperty, value); }
+            get { return (ObservableCollection<BO.ProductItem?>)GetValue(catalogProductsProperty); }
+            set { SetValue(catalogProductsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty productsProperty =
-            DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
-        private BO.Cart? currentCart=new BO.Cart();
+        public static readonly DependencyProperty catalogProductsProperty =
+            DependencyProperty.Register("catalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
+        private BO.Cart? currentCart;
 
         //IEnumerable<BO.ProductItem?> products;
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public AddNewOrderWindow()
+        public AddNewOrderWindow(BO.Cart currentCartOut)
         {
             InitializeComponent();
+            currentCart = currentCartOut;
             var temp = bl!.Product.GetCatalog();
-            products = temp == null ? new() : new(temp);
+            catalogProducts = temp == null ? new() : new(temp);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             categorySelector.SelectedItem= (BO.Category.None);
         }
@@ -59,19 +60,20 @@ namespace PL
             if (categories == (BO.Category.None))
             {
                 var tmp = bl!.Product.GetCatalog();
-                products = tmp == null ? new() : new(tmp);
+                catalogProducts = tmp == null ? new() : new(tmp);
             }
             else
             {
                 var tmp = bl!.Product.GetCatalog(x=>x?.CategoryP==(DO.Category)categories);
-                products = tmp == null ? new() : new(tmp);
+                catalogProducts = tmp == null ? new() : new(tmp);
             }
 
         }
 
         private void shopCartBtn_Click(object sender, RoutedEventArgs e)
         {
-            new ShoppingCart(currentCart).Show();
+            new ShoppingCart(currentCart!).ShowDialog();
+            this.Close();
         }
     }
 }

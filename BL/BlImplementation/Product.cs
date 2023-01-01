@@ -19,12 +19,14 @@ namespace BlImplementation
             //new list
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
-                foreach (DO.Product? item in idal!.Product.GetAll())
-                {
-                    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID??0 };
-                    products.Add(pr);
-                }
-            return products;
+            return from item in idal!.Product.GetAll()
+                   select new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
+                //foreach (DO.Product? item in idal!.Product.GetAll())
+                //{
+                //    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID??0 };
+                //    products.Add(pr);
+                //}
+                //return products;
         }
         /// <summary>
         /// this function return all the detail of this product id
@@ -84,17 +86,21 @@ namespace BlImplementation
         public void Delete(int id)
         {
            IEnumerable<DO.OrderItem?> orderItemList;
-            IEnumerable<DO.Order?> orderList = idal!.Order.GetAll();
+            //IEnumerable<DO.Order?> orderList = idal!.Order.GetAll();
             //check if the product exsist in order
-            foreach (DO.Order? order in orderList)
-            {
-                orderItemList = idal.OrderItem.GetAll(x => x?.OrderId == order?.ID);
-                foreach (DO.OrderItem? item in orderItemList)
-                    if (item?.ProductId == id)
-                        throw new BO.AlreadyExistBlException("the product is exist in orders so it cannot delete");
-            }
-            try
-            {
+            var items=idal!.OrderItem.GetAll(x=>x?.ProductId==id);
+            if (items != null)
+                throw new BO.AlreadyExistBlException("the product is exist in orders so it cannot delete");
+
+                //foreach (DO.Order? order in orderList)
+                //{
+                //    orderItemList = idal.OrderItem.GetAll(x => x?.OrderId == order?.ID);
+                //    foreach (DO.OrderItem? item in orderItemList)
+                //        if (item?.ProductId == id)
+                //            throw new BO.AlreadyExistBlException("the product is exist in orders so it cannot delete");
+                //}
+                try
+                {
                 idal.Product.Delete(id);
             }
             catch(DO.NotExistException ex)
@@ -126,24 +132,30 @@ namespace BlImplementation
         /// <returns>list of product to customer</returns>
         public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null)
         {
-           IEnumerable<DO.Product?> doProduct = idal!.Product.GetAll();
+            IEnumerable<DO.Product?> doProduct;
+            if (check == null)
+                 doProduct = idal!.Product.GetAll();
+            else
+                doProduct = idal!.Product.GetAll(check);
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
-            foreach (DO.Product? item in doProduct)
-            {
-                if (check == null || check(item))
-                {
-                    BO.ProductItem boProd = new BO.ProductItem() { Id = item?.ID ?? 0, Name = item?.Name, Price = item?.Price ?? 0, Amount = item?.InStock ?? 0, Category = (BO.Category?)item?.CategoryP };
-                    if (item?.InStock > 0)
-                    {
-                        boProd.InStock = true;
-                    }
-                    else
-                        boProd.InStock = false;
-                    list.Add(boProd);
-                }
-            }
-            return list;
+                return from prod in doProduct
+                       select new BO.ProductItem { Id = prod?.ID ?? 0, Name = prod?.Name, Price = prod?.Price ?? 0, Amount = prod?.InStock ?? 0, Category = (BO.Category?)prod?.CategoryP ,InStock= prod?.InStock > 0 ?true:false};
+            ////foreach (DO.Product? item in doProduct)
+            ////{
+            ////    if (check == null || check(item))
+            ////    {
+            ////        BO.ProductItem boProd = new BO.ProductItem() { Id = item?.ID ?? 0, Name = item?.Name, Price = item?.Price ?? 0, Amount = item?.InStock ?? 0, Category = (BO.Category?)item?.CategoryP };
+            ////        if (item?.InStock > 0)
+            ////        {
+            ////            boProd.InStock = true;
+            ////        }
+            ////        else
+            ////            boProd.InStock = false;
+            ////        list.Add(boProd);
+            ////    }
+            ////}
+            ////return list;
         }
         /// <summary>
         /// get product item by id
@@ -172,15 +184,17 @@ namespace BlImplementation
         }
         public IEnumerable<BO.ProductForList?> GetProductForListByCategory(BO.Category? category)
         {
-           IEnumerable<DO.Product?> prod= idal!.Product.GetAll(x => x?.CategoryP == (DO.Category?)category);
+           IEnumerable<DO.Product?> product= idal!.Product.GetAll(x => x?.CategoryP == (DO.Category?)category);
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
-            foreach (DO.Product? item in prod)
-            {
-                BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
-                products.Add(pr);
-            }
-            return products;
+            return from prod in product
+                   select new BO.ProductForList() { Name = prod?.Name, Price = prod?.Price ?? 0, Category = (BO.Category?)prod?.CategoryP, ID = prod?.ID ?? 0 };
+            //foreach (DO.Product? item in prod)
+            //{
+            //    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
+            //    products.Add(pr);
+            //}
+            //return products;
         }
 
     }

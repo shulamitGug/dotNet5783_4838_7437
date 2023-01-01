@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,14 +50,27 @@ namespace PL
 
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            BO.Order o = bl!.Order.updateSendingDate(newOrder.ID);
+            BO.Order o = bl!.Order.updateSendingDate(newOrder!.ID);
             newOrder.ShipDate = o.ShipDate;
             MessageBox.Show("" + newOrder);
 
         }
         private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            newOrder=bl!.Order.UpdateProvideDate(newOrder.ID);
+            newOrder=bl!.Order.UpdateProvideDate(newOrder!.ID);
         }
     }
+   public  class ConvertDate1 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
