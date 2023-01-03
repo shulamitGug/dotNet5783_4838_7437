@@ -75,5 +75,11 @@ namespace PL
             new ShoppingCart(currentCart!).ShowDialog();
             this.Close();
         }
+
+        private void ListView1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int id = ((BO.ProductItem)((System.Windows.Controls.ListView)sender).SelectedItem).Id;
+            new ProductItem(id).ShowDialog();   
+        }
     }
 }

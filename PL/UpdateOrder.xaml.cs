@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class UpdateOrder : Window
     {
+
         BlApi.IBl? bl = BlApi.Factory.Get();
         public BO.Order? newOrder
         {
@@ -31,13 +32,12 @@ namespace PL
         public static readonly DependencyProperty newOrderProperty =
             DependencyProperty.Register("newOrder", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
-
-        public UpdateOrder(int id)
+        public UpdateOrder(int id,string state)
         {
             InitializeComponent();
            newOrder= bl!.Order.GetOrderDetails(id);
+            Help.setX(state);
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -50,27 +50,31 @@ namespace PL
 
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            BO.Order o = bl!.Order.updateSendingDate(newOrder!.ID);
-            newOrder.ShipDate = o.ShipDate;
-            MessageBox.Show("" + newOrder);
-
+            newOrder = bl!.Order.updateSendingDate(newOrder!.ID);
         }
         private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
             newOrder=bl!.Order.UpdateProvideDate(newOrder!.ID);
         }
+
     }
    public  class ConvertDate1 : IValueConverter
     {
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(!Help.getX())
+                return Visibility.Hidden;
+            if (value == null)
+            return Visibility.Visible;
+            return Visibility.Hidden;
+        }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

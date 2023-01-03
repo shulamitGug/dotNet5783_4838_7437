@@ -7,6 +7,9 @@
         DataContext="{Binding Path=product, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="AddUpdateProduct" Background="Beige" Height="450" Width="800">
+    <Window.Resources>
+        <local:ConvertStatus x:Key="rr"/>
+    </Window.Resources>
     <Grid x:Name="bigGrid">
         <Grid x:Name="stackPanel">
             <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"

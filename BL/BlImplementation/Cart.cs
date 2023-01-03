@@ -45,7 +45,6 @@ namespace BlImplementation
                 BO.OrderItem boItem = new BO.OrderItem() {OrderItemId=idOrd, ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
                 boCart.Items.Add(boItem);
             }
-            
             boCart.TotalPrice += doProduct.Price;
             return boCart;
         }
@@ -112,12 +111,12 @@ namespace BlImplementation
                 boCart.Items!.FindAll(x => idal!.Product.Get(x!.ProductId).InStock - x.Amount > 0 ? true : throw new BO.NotInStockException(x.ProductId, x.ProductName!));
                 DO.Order doOrder = new DO.Order() { CustomerAdress = boCart.CustomerAdress, CustomerName = boCart.CustomerName, CustomerEmail = boCart.CustomerEmail, ShipDate = null, DeliveryDate = null, OrderDate = DateTime.Now };
                 int id = idal!.Order.Add(doOrder);
-                var x = from item in boCart.Items
+                var allItems = from item in boCart.Items
                         let product = idal!.Product.Get(item.ProductId)
                         let newProd = new DO.Product { ID = product.ID, Name = product.Name, Price = product.Price, InStock = product.InStock - item.Amount, CategoryP = product.CategoryP }
-                        let w = UpdateAmountDal(newProd)
+                        let updateAmount = UpdateAmountDal(newProd)
                         select new DO.OrderItem() { Amount = item!.Amount, ProductId = item.ProductId, OrderId = id, Price = newProd.Price };
-                x.All(x => idal.OrderItem.Add(x) > 0 ? true : false);
+                allItems.All(x => idal.OrderItem.Add(x) > 0 ? true : false);
             }
             catch (DO.AlreadyExistException ex)
             {

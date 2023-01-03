@@ -66,7 +66,7 @@ namespace PL
 
         private void orderTracking_Click(object sender, RoutedEventArgs e)
         {
-            new Order_Tracking(2).Show();
+            new OrderTracking(3).Show();
         }
     }
 }

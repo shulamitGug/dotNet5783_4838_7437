@@ -35,19 +35,19 @@ namespace BlImplementation
             {
                 IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
                 var ordersForList = from order in orders
-                                    let orderItems = idal.OrderItem.GetAll(orderitem2 => orderitem2?.OrderId == order?.ID)
-                                    let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
-                                    let totalPrice = orderItems.Sum(o => ((DO.OrderItem)o!).Amount * ((DO.OrderItem)o!).Price)
-                                    select new BO.OrderForList
-                                    {
-                                        ID = ((DO.Order)order!).ID,
-                                        CustomerName = ((DO.Order)order!).CustomerName,
-                                        AmountOfItems = amount,
-                                        TotalPrice = totalPrice,
-                                        Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
-                                      BO.OrderStatus.provided : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
-                                      BO.OrderStatus.sent : BO.OrderStatus.approved
-                                    };
+                        let orderItems = idal.OrderItem.GetAll(orditem => orditem?.OrderId == order?.ID)
+                         let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
+                         let totalPrice = orderItems.Sum(o => ((DO.OrderItem)o!).Amount * ((DO.OrderItem)o!).Price)
+                         select new BO.OrderForList
+                         {
+                          ID = ((DO.Order)order!).ID,
+                          CustomerName = ((DO.Order)order!).CustomerName,
+                          AmountOfItems = amount,
+                          TotalPrice = totalPrice,
+                          Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
+                          BO.OrderStatus.provided : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
+                          BO.OrderStatus.sent : BO.OrderStatus.approved
+                         };
                 return ordersForList;
             }
             catch (DO.NotExistException ex)

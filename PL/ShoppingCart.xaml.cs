@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Globalization;
+
 namespace PL
 {
     /// <summary>
@@ -71,4 +73,21 @@ namespace PL
             this.Close();
         }
     }
+    public class ConvertEmptyCart : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value == 0)
+                return Visibility.Visible;
+            return Visibility.Hidden;
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

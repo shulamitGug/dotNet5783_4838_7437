@@ -7,19 +7,19 @@
         DataContext="{Binding Path=newOrder, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="UpdateOrder" Height="592" Width="1035">
-    <!--<Window.Resources>
-        <local:ConvertDate1 x:Key="nnn"/>
-    </Window.Resources>-->
+    <Window.Resources>
+        <local:ConvertDate1 x:Key="coooo"/>
+    </Window.Resources>
     <Grid x:Name="stackPanel" RenderTransformOrigin="0.747,0.398">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
-        <Label Content="id" HorizontalAlignment="Left" Margin="133,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.89,0.635" Height="26" Width="20"/>
-        <Label Content="customer name" HorizontalAlignment="Left" Margin="133,123,0,0" VerticalAlignment="Top" Height="26" Width="92"/>
-        <Label Content="status" HorizontalAlignment="Left" Margin="133,180,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.064,0.134" Height="26" Width="41"/>
-        <Label Content="customer adress" HorizontalAlignment="Left" Margin="133,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.096,0.282" Height="26" Width="97"/>
-        <Label Content="total price" HorizontalAlignment="Left" Margin="122,277,0,0" VerticalAlignment="Top" Height="26" Width="63"/>
+        <TextBlock Text="id" HorizontalAlignment="Left" Margin="133,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.89,0.635" Height="26" Width="20"/>
+        <TextBlock Text="customer name" HorizontalAlignment="Left" Margin="133,123,0,0" VerticalAlignment="Top" Height="26" Width="92"/>
+        <TextBlock Text="status" HorizontalAlignment="Left" Margin="133,180,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.064,0.134" Height="26" Width="41"/>
+        <TextBlock Text="customer adress" HorizontalAlignment="Left" Margin="133,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.096,0.282" Height="26" Width="97"/>
+        <TextBlock Text="total price" HorizontalAlignment="Left" Margin="122,277,0,0" VerticalAlignment="Top" Height="26" Width="63"/>
         <TextBlock  Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="309,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.477,0.585" Height="22"/>
         <TextBlock IsEnabled="false" Text="{Binding Path=Status}" HorizontalAlignment="Left" Margin="309,182,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
         <TextBlock IsEnabled="false" Text="{Binding Path=CustomerAdress}" HorizontalAlignment="Left" Margin="309,235,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.632,0.504" Height="22"/>
@@ -37,7 +37,7 @@
         <TextBlock  Text="{Binding Path=ShipDate}" HorizontalAlignment="Left" Margin="309,417,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <TextBlock  Text="{Binding Path=DeliveryDate}" HorizontalAlignment="Left" Margin="309,473,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock  Text="{Binding Path=CustomerName}" HorizontalAlignment="Left" Margin="309,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <Button   Click="updateShipDateBtn_Click" Name="updateShipDateBtn" Content="update" HorizontalAlignment="Left" Margin="753,506,0,0" VerticalAlignment="Top" Height="23" Width="44" RenderTransformOrigin="7.045,5.437"/>
-        <Button Click="updateDerliveryDateBtn_Click" Content="updateDerliveryDate" x:Name="updateDerliveryDateBtn" HorizontalAlignment="Left" Margin="624,518,0,0" VerticalAlignment="Top"/>
+        <Button Name="updateShipDateBtn" Visibility="{Binding Path=ShipDate , Converter={StaticResource coooo}}"  Click="updateShipDateBtn_Click"  Content="update shipDate" HorizontalAlignment="Left" Margin="215,502,0,0" VerticalAlignment="Top" Height="23" Width="119" RenderTransformOrigin="7.045,5.437"/>
+        <Button Visibility="{Binding Path=DeliveryDate , Converter={StaticResource coooo}}" Click="updateDerliveryDateBtn_Click" Content="updateDerliveryDate" x:Name="updateDerliveryDateBtn" HorizontalAlignment="Left" Margin="37,502,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.838,0.75"/>
     </Grid>
 </Window>

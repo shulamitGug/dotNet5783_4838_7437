@@ -41,8 +41,13 @@ namespace PL
 
         private void okayBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddNewOrderWindow(currentCart).ShowDialog();
-            this.Close();
+            if (txtAdrss.Text == "" || txtEmail.Text == "" || txtName.Text == "")
+                MessageBox.Show("לא הוזנו מספיק פרטים");
+            else
+            {
+                new AddNewOrderWindow(currentCart).ShowDialog();
+                this.Close();
+            }
         }
     }
 }

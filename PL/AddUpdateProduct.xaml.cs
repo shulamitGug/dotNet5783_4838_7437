@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
+
 namespace PL
 {
     /// <summary>
@@ -123,10 +124,10 @@ namespace PL
             }
         }
     }
-    public class NotBooleanToVisibilityConverter : IValueConverter
+    public class ConvertStatus : IValueConverter
     {
         //convert from source property type to target property type
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Visibility Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool boolValue = (bool)value;
             if (boolValue)
@@ -138,8 +139,24 @@ namespace PL
                 return Visibility.Visible;
             }
         }
+        public bool Convert(int value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value>0)
+            {
+                return true; //Visibility.Collapsed;
+            }
+            else
+            {
+                return false;
+            }
+        }
         //convert from target property type to source property type
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
