@@ -22,8 +22,6 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         //IEnumerable<BO.ProductForList?> products;
-
-
         public ObservableCollection<BO.ProductForList?> products
         {
             get { return (ObservableCollection<BO.ProductForList?>)GetValue(productsProperty); }
@@ -33,7 +31,6 @@ namespace PL
         // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty productsProperty =
             DependencyProperty.Register("products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
-
 
         /// <summary>
         /// A function that returns the list of products to display

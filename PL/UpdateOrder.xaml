@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.UpdateOrder"
+﻿<Window  x:Class="PL.UpdateOrder"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,35 +9,38 @@
         Title="UpdateOrder" Height="592" Width="1035">
     <Window.Resources>
         <local:ConvertDate1 x:Key="coooo"/>
+        <Style x:Key="textBlockDesign" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Red"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
     </Window.Resources>
     <Grid x:Name="stackPanel" RenderTransformOrigin="0.747,0.398">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="id" HorizontalAlignment="Left" Margin="133,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.89,0.635" Height="26" Width="20"/>
-        <TextBlock Text="customer name" HorizontalAlignment="Left" Margin="133,123,0,0" VerticalAlignment="Top" Height="26" Width="92"/>
-        <TextBlock Text="status" HorizontalAlignment="Left" Margin="133,180,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.064,0.134" Height="26" Width="41"/>
-        <TextBlock Text="customer adress" HorizontalAlignment="Left" Margin="133,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.096,0.282" Height="26" Width="97"/>
-        <TextBlock Text="total price" HorizontalAlignment="Left" Margin="122,277,0,0" VerticalAlignment="Top" Height="26" Width="63"/>
-        <TextBlock  Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="309,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.477,0.585" Height="22"/>
-        <TextBlock IsEnabled="false" Text="{Binding Path=Status}" HorizontalAlignment="Left" Margin="309,182,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
-        <TextBlock IsEnabled="false" Text="{Binding Path=CustomerAdress}" HorizontalAlignment="Left" Margin="309,235,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.632,0.504" Height="22"/>
-        <TextBlock IsEnabled="false" Text="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="309,281,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.664,0.611" Height="22"/>
-        <Label Content="update order" FontSize="20" HorizontalAlignment="Left" Margin="222,23,0,0" VerticalAlignment="Top" Height="36" Width="337"/>
-        <Label Content="customer email" HorizontalAlignment="Left" Margin="133,321,0,0" VerticalAlignment="Top" Height="26" Width="126" RenderTransformOrigin="1.024,0.181"/>
-        <Label Content="payment date" HorizontalAlignment="Left" Margin="133,350,0,0" VerticalAlignment="Top"/>
-        <Label Content="order date" HorizontalAlignment="Left" Margin="141,381,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.002"/>
-        <Label Content="ship date" HorizontalAlignment="Left" Margin="148,415,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.66,-0.884"/>
-        <Label Content="delivery date" HorizontalAlignment="Left" Margin="147,455,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.156"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="order id" HorizontalAlignment="Left" Margin="133,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.89,0.635" Height="26" Width="20"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="customer name" HorizontalAlignment="Left" Margin="133,106,0,0" VerticalAlignment="Top" Height="52" Width="119"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="status" HorizontalAlignment="Left" Margin="133,143,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.064,0.134" Height="26" Width="41"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="customer adress" HorizontalAlignment="Left" Margin="130,182,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.096,0.282" Height="26" Width="97"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="total price" HorizontalAlignment="Left" Margin="133,223,0,0" VerticalAlignment="Top" Height="26" Width="63"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}"  Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="270,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.477,0.585" Height="22"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=Status}" HorizontalAlignment="Left" Margin="249,143,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=CustomerAdress}" HorizontalAlignment="Left" Margin="249,186,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.632,0.504" Height="22"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Margin="249,225,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.664,0.611" Height="22"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text=" order details" FontSize="20" HorizontalAlignment="Left" Margin="222,23,0,0" VerticalAlignment="Top" Height="36" Width="337"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="customer email" HorizontalAlignment="Left" Margin="130,261,0,0" VerticalAlignment="Top" Height="26" Width="126" RenderTransformOrigin="1.024,0.181"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="order date" HorizontalAlignment="Left" Margin="140,308,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.002"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="ship date" HorizontalAlignment="Left" Margin="140,351,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.66,-0.884" Height="35" Width="56"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="delivery date" HorizontalAlignment="Left" Margin="133,387,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.156" Height="39"/>
         <ListView ItemsSource="{Binding Path=Items}" RenderTransformOrigin="26.05,-6.398" Margin="512,89,124,143"/>
-        <TextBlock  Text="{Binding Path=CustomerEmail}" HorizontalAlignment="Left" Margin="309,323,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBlock  Text="{Binding Path=PaymentDate}" HorizontalAlignment="Left" Margin="309,350,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBlock Text="{Binding Path=OrderDate}" HorizontalAlignment="Left" Margin="309,377,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBlock  Text="{Binding Path=ShipDate}" HorizontalAlignment="Left" Margin="309,417,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBlock  Text="{Binding Path=DeliveryDate}" HorizontalAlignment="Left" Margin="309,473,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBlock  Text="{Binding Path=CustomerName}" HorizontalAlignment="Left" Margin="309,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <Button Name="updateShipDateBtn" Visibility="{Binding Path=ShipDate , Converter={StaticResource coooo}}"  Click="updateShipDateBtn_Click"  Content="update shipDate" HorizontalAlignment="Left" Margin="215,502,0,0" VerticalAlignment="Top" Height="23" Width="119" RenderTransformOrigin="7.045,5.437"/>
-        <Button Visibility="{Binding Path=DeliveryDate , Converter={StaticResource coooo}}" Click="updateDerliveryDateBtn_Click" Content="updateDerliveryDate" x:Name="updateDerliveryDateBtn" HorizontalAlignment="Left" Margin="37,502,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.838,0.75"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=CustomerEmail}" HorizontalAlignment="Left" Margin="249,259,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=OrderDate}" HorizontalAlignment="Left" Margin="249,308,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=ShipDate}" HorizontalAlignment="Left" Margin="249,350,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=DeliveryDate}" HorizontalAlignment="Left" Margin="249,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Path=CustomerName}" HorizontalAlignment="Left" Margin="249,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Button Name="updateShipDateBtn" Visibility="{Binding Path=ShipDate , Converter={StaticResource coooo}}"  Click="updateShipDateBtn_Click"  Content="update shipDate" HorizontalAlignment="Left" Margin="272,486,0,0" VerticalAlignment="Top" Height="23" Width="118" RenderTransformOrigin="7.045,5.437"/>
+        <Button Visibility="{Binding Path=DeliveryDate , Converter={StaticResource coooo}}" Click="updateDerliveryDateBtn_Click" Content="updateDerliveryDate" x:Name="updateDerliveryDateBtn" HorizontalAlignment="Left" Margin="96,482,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.838,0.75"/>
+        <TextBlock FontSize="30"  Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="643,20,0,0" TextWrapping="Wrap" Text="products:" VerticalAlignment="Top" Height="42" Width="412"/>
     </Grid>
 </Window>

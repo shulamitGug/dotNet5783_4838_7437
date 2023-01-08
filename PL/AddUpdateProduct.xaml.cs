@@ -32,14 +32,13 @@ namespace PL
         public static readonly DependencyProperty productProperty =
             DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
 
-        private int productId;
         public AddUpdateProduct()
         {
             InitializeComponent();
             state = "add";
-            OkayBtn.Content = "add";
+            //OkayBtn.Content = "add";
             product = new BO.Product();
-            deleteProdBtn.Visibility = Visibility.Hidden;
+            //deleteProdBtn.Visibility = Visibility.Hidden;
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoryProd_selector.SelectedItem = (BO.Category)7;
         }
@@ -52,11 +51,11 @@ namespace PL
         {
             InitializeComponent();
             //bigGrid.DataContext = state;
-            idProd_txt.IsEnabled = false;
-            productId = id;
-            deleteProdBtn.Visibility = Visibility.Visible;
+            //idProd_txt.IsEnabled = false;
+            //productId = id;
+            //deleteProdBtn.Visibility = Visibility.Visible;
             state ="update";
-            OkayBtn.Content = "update";
+            //OkayBtn.Content = "update";
             product = bl!.Product.GetProductById(id);
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
@@ -77,7 +76,7 @@ namespace PL
                     try
                     {
                        
-                         if(state =="update")
+                         if(state=="update")
                         {
                             bl!.Product.Update(product);
                             MessageBox.Show("the product updated");
@@ -114,8 +113,8 @@ namespace PL
         {
             try
             {
-                bl!.Product.Delete(productId);
-                MessageBox.Show($"the product with {productId} id deleted");
+                bl!.Product.Delete(product.ID);
+                MessageBox.Show($"the product with {product.ID} id deleted");
                 this.Close();
             }
             catch (BO.NotExistBlException ex)
@@ -126,30 +125,6 @@ namespace PL
     }
     public class ConvertStatus : IValueConverter
     {
-        //convert from source property type to target property type
-        public Visibility Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            bool boolValue = (bool)value;
-            if (boolValue)
-            {
-                return Visibility.Hidden; //Visibility.Collapsed;
-            }
-            else
-            {
-                return Visibility.Visible;
-            }
-        }
-        public bool Convert(int value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value>0)
-            {
-                return true; //Visibility.Collapsed;
-            }
-            else
-            {
-                return false;
-            }
-        }
         //convert from target property type to source property type
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -158,7 +133,42 @@ namespace PL
 
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if ((int)value == 0)
+                return "add";
+            return "update";
+
+        }
+    }
+    public class convertStatusVisible : IValueConverter
+    {
+        //convert from target property type to source property type
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
             throw new NotImplementedException();
+        }
+
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value == 0)
+                return Visibility.Hidden;
+            return Visibility.Visible;
+
+        }
+    }
+    public class ConvertIsEnabled : IValueConverter
+    {
+        //convert from target property type to source property type
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value == 0)
+                return true;
+            return false;
+
         }
     }
 }

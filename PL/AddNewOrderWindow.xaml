@@ -1,4 +1,4 @@
-﻿<Window Background="Black" x:Class="PL.AddNewOrderWindow"
+﻿<Window Background="White" x:Class="PL.AddNewOrderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <ListView Background="Black" MouseDoubleClick="ListView1_MouseDoubleClick"
+        <ListView  MouseDoubleClick="ListView1_MouseDoubleClick"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
             ItemsSource="{Binding}"
@@ -32,16 +32,16 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Id}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Id}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="id" >product id</GridViewColumnHeader>
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >product id</GridViewColumnHeader>
                     </GridViewColumn>
                     <!--DisplayMemberBinding="{Binding Name}" Width="100"-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Name}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Name}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="Name">name</GridViewColumnHeader>
@@ -49,15 +49,15 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Price}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Price}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="Price">price</GridViewColumnHeader>
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}">price</GridViewColumnHeader>
                     </GridViewColumn>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Category}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Category}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="Name">category</GridViewColumnHeader>
@@ -65,7 +65,7 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Amount}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Amount}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="Name" Height="26" Width="97" RenderTransformOrigin="0.141,0.732">amount in stock</GridViewColumnHeader>
@@ -74,7 +74,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="Name" Height="26" Width="97" RenderTransformOrigin="0.141,0.732">add to cart</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Background="Yellow" Content="add" x:Name="addBtn" Click="addBtn_Click"></Button>
+                                <Button  Content="add" x:Name="addBtn" Click="addBtn_Click"></Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -83,6 +83,6 @@
         </ListView>
         <Button Background="Yellow" x:Name="shopCartBtn" Click="shopCartBtn_Click" Content="מעבר לסל הקניות" HorizontalAlignment="Left" Margin="647,25,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" HorizontalAlignment="Left" Margin="627,113,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="סינון על פי קטגוריה" Foreground="Yellow" HorizontalAlignment="Left" Margin="627,71,0,0" VerticalAlignment="Top" Height="37" Width="120"/>
+        <Label Content="סינון על פי קטגוריה" HorizontalAlignment="Left" Margin="627,71,0,0" VerticalAlignment="Top" Height="37" Width="120"/>
     </Grid>
 </Window>
