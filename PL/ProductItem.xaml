@@ -9,7 +9,6 @@
         Title="ProductItem" Height="450" Width="800">
 
     <Window.Resources>
-        <!--<local:ConvertBool x:Key="hhh"/>-->
         <Style x:Key="textBlockDesign" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Green"></Setter>
             <Setter Property="FontSize" Value="25"></Setter>
@@ -19,18 +18,18 @@
     </Window.Resources>
     <Grid>
         <TextBlock Style="{DynamicResource textBlockDesign}" Text="prodect details" HorizontalAlignment="Left" Margin="245,31,0,0" VerticalAlignment="Top" Height="44" Width="330"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="191,81,0,0" TextWrapping="Wrap" Text="id" VerticalAlignment="Top" RenderTransformOrigin="0.485,-0.315"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="193,119,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Height="34" RenderTransformOrigin="0.409,-1.42"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="191,158,0,0" TextWrapping="Wrap" Text="price" VerticalAlignment="Top" RenderTransformOrigin="0.51,-0.171"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="193,201,0,0" TextWrapping="Wrap" Text="category" VerticalAlignment="Top" RenderTransformOrigin="0.333,-0.351"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Id}" HorizontalAlignment="Left" Margin="325,81,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Name}" HorizontalAlignment="Left" Margin="325,119,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  RenderTransformOrigin="0.52,-0.133"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="325,164,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="325,207,0,0" TextWrapping="Wrap" Text="{Binding Category}" VerticalAlignment="Top"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="193,237,0,0" TextWrapping="Wrap" Text="amount" VerticalAlignment="Top"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="350,248,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Height="27" RenderTransformOrigin="-0.417,0.261"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="193,275,0,0" TextWrapping="Wrap" Text="in stock" VerticalAlignment="Top"/>
-        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="355,281,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="184,77,0,0" TextWrapping="Wrap" Text="product id" VerticalAlignment="Top" RenderTransformOrigin="0.485,-0.315"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,115,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Height="34" RenderTransformOrigin="0.409,-1.42"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="184,154,0,0" TextWrapping="Wrap" Text="price" VerticalAlignment="Top" RenderTransformOrigin="0.51,-0.171"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,197,0,0" TextWrapping="Wrap" Text="category" VerticalAlignment="Top" RenderTransformOrigin="0.333,-0.351"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Id}" HorizontalAlignment="Left" Margin="318,77,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="{Binding Name}" HorizontalAlignment="Left" Margin="318,115,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  RenderTransformOrigin="0.52,-0.133"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="318,160,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="318,203,0,0" TextWrapping="Wrap" Text="{Binding Category}" VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,233,0,0" TextWrapping="Wrap" Text="amount" VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="316,236,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Height="28" RenderTransformOrigin="-0.417,0.261" Width="42"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,271,0,0" TextWrapping="Wrap" Text="in stock" VerticalAlignment="Top"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="316,271,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="62" RenderTransformOrigin="-1.109,0.376" Height="41"/>
 
     </Grid>
 </Window>

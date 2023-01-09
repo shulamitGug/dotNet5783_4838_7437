@@ -10,31 +10,39 @@
     <Window.Resources>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
             <Setter Property="Background" Value="green"></Setter>
-            <Setter Property="Width" Value="88"></Setter>
-            <Setter Property="Margin" Value="5,0,0,0"></Setter>
+            <Setter Property="Width" Value="120"></Setter>
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Margin" Value="10,2,0,0"></Setter>
         </Style>
+        <Style x:Key="textBlogDesign" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Margin" Value="5,2,0,0"></Setter>
+            <Setter Property="Foreground" Value="Green"></Setter>
+        </Style>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="433.042"/>
+            <RowDefinition Height="104.954"/>
+            <RowDefinition Height="328.088"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding}" x:Name="orderList" MouseDoubleClick="orderList_MouseDoubleClick" Margin="117,0,180,9">
+        <ListView ItemsSource="{Binding}" x:Name="orderList" MouseDoubleClick="orderList_MouseDoubleClick" Margin="33,0,33,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="inStock" >order id</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Green" Text="{Binding ID}"></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}" Foreground="Green" Text="{Binding ID}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn>
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="inStock" Height="21" Width="97" >customer name</GridViewColumnHeader>
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}">customer name</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Green" Text="{Binding CustomerName}"></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}"  Text="{Binding CustomerName}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -42,7 +50,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >status</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Green" Text="{Binding Status}" ></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}" Text="{Binding Status}" ></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -50,7 +58,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}"  >amount of items</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Green" Text="{Binding AmountOfItems}"></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}" Text="{Binding AmountOfItems}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -58,7 +66,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}">total price</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Green" Text="{Binding TotalPrice}"></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}" Text="{Binding TotalPrice}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -33,14 +33,14 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="1
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}">product id</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="Yellow" Text="{Binding ID}"/>
+                                <TextBlock Foreground="Black" Text="{Binding ID}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Name}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Name}" Foreground="Black" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}">product name</GridViewColumnHeader>
@@ -48,15 +48,15 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="1
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Price}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Price}" Foreground="Black" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="id" >price</GridViewColumnHeader>
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >price</GridViewColumnHeader>
                     </GridViewColumn>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="Txt" Text="{Binding Path=Category}" Foreground="Yellow" />
+                                <TextBlock x:Name="Txt" Text="{Binding Path=Category}" Foreground="Black" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Height="28" Width="94" >category</GridViewColumnHeader>

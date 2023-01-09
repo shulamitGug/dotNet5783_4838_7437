@@ -38,16 +38,6 @@ namespace PL
            newOrder= bl!.Order.GetOrderDetails(id);
             Help.setX(state);
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
             newOrder = bl!.Order.updateSendingDate(newOrder!.ID);
@@ -60,7 +50,6 @@ namespace PL
     }
    public  class ConvertDate1 : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(!Help.getX())

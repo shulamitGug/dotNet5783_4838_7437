@@ -80,7 +80,7 @@ namespace BlImplementation
             IEnumerable<DO.Product?> productsList=idal!.Product.GetAll();
             IEnumerable<DO.OrderItem?> doItems = idal!.OrderItem.GetAll(x => x?.OrderId ==id);
             //A loop that goes through the order details and enters them into the bo data type
-            IEnumerable<BO.OrderItem?> x = from itemQuery in doItems
+            IEnumerable<BO.OrderItem?> allItems = from itemQuery in doItems
                     let prodName = productsList.FirstOrDefault(x => x?.ID == ((DO.OrderItem)itemQuery!).ProductId)?.Name
                     select new BO.OrderItem
                     {
@@ -90,9 +90,8 @@ namespace BlImplementation
                         TotalPrice = ((DO.OrderItem)itemQuery!).Price * ((DO.OrderItem)itemQuery!).Amount,
                         Amount = ((DO.OrderItem)itemQuery!).Amount
                     };
-            if(x!=null)
-                boOrder.Items = x.ToList();
-
+            if(allItems != null)
+                boOrder.Items = allItems.ToList();
                 boOrder.TotalPrice = boOrder.Items.Sum(o => ((BO.OrderItem)o!).TotalPrice);
             //foreach (DO.OrderItem? item in doItems)
             //{
@@ -158,7 +157,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            if (doOrder.DeliveryDate!=null)
+            if (doOrder.DeliveryDate==null&&doOrder.ShipDate!=null)
             {
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -183,7 +182,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder.ID, Status = CheckStatus(doOrder) };
+            BO.OrderTracking trackingOrder = new BO.OrderTracking() { ID = doOrder.ID, StatusOrder = CheckStatus(doOrder) };
             trackingOrder.Tracking = new List<Tuple<DateTime?, string?>>();
             Tuple<DateTime?, string?> newTuple = new Tuple<DateTime?, string?>(doOrder.OrderDate, "approved");
             trackingOrder.Tracking.Add(newTuple);

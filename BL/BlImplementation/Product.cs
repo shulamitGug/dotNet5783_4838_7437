@@ -21,12 +21,6 @@ namespace BlImplementation
             //the loop go at all products
             return from item in idal!.Product.GetAll()
                    select new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
-                //foreach (DO.Product? item in idal!.Product.GetAll())
-                //{
-                //    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price??0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID??0 };
-                //    products.Add(pr);
-                //}
-                //return products;
         }
         /// <summary>
         /// this function return all the detail of this product id
@@ -85,7 +79,7 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public void Delete(int id)
         {
-           IEnumerable<DO.OrderItem?> orderItemList;
+           //IEnumerable<DO.OrderItem?> orderItemList;
             //IEnumerable<DO.Order?> orderList = idal!.Order.GetAll();
             //check if the product exsist in order
             var items=idal!.OrderItem.GetAll(x=>x?.ProductId==id);

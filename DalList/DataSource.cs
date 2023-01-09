@@ -59,15 +59,17 @@ internal static class DataSource
         {
                 TimeSpan ts = new TimeSpan(s_rand.Next(5));
                 TimeSpan ts1 = new TimeSpan(s_rand.Next(200));
-            DateTime? d;
+            DateTime? d,t;
             if (i % 2 == 0)
             {
                  d = null;
+                t = null;
             }
 
             else
             {
                  d = DateTime.MinValue + ts;
+                t = DateTime.MinValue + ts + ts1;
             }
 
             Order o = new Order()
@@ -78,7 +80,7 @@ internal static class DataSource
                 CustomerEmail = arrCustomerEmail[s_rand.Next(arrCustomerName.Length)],
                 OrderDate = DateTime.Today,
                 ShipDate = d,
-                DeliveryDate = DateTime.MinValue + ts+ts1,
+                DeliveryDate = t,
             };
             OrdersList.Add(o);
 

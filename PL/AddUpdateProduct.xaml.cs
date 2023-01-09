@@ -36,9 +36,7 @@ namespace PL
         {
             InitializeComponent();
             state = "add";
-            //OkayBtn.Content = "add";
             product = new BO.Product();
-            //deleteProdBtn.Visibility = Visibility.Hidden;
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoryProd_selector.SelectedItem = (BO.Category)7;
         }
@@ -50,12 +48,7 @@ namespace PL
         public AddUpdateProduct(int id)
         {
             InitializeComponent();
-            //bigGrid.DataContext = state;
-            //idProd_txt.IsEnabled = false;
-            //productId = id;
-            //deleteProdBtn.Visibility = Visibility.Visible;
             state ="update";
-            //OkayBtn.Content = "update";
             product = bl!.Product.GetProductById(id);
             CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
@@ -72,10 +65,8 @@ namespace PL
             {
                 try
                 {
-                    //BO.Product newProduct = new BO.Product() { ID = Convert.ToInt32(idProd_txt.Text), CategoryP = (BO.Category)CategoryProd_selector.SelectedItem, Price = Convert.ToInt32(PriceProd_txt.Text), InStock = Convert.ToInt32(InStockProd_txt.Text), Name = NameProd_txt.Text };
                     try
                     {
-                       
                          if(state=="update")
                         {
                             bl!.Product.Update(product);

@@ -26,7 +26,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Width="87" >product name</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="20,10,0,0" Foreground="Yellow" Text="{Binding ProductName}"/>
+                                <TextBlock Margin="20,10,0,0"  Text="{Binding ProductName}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -34,10 +34,11 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >total Price</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="40,10,0,0" Foreground="Yellow" Text="{Binding TotalPrice}"/>
+                                <TextBlock Margin="40,10,0,0"  Text="{Binding TotalPrice}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    
                     <!--<GridViewColumn Header="product name" DisplayMemberBinding="{Binding ProductName}" Width="120"/>-->
                     <!--<GridViewColumn Header="total price" DisplayMemberBinding="{Binding TotalPrice}" Width="120"/>-->
                     <GridViewColumn Width="120">

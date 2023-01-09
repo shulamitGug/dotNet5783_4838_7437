@@ -29,8 +29,6 @@ namespace PL
         public static readonly DependencyProperty catalogProductsProperty =
             DependencyProperty.Register("catalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
         private BO.Cart? currentCart;
-
-        //IEnumerable<BO.ProductItem?> products;
         BlApi.IBl? bl = BlApi.Factory.Get();
         public AddNewOrderWindow(BO.Cart currentCartOut)
         {
@@ -78,8 +76,23 @@ namespace PL
 
         private void ListView1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int id = ((BO.ProductItem)((System.Windows.Controls.ListView)sender).SelectedItem).Id;
+            int id = ((BO.ProductItem)((ListView)sender).SelectedItem).Id;
             new ProductItem(id).ShowDialog();   
+        }
+
+        private void groupingBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var x =
+                     from prod in catalogProducts
+                     group prod by prod.Category into g
+                     select g;
+
+        }
+
+        private void orderByPrice_Click(object sender, RoutedEventArgs e)
+        {
+            var temp = catalogProducts.OrderBy(x => x.Price);
+            catalogProducts =temp ==null?new():new(temp);
         }
     }
 }

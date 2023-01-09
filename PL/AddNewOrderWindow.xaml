@@ -81,8 +81,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Background="Yellow" x:Name="shopCartBtn" Click="shopCartBtn_Click" Content="מעבר לסל הקניות" HorizontalAlignment="Left" Margin="647,25,0,0" VerticalAlignment="Top"/>
+        <Button Background="Yellow" x:Name="shopCartBtn" Click="shopCartBtn_Click" Content="Beyond the shopping cart" HorizontalAlignment="Left" Margin="627,43,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="categorySelector" SelectionChanged="categorySelector_SelectionChanged" HorizontalAlignment="Left" Margin="627,113,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="סינון על פי קטגוריה" HorizontalAlignment="Left" Margin="627,71,0,0" VerticalAlignment="Top" Height="37" Width="120"/>
+        <Label Content="Filter by category" HorizontalAlignment="Left" Margin="627,71,0,0" VerticalAlignment="Top" Height="37" Width="120"/>
+        <Button x:Name="groupingBtn" Click="groupingBtn_Click" Content="group" HorizontalAlignment="Left" Margin="664,171,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="orderByPrice" Click="orderByPrice_Click" Content="sort by price" HorizontalAlignment="Left" Margin="664,217,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

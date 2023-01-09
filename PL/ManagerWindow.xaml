@@ -15,9 +15,9 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Style="{DynamicResource buttonsDesign}" Click="ProductsShow_Click" x:Name="ProductsShow" Content="תצוגת מוצרים" HorizontalAlignment="Left" Margin="88,0,0,0" VerticalAlignment="Center" Height="129" Width="214"/>
-        <Button Style="{DynamicResource buttonsDesign}" Click="OrderShow_Click" x:Name="OrderShow" Content="תצוגת הזמנות" HorizontalAlignment="Left" Margin="427,0,0,0" VerticalAlignment="Center" Height="129" Width="215"/>
-        <Label FontSize="30" Foreground="Red" Content="?מנהל, מה תרצה לראות" HorizontalAlignment="Left" Margin="204,62,0,0" VerticalAlignment="Top" Height="47" Width="542"/>
+        <Button Style="{DynamicResource buttonsDesign}" Click="ProductsShow_Click" x:Name="ProductsShow" Content="Product display" HorizontalAlignment="Left" Margin="88,0,0,0" VerticalAlignment="Center" Height="129" Width="253"/>
+        <Button Style="{DynamicResource buttonsDesign}" Click="OrderShow_Click" x:Name="OrderShow" Content="order display" HorizontalAlignment="Left" Margin="427,0,0,0" VerticalAlignment="Center" Height="129" Width="239"/>
+        <Label FontSize="30" Foreground="Red" Content="Manage what you would like to see?" HorizontalAlignment="Left" Margin="133,65,0,0" VerticalAlignment="Top" Height="53" Width="566" RenderTransformOrigin="0.582,0.462"/>
 
     </Grid>
 </Window>

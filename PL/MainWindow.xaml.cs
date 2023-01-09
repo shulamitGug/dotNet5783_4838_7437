@@ -29,31 +29,6 @@ namespace PL
         {
             InitializeComponent();
         }
-        /// <summary>
-        /// A function to display the products
-        /// </summary>
-        /// <param name="sender">sender runtime variable</param>
-        /// <param name="e">A variable of the type of event that happens</param>
-        //private void ShowProductsBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    new ProductListWindow(bl).Show();
-        //}
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    new OrderListWindow(bl).Show();
-        //}
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    new AddNewOrderWindow().Show();
-        //}
-
-        //private void Button_Click_2(object sender, RoutedEventArgs e)
-        //{
-        //    new Order_Tracking(10).Show();
-        //}
-
         private void addNewOrd_Click(object sender, RoutedEventArgs e)
         {
             new CustomerDetails().Show();
@@ -66,7 +41,33 @@ namespace PL
 
         private void orderTracking_Click(object sender, RoutedEventArgs e)
         {
-            new OrderTracking(3).Show();
+            InputBox.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            String input = InputTextBox.Text;
+            try
+            {
+                new OrderTracking((int.Parse(input))).Show();
+
+                InputBox.Visibility = System.Windows.Visibility.Collapsed;
+                // Clear InputBox.
+                InputTextBox.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("please enter number");
+            }
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            InputBox.Visibility = System.Windows.Visibility.Collapsed;
+
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
+
         }
     }
 }
