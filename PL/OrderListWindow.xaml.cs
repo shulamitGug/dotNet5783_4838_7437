@@ -44,7 +44,7 @@ namespace PL
 
         private void orderList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int id = ((BO.OrderForList)((System.Windows.Controls.ListView)sender).SelectedItem).ID;
+            int id = ((BO.OrderForList)((ListView)sender).SelectedItem).ID;
             new UpdateOrder(id,"update").ShowDialog();
             var temp = bl!.Order.GetOrders();
             orders = temp == null ? new() : new(temp);

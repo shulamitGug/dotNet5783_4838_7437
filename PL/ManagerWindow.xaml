@@ -9,15 +9,19 @@
     <Window.Resources>
         <Style x:Key="buttonsDesign" TargetType="Button">
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Background" Value="Red" />
+            <Setter Property="Background" Value="SkyBlue" />
+            <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontSize" Value="28" />
             <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Width" Value="260" />
+            <Setter Property="Height" Value="84" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Style="{DynamicResource buttonsDesign}" Click="ProductsShow_Click" x:Name="ProductsShow" Content="Product display" HorizontalAlignment="Left" Margin="88,0,0,0" VerticalAlignment="Center" Height="129" Width="253"/>
-        <Button Style="{DynamicResource buttonsDesign}" Click="OrderShow_Click" x:Name="OrderShow" Content="order display" HorizontalAlignment="Left" Margin="427,0,0,0" VerticalAlignment="Center" Height="129" Width="239"/>
-        <Label FontSize="30" Foreground="Red" Content="Manage what you would like to see?" HorizontalAlignment="Left" Margin="133,65,0,0" VerticalAlignment="Top" Height="53" Width="566" RenderTransformOrigin="0.582,0.462"/>
+        <Button Style="{DynamicResource buttonsDesign}" Click="ProductsShow_Click" x:Name="ProductsShow" Content="Product display"  Margin="107,0,0,0"  />
+        <Button Style="{DynamicResource buttonsDesign}" Click="OrderShow_Click" x:Name="OrderShow" Content="order display" Margin="427,0,0,0"/>
+        <Label FontSize="30" Foreground="SkyBlue" BorderBrush="SkyBlue" BorderThickness="4" Content="Manage what you would like to see?" HorizontalAlignment="Left" Margin="132,53,0,0" VerticalAlignment="Top" Height="60" Width="501" RenderTransformOrigin="0.582,0.462"/>
 
     </Grid>
 </Window>

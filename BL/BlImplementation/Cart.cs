@@ -55,8 +55,9 @@ namespace BlImplementation
         /// <param name="id">product id</param>
         /// <param name="amount"></param>
         /// <exception cref="Exception">if the produnt does not exist in cart</exception>
-        public void UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
+        public BO.Cart? UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
         {
+            BO.Cart cart = new BO.Cart();
             int itemAmount = 0;
             DO.Product doProduct;
             try
@@ -86,6 +87,12 @@ namespace BlImplementation
             boCart.TotalPrice -= orderItem.TotalPrice;
             orderItem.TotalPrice=amount*doProduct.Price;
             boCart.TotalPrice += orderItem.TotalPrice;
+             cart.TotalPrice=boCart.TotalPrice;
+            cart.Items = new(boCart.Items);
+            cart.CustomerEmail =boCart.CustomerEmail;
+            cart.CustomerName =boCart.CustomerName;
+            cart.CustomerAdress =boCart.CustomerAdress;
+            return cart;
         }
 
         /// <summary>
@@ -95,15 +102,15 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public void OrderConfirmation(BO.Cart boCart)
         {
-            if (boCart.CustomerAdress == "")
+            if (boCart.CustomerAdress == null)
                 throw new BO.NotEnoughDetailsException("customerAsress");
-            if (boCart.CustomerEmail == "")
+            if (boCart.CustomerEmail == null)
                 throw new BO.NotEnoughDetailsException("customerEmail");
-            if (boCart.CustomerName == "")
+            if (boCart.CustomerName == null)
                 throw new BO.NotEnoughDetailsException("customerName");
-            if (boCart.Items == null)
-                throw new Exception("the cart is empty");
             int negativeAmount = boCart.Items!.Count(x => x!.Amount < 0);
+            if (!boCart.CustomerEmail!.Contains("@"))
+                throw new BO.NotValidException("mail");
                 if(negativeAmount > 0)
                 throw new BO.NotValidException("amount");
             try
@@ -183,10 +190,16 @@ namespace BlImplementation
         }
         public BO.Cart deleteProduct(BO.Cart boCart, int id)
         {
+            BO.Cart cart = new BO.Cart();
             idal!.OrderItem.Delete(id);
             boCart.TotalPrice -= boCart.Items!.FirstOrDefault(x => x?.OrderItemId == id)!.TotalPrice;
             boCart.Items!.RemoveAll(x => x?.OrderItemId == id);
-            return boCart;
+            cart.TotalPrice = boCart.TotalPrice;
+            cart.Items = new(boCart.Items);
+            cart.CustomerEmail = boCart.CustomerEmail;
+            cart.CustomerName = boCart.CustomerName;
+            cart.CustomerAdress = boCart.CustomerAdress;
+            return cart;
         }
         private bool UpdateAmountDal(DO.Product prod)
         {

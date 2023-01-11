@@ -10,19 +10,19 @@
     <Window.Resources>
         <Style x:Key="textBlocksDesign" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="Green" />
+            <Setter Property="Foreground" Value="SkyBlue" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontFamily" Value="Consolas" />
         </Style>
     </Window.Resources>
     <Grid>
-        <Label FontSize="30" Foreground="Green" Content="Some details about you" HorizontalAlignment="Left" Margin="227,43,0,0" VerticalAlignment="Top" Height="51" Width="384"/>
-        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="276,118,0,0" TextWrapping="Wrap" Text="full name" VerticalAlignment="Top" RenderTransformOrigin="0.481,0.102" Height="33" Width="101"/>
-        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,159,0,0" TextWrapping="Wrap" Text="adress" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.501,-0.008"/>
-        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,0,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Center" Height="31"/>
-        <TextBox x:Name="txtName" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="381,118,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.865,0.201"/>
-        <TextBox x:Name="txtAdrss" Text="{Binding CustomerAdress}" HorizontalAlignment="Left" Margin="381,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtEmail" Text="{Binding CustomerEmail}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Center" Width="120" Margin="381,0,0,0"/>
-        <Button Background="Green" Click="okayBtn_Click" x:Name="okayBtn" Content="okay" HorizontalAlignment="Left" Margin="335,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.768,0.714" Height="37" Width="84"/>
+        <Label FontSize="30" BorderBrush="SkyBlue" BorderThickness="4" Foreground="SkyBlue" Content="Some details about you" HorizontalAlignment="Left" Margin="227,33,0,0" VerticalAlignment="Top" Height="61" Width="382"/>
+        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="276,114,0,0" TextWrapping="Wrap" Text="full name" VerticalAlignment="Top" RenderTransformOrigin="0.481,0.102" Height="33" Width="101"/>
+        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,155,0,0" TextWrapping="Wrap" Text="adress" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.501,-0.008"/>
+        <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,198,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Height="31"/>
+        <TextBox x:Name="txtName" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="381,114,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.865,0.201"/>
+        <TextBox x:Name="txtAdrss" Text="{Binding CustomerAdress}" HorizontalAlignment="Left" Margin="381,158,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtEmail" Text="{Binding CustomerEmail}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Margin="381,202,0,0"/>
+        <Button FontWeight="Bold" Background="SkyBlue" Click="okayBtn_Click" x:Name="okayBtn" Content="okay" HorizontalAlignment="Left" Margin="346,245,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.768,0.714" Height="37" Width="84"/>
     </Grid>
 </Window>

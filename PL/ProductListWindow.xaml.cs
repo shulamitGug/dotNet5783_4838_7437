@@ -21,7 +21,6 @@ namespace PL
     public partial class ProductListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        //IEnumerable<BO.ProductForList?> products;
         public ObservableCollection<BO.ProductForList?> products
         {
             get { return (ObservableCollection<BO.ProductForList?>)GetValue(productsProperty); }
@@ -43,8 +42,8 @@ namespace PL
             var tmp = bl!.Product.GetProductForList(); 
             products = tmp == null ? new():new(tmp);
             //ProductListview.ItemsSource = products;
-            CategoriesSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            CategoriesSelector.SelectedItem = (BO.Category)7;
+            //CategoriesSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //CategoriesSelector.SelectedItem = (BO.Category)7;
         }
         /// <summary>
         /// Filter by category
@@ -74,7 +73,7 @@ namespace PL
         /// </summary>
         /// <param name="sender">sender runtime variable</param>
         /// <param name="e">A variable of the type of event that happens </param>
-        private void AddProductBtn_Click(object sender, RoutedEventArgs e)
+        private void AddProductBtn_Click(object sender,RoutedEventArgs e)
         {
             new AddUpdateProduct().ShowDialog();
             var tmp = bl!.Product.GetProductForList();

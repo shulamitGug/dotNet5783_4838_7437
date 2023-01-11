@@ -9,15 +9,17 @@
         Title="OrderListWindow" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="green"></Setter>
+            <Setter Property="Background" Value="SkyBlue"></Setter>
             <Setter Property="Width" Value="120"></Setter>
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Margin" Value="10,2,0,0"></Setter>
         </Style>
         <Style x:Key="textBlogDesign" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"></Setter>
-            <Setter Property="Margin" Value="5,2,0,0"></Setter>
-            <Setter Property="Foreground" Value="Green"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Width" Value="120"></Setter>
+            <Setter Property="Margin" Value="7,10,0,0"></Setter>
+            <!--<Setter Property="FontWeight" Value="Bold"></Setter>-->
+            <Setter Property="TextAlignment" Value="Center"></Setter>
         </Style>
 
     </Window.Resources>
@@ -27,14 +29,14 @@
             <RowDefinition Height="328.088"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding}" x:Name="orderList" MouseDoubleClick="orderList_MouseDoubleClick" Margin="33,0,33,0" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding}" x:Name="orderList" MouseDoubleClick="orderList_MouseDoubleClick" Margin="33,0,44,0" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="inStock" >order id</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Style="{DynamicResource textBlogDesign}" Foreground="Green" Text="{Binding ID}"></TextBlock>
+                                <TextBlock Style="{DynamicResource textBlogDesign}" Text="{Binding ID}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

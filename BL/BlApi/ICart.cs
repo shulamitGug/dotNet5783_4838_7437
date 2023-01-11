@@ -11,7 +11,7 @@ namespace BlApi
         public BO.Cart AddProduct(BO.Cart boCart, int id);
         public BO.Cart deleteProduct(BO.Cart boCart, int id);
 
-        public void UpdateAmountOfProduct(BO.Cart boCart,int id, int amount);
+        public BO.Cart UpdateAmountOfProduct(BO.Cart boCart,int id, int amount);
         public void OrderConfirmation(BO.Cart boCart);
 
     }

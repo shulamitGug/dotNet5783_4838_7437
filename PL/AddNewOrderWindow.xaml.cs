@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,6 +20,19 @@ namespace PL
     /// </summary>
     public partial class AddNewOrderWindow : Window
     {
+
+
+        //public IEnumerable catalog
+        //{
+        //    get { return (IEnumerable)GetValue(catalogProperty); }
+        //    set { SetValue(catalogProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for catalog.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty catalogProperty =
+        //    DependencyProperty.Register("catalog", typeof(IEnumerable), typeof(Window), new PropertyMetadata(null));
+
+
         public ObservableCollection<BO.ProductItem?> catalogProducts
         {
             get { return (ObservableCollection<BO.ProductItem?>)GetValue(catalogProductsProperty); }
@@ -36,15 +50,15 @@ namespace PL
             currentCart = currentCartOut;
             var temp = bl!.Product.GetCatalog();
             catalogProducts = temp == null ? new() : new(temp);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            categorySelector.SelectedItem= (BO.Category.None);
+            //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //categorySelector.SelectedItem= (BO.Category.None);
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            int id=(((BO.ProductItem)((System.Windows.FrameworkElement)sender).DataContext).Id);
-            if (!((BO.ProductItem)((System.Windows.FrameworkElement)sender).DataContext).InStock)
-                MessageBox.Show("הפריט חסר במלאי");
+            int id=(((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
+            if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
+                MessageBox.Show("The item is out of stock");
             else
             {
                 currentCart = bl!.Cart.AddProduct(currentCart!,id);
@@ -57,7 +71,7 @@ namespace PL
             BO.Category categories = (BO.Category)categorySelector.SelectedItem;
             if (categories == (BO.Category.None))
             {
-                var tmp = bl!.Product.GetCatalog();
+                var tmp= bl!.Product.GetCatalog();
                 catalogProducts = tmp == null ? new() : new(tmp);
             }
             else
@@ -70,8 +84,8 @@ namespace PL
 
         private void shopCartBtn_Click(object sender, RoutedEventArgs e)
         {
-            new ShoppingCart(currentCart!).ShowDialog();
             this.Close();
+            new ShoppingCart(currentCart!).ShowDialog();
         }
 
         private void ListView1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -83,16 +97,17 @@ namespace PL
         private void groupingBtn_Click(object sender, RoutedEventArgs e)
         {
             var x =
-                     from prod in catalogProducts
+                     from prod in bl!.Product.GetCatalog()
                      group prod by prod.Category into g
-                     select g;
+                     select new { Key = g.Key, prod = g };
+            //catalog = x;
 
         }
 
         private void orderByPrice_Click(object sender, RoutedEventArgs e)
         {
-            var temp = catalogProducts.OrderBy(x => x.Price);
-            catalogProducts =temp ==null?new():new(temp);
+            var temp = catalogProducts.OrderBy(x => x?.Price);
+            catalogProducts = temp == null ? new() : new(temp);
         }
     }
 }

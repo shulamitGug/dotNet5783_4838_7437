@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding Path=MyInput, RelativeSource={RelativeSource self}}"
         Title="MainWindow" Height="450" Width="800">
+    
     <Window.Resources>
+        <local:vkjjn x:Key="fff"/>
+
         <Style x:Key="buttonsDesign" TargetType="Button">
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Background" Value="SkyBlue" />
@@ -15,19 +19,19 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid Panel.ZIndex="3"  x:Name="InputBox" Visibility="Collapsed">
+        <Grid  Panel.ZIndex="3" x:Name="InputBox" Visibility="{Binding Path=Myvisibility,Mode=TwoWay}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
                 MinWidth="250"
-                Background="Orange" 
+                Background="SkyBlue" 
                 BorderBrush="Black" 
                 BorderThickness="1" 
                 CornerRadius="0,55,0,55" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center">
                 <StackPanel>
-                    <TextBlock Margin="5" Text="order id:" FontWeight="Bold" FontFamily="Cambria" />
-                    <TextBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                    <TextBlock  Margin="5" Text="order id:" FontWeight="Bold" FontFamily="Cambria" />
+                    <TextBox Text="{Binding Text}" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="YesButton" Margin="5" Content="Yes" Click="YesButton_Click" Background="{x:Null}" />
                         <Button x:Name="NoButton" Margin="5" Content="No" Click="NoButton_Click" Background="{x:Null}" />
@@ -36,12 +40,12 @@
             </Border>
         </Grid>
         <Grid Panel.ZIndex="2">
-        <Button Style="{DynamicResource buttonsDesign}"  x:Name="managerWindow" Click="managerWindow_Click" Content="Director" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
-        <Button Style="{DynamicResource buttonsDesign}" x:Name="addNewOrd" Click="addNewOrd_Click"  Content="New order" HorizontalAlignment="Left" Margin="273,0,0,0" VerticalAlignment="Center" Height="99" Width="226"/>
-        <Button Style="{DynamicResource buttonsDesign}" x:Name="orderTracking" Click="orderTracking_Click" Content="Order tracking" HorizontalAlignment="Left" Margin="536,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
-        <Label Foreground="SkyBlue"  FontSize="30" FontWeight="Bold" Content="Welcome to the makeup store"   HorizontalAlignment="Left" Margin="138,55,0,0"  VerticalAlignment="Top" Height="67" Width="462"/>
-        <!--<Button Height="100" Content="show all products" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />-->
-        <!--<Button Click="Button_Click" Content="btnShowOrder" HorizontalAlignment="Left" Margin="210,282,0,0" VerticalAlignment="Top"/>
+            <Button Style="{DynamicResource buttonsDesign}"  x:Name="managerWindow" Click="managerWindow_Click" Content="Director" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
+            <Button Style="{DynamicResource buttonsDesign}" x:Name="addNewOrd" Click="addNewOrd_Click"  Content="New order" HorizontalAlignment="Left" Margin="273,0,0,0" VerticalAlignment="Center" Height="99" Width="226"/>
+            <Button Style="{DynamicResource buttonsDesign}" x:Name="orderTracking" Click="orderTracking_Click" Content="Order tracking" HorizontalAlignment="Left" Margin="536,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
+            <Label Foreground="Black" Background="SkyBlue"   FontSize="30" FontWeight="Bold" Content="Welcome to the makeup store"   HorizontalAlignment="Center" Margin="0,61,0,0" HorizontalContentAlignment="Center"  VerticalAlignment="Top" Height="76" Width="800"/>
+            <!--<Button Height="100" Content="show all products" x:Name="ShowProductsBtn" Click="ShowProductsBtn_Click" />-->
+            <!--<Button Click="Button_Click" Content="btnShowOrder" HorizontalAlignment="Left" Margin="210,282,0,0" VerticalAlignment="Top"/>
         <Button Content="order" HorizontalAlignment="Left" Margin="570,293,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
         <Button Content="tracking" Click="Button_Click_2" HorizontalAlignment="Left" Margin="118,328,0,0" VerticalAlignment="Top"/>-->
         </Grid>

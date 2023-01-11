@@ -5,13 +5,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        DataContext="{Binding Path=orderItems, RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding Path=MyCart, RelativeSource={RelativeSource Mode=Self}}"
         mc:Ignorable="d"
         Title="ShoppingCart" Height="450" Width="800" >
     <Window.Resources>
+        <local:ConvertEmptyCartGrid x:Key="gridCon"/>
+        <local:ConvertEmptyCartText x:Key="textCon"/>
+        <local:ConvertPositiveAmount x:Key="Positive"/>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="Yellow"></Setter>
-            <Setter Property="Width" Value="70"></Setter>
+            <Setter Property="Background" Value="SkyBlue"></Setter>
+            <Setter Property="Width" Value="90"></Setter>
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Margin" Value="1,2,0,0"></Setter>
+        </Style>
+        <Style x:Key="textBlockDesign" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Width" Value="90"></Setter>
+            <Setter Property="Margin" Value="1,1,0,0"></Setter>
+            <!--<Setter Property="FontWeight" Value="Bold"></Setter>-->
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="buttonDesign" TargetType="Button">
+            <Setter Property="Background" Value="SkyBlue"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="170"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -19,58 +37,64 @@
             <ColumnDefinition Width="29*"/>
             <ColumnDefinition Width="771*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="listViewall" ItemsSource="{Binding}" Margin="0,0,164,5" Grid.ColumnSpan="2" >
+        <ListView Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}" x:Name="listViewall" ItemsSource="{Binding Items}" Margin="100,13,226,13" Grid.Column="1" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="120">
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Width="87" >product name</GridViewColumnHeader>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}"  >product name</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="20,10,0,0"  Text="{Binding ProductName}"/>
+                                <TextBlock Style="{DynamicResource textBlockDesign}"  Text="{Binding ProductName}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="120">
-                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >total Price</GridViewColumnHeader>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="40,10,0,0"  Text="{Binding TotalPrice}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    
-                    <!--<GridViewColumn Header="product name" DisplayMemberBinding="{Binding ProductName}" Width="120"/>-->
-                    <!--<GridViewColumn Header="total price" DisplayMemberBinding="{Binding TotalPrice}" Width="120"/>-->
-                    <GridViewColumn Width="120">
+                    <GridViewColumn>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >amount</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="50,10,0,0" Text="{Binding Path=Amount}" x:Name="changeAmountTxt" ></TextBox>
+                                <Grid >
+                                    <TextBox FontWeight="bold" IsEnabled="False" Height="22" Margin="20,10,0,0" Width="20" x:Name="txtNum"  Text="{Binding Amount}" />
+                                    <Button Click="cmdUp_Click" Height="22" Margin="52,10,0,0" Width="20" x:Name="cmdUp"  FontSize="12"  Content="▲"   />
+                                    <Button IsEnabled="{Binding Amount, Converter={StaticResource Positive}}" Click="cmdDown_Click" Height="22" Margin="-15,10,0,0" Width="20" x:Name="cmdDown"  FontSize="12"  Content="▼"   />
+                                </Grid>
+                                <!--<TextBox Margin="50,10,0,0" Text="{Binding Path=Amount}" x:Name="changeAmountTxt" ></TextBox>-->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="120">
+                    <GridViewColumn >
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >total Price</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{DynamicResource textBlockDesign}"  Text="{Binding TotalPrice}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--<GridViewColumn Header="product name" DisplayMemberBinding="{Binding ProductName}" Width="120"/>-->
+                    <!--<GridViewColumn Header="total price" DisplayMemberBinding="{Binding TotalPrice}" Width="120"/>-->
+
+                    <!--<GridViewColumn Width="120">
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >change</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Margin="10,10,0,0"  Background="Yellow" Content="change amont" x:Name="changeAmountBtn" Click="changeAmountBtn_Click"></Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="120">
+                    </GridViewColumn>-->
+                    <GridViewColumn >
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" >delete</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Margin="30,10,0,0"  Content="delete" Background="Yellow" x:Name="DeleteBtn" Click="DeleteBtn_Click"></Button>
+                                <Button Width="50" Background="SkyBlue" BorderBrush="Black" Margin="20,2,0,0" Content="delete"  x:Name="DeleteBtn" Click="DeleteBtn_Click"></Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock Foreground="Black" Name="totalPriceTxt" Text="total price" HorizontalAlignment="Left" Margin="612,111,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="32" Width="85" RenderTransformOrigin="0.479,3.06" Grid.Column="1"/>
-        <Button Background="Yellow" Name="OrderConfirmation" Click="OrderConfirmation_Click" Content="Order Confirmation" HorizontalAlignment="Left" Margin="612,39,0,0"   VerticalAlignment="Top" Height="32" Width="85" RenderTransformOrigin="1.02,0.414" Grid.Column="1"/>
-        <!--<TextBlock Text="אין פריטים בסל" HorizontalAlignment="Left" Margin="619,182,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="32" Width="85"/>-->
-
+        <TextBlock Style="{DynamicResource textBlockDesign}" Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}" Foreground="Black" Name="totalPriceTxt" Text="{Binding TotalPrice}" HorizontalAlignment="Left" Margin="611,231,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="32" Width="86" RenderTransformOrigin="0.479,3.06" Grid.Column="1"/>
+        <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}"  Name="OrderConfirmation" Click="OrderConfirmation_Click" Content="Order Confirmation" HorizontalAlignment="Left" Margin="569,292,0,0"   VerticalAlignment="Top" RenderTransformOrigin="1.02,0.414" Grid.Column="1"/>
+        <TextBlock FontSize="30"  Visibility="{Binding Path=Items.Count, Converter={StaticResource textCon}}" Text="There are no items in the basket" HorizontalAlignment="Left" Margin="100,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Grid.Column="1" Height="56" Width="445"/>
+        <Button Style="{DynamicResource buttonDesign}"  x:Name="backShopping" Click="backShopping_Click" Grid.Column="1" Content="to continue shopping" HorizontalAlignment="Left" Margin="569,347,0,0" VerticalAlignment="Top"  />
+        <Label Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}" Grid.Column="1" Content="total price" HorizontalAlignment="Left" Margin="625,191,0,0" VerticalAlignment="Top" Height="26" Width="72"/>
     </Grid>
 </Window>

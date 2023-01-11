@@ -20,8 +20,6 @@ namespace PL
     /// </summary>
     public partial class CustomerDetails : Window
     {
-
-
         public BO.Cart currentCart
         {
             get { return (BO.Cart)GetValue(currentCartProperty); }
@@ -42,11 +40,11 @@ namespace PL
         private void okayBtn_Click(object sender, RoutedEventArgs e)
         {
             if (txtAdrss.Text == "" || txtEmail.Text == "" || txtName.Text == "")
-                MessageBox.Show("לא הוזנו מספיק פרטים");
+                MessageBox.Show("Not enough data has been entered");
             else
             {
-                new AddNewOrderWindow(currentCart).ShowDialog();
                 this.Close();
+                new AddNewOrderWindow(currentCart).ShowDialog();
             }
         }
     }

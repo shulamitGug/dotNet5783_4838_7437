@@ -20,7 +20,6 @@ namespace PL
     /// </summary>
     public partial class AddUpdateProduct : Window
     {
-        string state;
         BlApi.IBl? bl = BlApi.Factory.Get();
         public BO.Product product
         {
@@ -32,12 +31,12 @@ namespace PL
         public static readonly DependencyProperty productProperty =
             DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
 
+        bool update = false;
         public AddUpdateProduct()
         {
             InitializeComponent();
-            state = "add";
             product = new BO.Product();
-            CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategoryProd_selector.SelectedItem = (BO.Category)7;
         }
         /// <summary>
@@ -48,9 +47,9 @@ namespace PL
         public AddUpdateProduct(int id)
         {
             InitializeComponent();
-            state ="update";
+            update = true;
             product = bl!.Product.GetProductById(id);
-            CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
         /// <summary>
         /// Action that happens while clicking the confirmation button and updates or adds the product respectively
@@ -67,7 +66,7 @@ namespace PL
                 {
                     try
                     {
-                         if(state=="update")
+                         if(update==true)
                         {
                             bl!.Product.Update(product);
                             MessageBox.Show("the product updated");
@@ -81,10 +80,6 @@ namespace PL
                     catch (BO.AlreadyExistBlException ex)
                     {
                         MessageBox.Show("the product is already exist");
-                    }
-                    catch(BO.NotExistBlException ex)
-                    {
-                        MessageBox.Show("the product is not exist");
                     }
                     this.Close();
                 }

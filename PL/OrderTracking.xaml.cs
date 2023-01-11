@@ -37,7 +37,6 @@ namespace PL
         {
             InitializeComponent();
             orderTracking = bl!.Order.StatusOrder(id);
-            //statusTxt.Text=orderTracking.Status.ToString();
         }
 
         private void orderDetailsBtn_Click(object sender, RoutedEventArgs e)

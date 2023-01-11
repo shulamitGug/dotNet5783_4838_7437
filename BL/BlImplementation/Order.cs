@@ -162,6 +162,10 @@ namespace BlImplementation
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
             }
+            //else
+            //{
+            //    throw new BO.
+            //}
             BO.Order newOrder = GetOrderDetails(id);
             newOrder.Status = (BO.OrderStatus)3;
             return newOrder;
