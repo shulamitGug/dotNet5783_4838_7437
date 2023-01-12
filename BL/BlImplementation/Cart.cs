@@ -55,7 +55,7 @@ namespace BlImplementation
         /// <param name="id">product id</param>
         /// <param name="amount"></param>
         /// <exception cref="Exception">if the produnt does not exist in cart</exception>
-        public BO.Cart? UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
+        public BO.Cart UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
         {
             BO.Cart cart = new BO.Cart();
             int itemAmount = 0;
@@ -79,7 +79,7 @@ namespace BlImplementation
             itemAmount = orderItem.Amount;
 
             if (amount > itemAmount)//check if there is enough in the stock
-                if (amount - itemAmount > doProduct.InStock)
+                if (amount > doProduct.InStock)
                     throw new BO.NotInStockException(id, doProduct.Name ?? "");
             //update
 

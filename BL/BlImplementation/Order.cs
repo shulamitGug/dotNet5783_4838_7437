@@ -162,10 +162,11 @@ namespace BlImplementation
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
             }
-            //else
-            //{
-            //    throw new BO.
-            //}
+            else
+            {
+
+                throw new BO.CannotUpdateDate("cannot update delivery date before ship date");
+            }
             BO.Order newOrder = GetOrderDetails(id);
             newOrder.Status = (BO.OrderStatus)3;
             return newOrder;

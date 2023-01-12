@@ -100,7 +100,6 @@ namespace PL
                      from prod in bl!.Product.GetCatalog()
                      group prod by prod.Category into g
                      select new { Key = g.Key, prod = g };
-            //catalog = x;
 
         }
 

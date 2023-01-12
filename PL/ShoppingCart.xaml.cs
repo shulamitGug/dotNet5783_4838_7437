@@ -94,7 +94,15 @@ namespace PL
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
             int amount = ((BO.OrderItem)((System.Windows.FrameworkElement)sender).DataContext).Amount+1;
-           MyCart= bl!.Cart.UpdateAmountOfProduct(MyCart, id, amount);
+            try
+            {
+                MyCart = bl!.Cart.UpdateAmountOfProduct(MyCart, id, amount);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("אזל המלאי");
+                MyCart!.Items!.FirstOrDefault(x => x?.ProductId == id)!.Amount--;
+            }
         }
     }
     public class ConvertEmptyCartGrid : IValueConverter
@@ -102,7 +110,7 @@ namespace PL
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((IEnumerable<BO.OrderItem>)value==null)
+            if ((IEnumerable<BO.OrderItem>)value==null|| ((List<BO.OrderItem>)value).Count==0)
                 return Visibility.Hidden;
             return Visibility.Visible;
 

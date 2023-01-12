@@ -20,8 +20,23 @@ namespace PL
     /// </summary>
     public partial class UpdateOrder : Window
     {
-
         BlApi.IBl? bl = BlApi.Factory.Get();
+
+
+
+        public Visibility State
+        {
+            get { return (Visibility)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for State.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StateProperty =
+            DependencyProperty.Register("State", typeof(Visibility), typeof(Window), new PropertyMetadata(null));
+
+
+
+
         public BO.Order? newOrder
         {
             get { return (BO.Order)GetValue(newOrderProperty); }
@@ -32,28 +47,39 @@ namespace PL
         public static readonly DependencyProperty newOrderProperty =
             DependencyProperty.Register("newOrder", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
-        public UpdateOrder(int id,string state)
+        public UpdateOrder(int id, string _state)
         {
             InitializeComponent();
-           newOrder= bl!.Order.GetOrderDetails(id);
-            Help.setX(state);
+            State = _state == "show" ? Visibility.Hidden : Visibility.Visible;
+            newOrder = bl!.Order.GetOrderDetails(id);
+            //Help.setX(state);
         }
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
             newOrder = bl!.Order.updateSendingDate(newOrder!.ID);
         }
+
         private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            newOrder=bl!.Order.UpdateProvideDate(newOrder!.ID);
-        }
+            try
+            {
+                newOrder = bl!.Order.UpdateProvideDate(newOrder!.ID);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
 
-    }
+        }
+    
+
+ }
    public  class ConvertDate1 : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(!Help.getX())
-                return Visibility.Hidden;
+            //if(!Help.getX())
+            //    return Visibility.Hidden;
             if (value == null)
             return Visibility.Visible;
             return Visibility.Hidden;

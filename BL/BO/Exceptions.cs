@@ -116,6 +116,19 @@ namespace BO
         public override string ToString() =>
         $"No values have been entered in the field {field}";
     }
+    public class CannotUpdateDate : Exception
+    {
+
+        public CannotUpdateDate(string massege) : base(massege)
+        {
+
+        }
+        public CannotUpdateDate(string massege, Exception innerException) : base(massege, innerException)
+        {
+        }
+        public override string ToString() =>
+        $"cannot update date";
+    }
 }
 
 

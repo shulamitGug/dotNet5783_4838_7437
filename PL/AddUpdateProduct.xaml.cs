@@ -79,7 +79,7 @@ namespace PL
                     }
                     catch (BO.AlreadyExistBlException ex)
                     {
-                        MessageBox.Show("the product is already exist");
+                        MessageBox.Show($"{ex.InnerException}");
                     }
                     this.Close();
                 }
@@ -105,7 +105,7 @@ namespace PL
             }
             catch (BO.NotExistBlException ex)
             {
-                MessageBox.Show("the product is not exist");
+                MessageBox.Show($"{ex.InnerException}");
             }
         }
     }

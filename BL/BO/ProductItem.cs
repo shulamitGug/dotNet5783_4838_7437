@@ -14,6 +14,8 @@ namespace BO
         public Category? Category { get; set; }
         public bool InStock { get; set; }
         public int Amount { get; set; }
+        public string? Image { get; set; }
+
         public override string ToString()
         {
             return ToolStringClass.ToStringProperty(this);

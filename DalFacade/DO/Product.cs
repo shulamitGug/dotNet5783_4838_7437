@@ -25,7 +25,7 @@ public struct Product
     /// The amount of products in stock
     /// </summary>
     public int InStock { get; set; }
-
+    public string? Image { get; set; }
     public override string ToString() => $@"
 Product ID={ID}: {Name}, 
 category - {CategoryP}

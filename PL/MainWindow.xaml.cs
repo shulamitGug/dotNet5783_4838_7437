@@ -70,7 +70,7 @@ namespace PL
             }
             catch(BO.NotExistBlException ex)
             {
-                MessageBox.Show("this order does not exist");
+                MessageBox.Show($"{ex.InnerException}");
                 MyInput.Text = String.Empty;
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace PL
         }
         private string text= String.Empty;
         private Visibility myvisibility= Visibility.Collapsed;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
     }
 

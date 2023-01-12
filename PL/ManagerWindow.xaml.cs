@@ -33,7 +33,7 @@ namespace PL
 
         private void OrderShow_Click(object sender, RoutedEventArgs e)
         {
-            new OrderListWindow(bl).Show();
+            new OrderListWindow(bl!).Show();
         }
     }
 }
