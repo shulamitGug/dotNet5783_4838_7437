@@ -38,5 +38,10 @@ namespace PL
             InitializeComponent();
             productItem=bl!.Product.GetProductItemById(id);
         }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

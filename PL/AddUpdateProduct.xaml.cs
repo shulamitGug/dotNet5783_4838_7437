@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
+using Microsoft.Win32;
 
 namespace PL
 {
@@ -20,25 +21,31 @@ namespace PL
     /// </summary>
     public partial class AddUpdateProduct : Window
     {
+
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public BO.Product product
+
+
+        public BO.Product Product
         {
-            get { return (BO.Product)GetValue(productProperty); }
-            set { SetValue(productProperty, value); }
+            get { return (BO.Product)GetValue(ProductProperty); }
+            set { SetValue(ProductProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for product.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty productProperty =
-            DependencyProperty.Register("product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for Product.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProductProperty =
+            DependencyProperty.Register("Product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
 
-        bool update = false;
+        private bool update = false;
+        
         public AddUpdateProduct()
         {
             InitializeComponent();
-            product = new BO.Product();
-            //CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            CategoryProd_selector.SelectedItem = (BO.Category)7;
+            Product = new BO.Product();
+            Product.CategoryP= BO.Category.None;
         }
+
+
+
         /// <summary>
         /// An operation that receives a product id and updates its details
         /// </summary>
@@ -48,9 +55,11 @@ namespace PL
         {
             InitializeComponent();
             update = true;
-            product = bl!.Product.GetProductById(id);
+            Product = bl!.Product.GetProductById(id);
             //CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
+
+
         /// <summary>
         /// Action that happens while clicking the confirmation button and updates or adds the product respectively
         /// </summary>
@@ -66,14 +75,14 @@ namespace PL
                 {
                     try
                     {
-                         if(update==true)
+                        if (update == true)
                         {
-                            bl!.Product.Update(product);
+                            bl!.Product.Update(Product);
                             MessageBox.Show("the product updated");
                         }
                         else
                         {
-                            bl!.Product.Add(product);
+                            bl!.Product.Add(Product);
                             MessageBox.Show("the product added");
                         }
                     }
@@ -85,9 +94,9 @@ namespace PL
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(""+ex);
-                }    
-                
+                    MessageBox.Show("" + ex);
+                }
+
             }
         }
         /// <summary>
@@ -95,12 +104,12 @@ namespace PL
         /// </summary>
         /// <param name="sender">sender runtime variable</param>
         /// <param name="e">A variable of the type of event that happens</param>
-        private void deleteProdBtn_Click(object sender, RoutedEventArgs e)
+        private void DeleteProdBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bl!.Product.Delete(product.ID);
-                MessageBox.Show($"the product with {product.ID} id deleted");
+                bl!.Product.Delete(Product.ID);
+                MessageBox.Show($"the product with {Product.ID} id deleted");
                 this.Close();
             }
             catch (BO.NotExistBlException ex)
@@ -108,53 +117,40 @@ namespace PL
                 MessageBox.Show($"{ex.InnerException}");
             }
         }
-    }
-    public class ConvertStatus : IValueConverter
-    {
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+
+        /// <summary>
+        /// choose picture
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            BO.Product p = new BO.Product();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                p.ID=Product.ID;
+                p.InStock=Product.InStock;
+                p.Name=Product.Name;
+                p.Price=Product.Price;
+                p.CategoryP=Product.CategoryP;
+                p.Image = openFileDialog.SafeFileName;
+                
+            }
+            Product = p;
         }
 
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((int)value == 0)
-                return "add";
-            return "update";
 
-        }
-    }
-    public class convertStatusVisible : IValueConverter
-    {
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
 
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// Back to the main menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if ((int)value == 0)
-                return Visibility.Hidden;
-            return Visibility.Visible;
-
-        }
-    }
-    public class ConvertIsEnabled : IValueConverter
-    {
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((int)value == 0)
-                return true;
-            return false;
-
+            this.Close();
         }
     }
+  
 }

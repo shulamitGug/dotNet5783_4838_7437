@@ -21,9 +21,9 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
-
-
+        /// <summary>
+        /// Dependent attribute that describes input box for entering an order number
+        /// </summary>
         public InputBox MyInput
         {
             get { return (InputBox)GetValue(MyInputProperty); }
@@ -38,49 +38,81 @@ namespace PL
         /// <summary>
         /// Constructor action for mainWindow
         /// </summary>
-        /// 
         public MainWindow()
         {
             InitializeComponent();
             MyInput = new InputBox();
         }
-        private void addNewOrd_Click(object sender, RoutedEventArgs e)
+
+
+        /// <summary>
+        /// add order for customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddNewOrd_Click(object sender, RoutedEventArgs e)
         {
             new CustomerDetails().Show();
+            this.Close();
         }
 
-        private void managerWindow_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// open manager window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManagerWindow_Click(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow().Show(); 
+            new ManagerWindow().Show();
+            this.Close();
         }
 
-        private void orderTracking_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// change input box to be visible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OrderTracking_Click(object sender, RoutedEventArgs e)
         {
            MyInput.Myvisibility = Visibility.Visible;
         }
 
+
+        /// <summary>
+        /// open order tracking according to id
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                new OrderTracking((int.Parse(MyInput.Text))).Show();
-                MyInput.Myvisibility =Visibility.Collapsed;
+                new OrderTracking((int.Parse(MyInput.MyText))).Show();
                 // Clear InputBox.
-                MyInput.Text = String.Empty;
+                MyInput.MyText = String.Empty;
+                MyInput.Myvisibility =Visibility.Collapsed;
             }
             catch(BO.NotExistBlException ex)
             {
                 MessageBox.Show($"{ex.InnerException}");
-                MyInput.Text = String.Empty;
+                MyInput.MyText = String.Empty;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("please enter number");
-                MyInput.Text = String.Empty;
+                MyInput.MyText = String.Empty;
 
             }
         }
 
+
+        /// <summary>
+        /// change input box to be hidden
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = Visibility.Collapsed;
@@ -89,9 +121,16 @@ namespace PL
 
         }
     }
+
+
+
+
+    /// <summary>
+    /// new class that describe instance of input box
+    /// </summary>
     public class InputBox: INotifyPropertyChanged
     {
-        public Visibility Myvisibility
+        public Visibility Myvisibility //visible of input box
         {
             get { return myvisibility; }
             set
@@ -103,19 +142,19 @@ namespace PL
                 }
             }
         }
-        public string Text
+        public string MyText //text of input box
         {
-            get { return text; }
+            get { return myText; }
             set
             {
-                text = value;
+                myText = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("text"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("myText"));
                 }
             }
         }
-        private string text= String.Empty;
+        private string myText = String.Empty;
         private Visibility myvisibility= Visibility.Collapsed;
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -40,9 +40,9 @@ namespace BlImplementation
             {
                 if (boCart.Items == null)
                     boCart.Items = new List<BO.OrderItem?>();
-                DO.OrderItem item= new DO.OrderItem() { ProductId = id,Price = doProduct.Price,Amount=1 };
-                int idOrd = idal.OrderItem.Add(item);
-                BO.OrderItem boItem = new BO.OrderItem() {OrderItemId=idOrd, ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
+                //DO.OrderItem item= new DO.OrderItem() { ProductId = id,Price = doProduct.Price,Amount=1 };
+                //int idOrd = idal.OrderItem.Add(item);
+                BO.OrderItem boItem = new BO.OrderItem() { ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
                 boCart.Items.Add(boItem);
             }
             boCart.TotalPrice += doProduct.Price;
@@ -79,14 +79,23 @@ namespace BlImplementation
             itemAmount = orderItem.Amount;
 
             if (amount > itemAmount)//check if there is enough in the stock
+            
                 if (amount > doProduct.InStock)
                     throw new BO.NotInStockException(id, doProduct.Name ?? "");
+            if(amount==0)
+            {
+                boCart.TotalPrice -= orderItem.TotalPrice;
+                boCart.Items.RemoveAll(x => x?.ProductId == id);
+            }
+            else
+            {
+                orderItem.Amount = amount;
+                boCart.TotalPrice -= orderItem.TotalPrice;
+                orderItem.TotalPrice = amount * doProduct.Price;
+                boCart.TotalPrice += orderItem.TotalPrice;
+            }
             //update
-
-            orderItem.Amount = amount;
-            boCart.TotalPrice -= orderItem.TotalPrice;
-            orderItem.TotalPrice=amount*doProduct.Price;
-            boCart.TotalPrice += orderItem.TotalPrice;
+           
              cart.TotalPrice=boCart.TotalPrice;
             cart.Items = new(boCart.Items);
             cart.CustomerEmail =boCart.CustomerEmail;
@@ -188,19 +197,19 @@ namespace BlImplementation
 
             //}
         }
-        public BO.Cart deleteProduct(BO.Cart boCart, int id)
-        {
-            BO.Cart cart = new BO.Cart();
-            idal!.OrderItem.Delete(id);
-            boCart.TotalPrice -= boCart.Items!.FirstOrDefault(x => x?.OrderItemId == id)!.TotalPrice;
-            boCart.Items!.RemoveAll(x => x?.OrderItemId == id);
-            cart.TotalPrice = boCart.TotalPrice;
-            cart.Items = new(boCart.Items);
-            cart.CustomerEmail = boCart.CustomerEmail;
-            cart.CustomerName = boCart.CustomerName;
-            cart.CustomerAdress = boCart.CustomerAdress;
-            return cart;
-        }
+        //public BO.Cart deleteProduct(BO.Cart boCart, int id)
+        //{
+        //    BO.Cart cart = new BO.Cart();
+        //    idal!.OrderItem.Delete(id);
+        //    boCart.TotalPrice -= boCart.Items!.FirstOrDefault(x => x?.OrderItemId == id)!.TotalPrice;
+        //    boCart.Items!.RemoveAll(x => x?.OrderItemId == id);
+        //    cart.TotalPrice = boCart.TotalPrice;
+        //    cart.Items = new(boCart.Items);
+        //    cart.CustomerEmail = boCart.CustomerEmail;
+        //    cart.CustomerName = boCart.CustomerName;
+        //    cart.CustomerAdress = boCart.CustomerAdress;
+        //    return cart;
+        //}
         private bool UpdateAmountDal(DO.Product prod)
         {
             idal!.Product.Update(prod);

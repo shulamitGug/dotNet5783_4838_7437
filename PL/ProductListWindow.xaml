@@ -1,4 +1,4 @@
-﻿ <Window Background="White" x:Class="PL.ProductListWindow"
+﻿<Window Background="White" x:Class="PL.ProductListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,7 +17,7 @@
                 <x:Type TypeName="thisEnum:Category" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-
+        <local:ImageConverter x:Key="imageConverter"/>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
             <Setter Property="Background" Value="SkyBlue"></Setter>
             <Setter Property="Width" Value="98"></Setter>
@@ -27,17 +27,27 @@
     <Grid Name="MainGrid" Margin="-20,0,0,78">
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
-            <Label Foreground="SkyBlue" FontWeight="Bold" FontSize="20" Content="choose category" Margin="241,35,10,-52" Grid.Column="1"/>
+            <Label Foreground="SkyBlue" FontWeight="Bold" FontSize="20" Content="choose category" Margin="234,124,17,-141" Grid.Column="1"/>
             <ComboBox SelectedItem="{x:Static thisEnum:Category.None }" ItemsSource="{Binding Source={StaticResource allCategories}}" Name="CategoriesSelector"
-Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="257,90,26,-84"/>
+Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="250,179,33,-173"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <ListView Background="White" ItemsSource="{Binding}" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="80,10,328,-19" Grid.RowSpan="3">
+        <ListView Background="White" ItemsSource="{Binding}" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-46" Grid.RowSpan="3">
             <ListView.View>
                 <GridView x:Name="gridView">
+                    <GridViewColumn>
+
+
+                        <GridViewColumnHeader Style="{DynamicResource listViewDesign}">image</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image  Margin="12,0,0,0" Height="40" Width="50" Source="{Binding Image,StringFormat='pack://application:,,,/PL;component/PicturesProduct/{0}.jpg', Converter={StaticResource imageConverter}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn>
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}">product id</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
@@ -46,6 +56,7 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -73,7 +84,8 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Background="SkyBlue" BorderBrush="Black" FontWeight="Bold" x:Name="AddProductBtn" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,275,64,82" Padding="5" Click="AddProductBtn_Click" Width="140" RenderTransformOrigin="0.534,-0.555"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="676,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
+        <Button Background="SkyBlue" BorderBrush="Black" FontWeight="Bold"  Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167" Padding="5" Click="AddProductBtn_Click" Width="140" RenderTransformOrigin="0.534,-0.555"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>

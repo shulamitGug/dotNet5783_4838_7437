@@ -26,14 +26,40 @@ namespace PL
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// show all products
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProductsShow_Click(object sender, RoutedEventArgs e)
         {
             new ProductListWindow(bl).Show();
+            this.Close();
         }
 
+
+        /// <summary>
+        /// show all orders
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OrderShow_Click(object sender, RoutedEventArgs e)
         {
             new OrderListWindow(bl!).Show();
+            this.Close();
+        }
+
+
+        /// <summary>
+        /// back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

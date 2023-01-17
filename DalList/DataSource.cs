@@ -92,8 +92,7 @@ internal static class DataSource
     private static void CreateInitilaizeProduct()
     {
         int cat;
-        string[] arrProductName = { "Makup", "blush", "Primer", "silhouettes", "Rimmel", "Shimmer", "eye brush", "Brush blush", "Eyeliner", "Concealer", "lipstick", "powder", "Bronzer", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush", "Blur brush" };
-        
+        string[] arrProductName = { "makeup", "blush", "primer", "silhouettes", "rimmel", "shimmer", "eye brush", "blush", "sfogit", "concealer", "lipstick", "powder", "bronzer", "blur brush", "blur brush", "blur brush", "blur brush", "blur brush", "blur brush", "blur brush", "blur brush" };
         for (int i = 0; i < 20; i++)
         {
             int instock;
@@ -109,6 +108,7 @@ internal static class DataSource
                 cat = (i + 1) % 6;
             Product p = new Product()
             {
+                Image= $"{arrProductName[i]}.jpg",
                 ID = i+1000000,
                 Name = arrProductName[i],
                 CategoryP = (Category)(cat),

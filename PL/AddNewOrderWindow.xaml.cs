@@ -20,41 +20,41 @@ namespace PL
     /// </summary>
     public partial class AddNewOrderWindow : Window
     {
+        /// <summary>
+        /// A dependent feature that stores all the products in the catalog and updates when there is a change
+        /// </summary>
 
 
-        //public IEnumerable catalog
-        //{
-        //    get { return (IEnumerable)GetValue(catalogProperty); }
-        //    set { SetValue(catalogProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for catalog.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty catalogProperty =
-        //    DependencyProperty.Register("catalog", typeof(IEnumerable), typeof(Window), new PropertyMetadata(null));
-
-
-        public ObservableCollection<BO.ProductItem?> catalogProducts
+        public ObservableCollection<BO.ProductItem?> CatalogProducts
         {
-            get { return (ObservableCollection<BO.ProductItem?>)GetValue(catalogProductsProperty); }
-            set { SetValue(catalogProductsProperty, value); }
+            get { return (ObservableCollection<BO.ProductItem?>)GetValue(CatalogProductsProperty); }
+            set { SetValue(CatalogProductsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty catalogProductsProperty =
-            DependencyProperty.Register("catalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for CatalogProducts.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CatalogProductsProperty =
+            DependencyProperty.Register("CatalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
+ 
         private BO.Cart? currentCart;
+        
         BlApi.IBl? bl = BlApi.Factory.Get();
+
         public AddNewOrderWindow(BO.Cart currentCartOut)
         {
             InitializeComponent();
             currentCart = currentCartOut;
             var temp = bl!.Product.GetCatalog();
-            catalogProducts = temp == null ? new() : new(temp);
-            //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //categorySelector.SelectedItem= (BO.Category.None);
+            CatalogProducts = temp == null ? new() : new(temp);
+     
         }
 
-        private void addBtn_Click(object sender, RoutedEventArgs e)
+
+         /// <summary>
+         /// add product to cart
+         /// </summary>
+         /// <param name="sender">product</param>
+         /// <param name="e"></param>
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             int id=(((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
             if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
@@ -66,47 +66,89 @@ namespace PL
             }
         }
 
-        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        /// <summary>
+        /// filter products by category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category categories = (BO.Category)categorySelector.SelectedItem;
+            BO.Category categories = (BO.Category)CategorySelector.SelectedItem;
             if (categories == (BO.Category.None))
             {
                 var tmp= bl!.Product.GetCatalog();
-                catalogProducts = tmp == null ? new() : new(tmp);
+                CatalogProducts = tmp == null ? new() : new(tmp);
             }
             else
             {
                 var tmp = bl!.Product.GetCatalog(x=>x?.CategoryP==(DO.Category)categories);
-                catalogProducts = tmp == null ? new() : new(tmp);
+                CatalogProducts = tmp == null ? new() : new(tmp);
             }
 
         }
 
-        private void shopCartBtn_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// see the shopping cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShopCartBtn_Click(object sender, RoutedEventArgs e)
         {
+            new ShoppingCart(currentCart!).Show();
             this.Close();
-            new ShoppingCart(currentCart!).ShowDialog();
         }
 
+
+        /// <summary>
+        /// see the product detail
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListView1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int id = ((BO.ProductItem)((ListView)sender).SelectedItem).Id;
             new ProductItem(id).ShowDialog();   
         }
 
-        private void groupingBtn_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Sort into groups by category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GroupingBtn_Click(object sender, RoutedEventArgs e)
         {
             var x =
                      from prod in bl!.Product.GetCatalog()
                      group prod by prod.Category into g
                      select new { Key = g.Key, prod = g };
-
         }
 
-        private void orderByPrice_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Sort by price
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OrderByPrice_Click(object sender, RoutedEventArgs e)
         {
-            var temp = catalogProducts.OrderBy(x => x?.Price);
-            catalogProducts = temp == null ? new() : new(temp);
+            var temp = CatalogProducts.OrderBy(x => x?.Price);
+            CatalogProducts = temp == null ? new() : new(temp);
+        }
+
+
+
+        /// <summary>
+        /// Back to the main menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

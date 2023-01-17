@@ -44,8 +44,10 @@ namespace PL
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).OrderItemId);
-            MyCart = bl!.Cart.deleteProduct(MyCart,id);
+            int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
+            //MyCart = bl!.Cart.deleteProduct(MyCart,id);
+            MyCart = bl!.Cart.UpdateAmountOfProduct(MyCart, id, 0);
+
         }
 
         //private void changeAmountBtn_Click(object sender, RoutedEventArgs e)
@@ -77,20 +79,21 @@ namespace PL
                 new CustomerDetails().Show();
             }
         }
-        private void backShopping_Click(object sender, RoutedEventArgs e)
+        private void BackShopping_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
             new AddNewOrderWindow(MyCart).Show();
+            this.Close();
+
         }
 
-        private void cmdDown_Click(object sender, RoutedEventArgs e)
+        private void CmdDown_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
             int amount = ((BO.OrderItem)((System.Windows.FrameworkElement)sender).DataContext).Amount-1;
            MyCart=bl!.Cart.UpdateAmountOfProduct(MyCart, id, amount);
         }
 
-        private void cmdUp_Click(object sender, RoutedEventArgs e)
+        private void CmdUp_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
             int amount = ((BO.OrderItem)((System.Windows.FrameworkElement)sender).DataContext).Amount+1;
@@ -104,53 +107,12 @@ namespace PL
                 MyCart!.Items!.FirstOrDefault(x => x?.ProductId == id)!.Amount--;
             }
         }
-    }
-    public class ConvertEmptyCartGrid : IValueConverter
-    {
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if ((IEnumerable<BO.OrderItem>)value==null|| ((List<BO.OrderItem>)value).Count==0)
-                return Visibility.Hidden;
-            return Visibility.Visible;
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            new MainWindow().Show();
+            this.Close();
         }
     }
-    public class ConvertEmptyCartText : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((int)value == 0)
-                return Visibility.Visible;
-            return Visibility.Hidden;
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class ConvertPositiveAmount : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((int)value > 1)
-                return true;
-            return false;
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 }

@@ -23,31 +23,51 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-        public ObservableCollection<BO.OrderForList?> orders
+        /// <summary>
+        /// Dependent attribute to describe a dependent collection of orders in a list
+        /// </summary>
+        public ObservableCollection<BO.OrderForList?> Orders
         {
-            get { return (ObservableCollection<BO.OrderForList?>)GetValue(ordersProperty); }
-            set { SetValue(ordersProperty, value); }
+            get { return (ObservableCollection<BO.OrderForList?>)GetValue(OrdersProperty); }
+            set { SetValue(OrdersProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for orders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ordersProperty =
-            DependencyProperty.Register("orders", typeof(ObservableCollection<BO.OrderForList>), typeof(Window), new PropertyMetadata(null));
-
+        // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OrdersProperty =
+            DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
 
         public OrderListWindow(BlApi.IBl _bl)
         {
             InitializeComponent();
             bl = _bl;
             var temp = bl!.Order.GetOrders();
-            orders =temp==null?new():new(temp) ;
+            Orders =temp==null?new():new(temp) ;
         }
 
-        private void orderList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        /// <summary>
+        /// update Order by double click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OrderList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int id = ((BO.OrderForList)((ListView)sender).SelectedItem).ID;
             new UpdateOrder(id,"update").ShowDialog();
             var temp = bl!.Order.GetOrders();
-            orders = temp == null ? new() : new(temp);
+            Orders = temp == null ? new() : new(temp);
+        }
+
+
+        /// <summary>
+        /// back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

@@ -43,5 +43,10 @@ namespace PL
         {
            new UpdateOrder(orderTracking!.ID,"show").Show();
         }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

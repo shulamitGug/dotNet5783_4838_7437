@@ -20,7 +20,7 @@ namespace BlImplementation
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
             return from item in idal!.Product.GetAll()
-                   select new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
+                   select new BO.ProductForList() { Name = item?.Name, Image = item?.Image, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };
         }
         /// <summary>
         /// this function return all the detail of this product id
@@ -38,7 +38,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist",ex);
             }
-            BO.Product boProduct=new BO.Product() { Name = doProduct.Name, Price = doProduct.Price, ID = doProduct.ID, CategoryP = (BO.Category?)doProduct.CategoryP, InStock = doProduct.InStock  };
+            BO.Product boProduct=new BO.Product() { Name = doProduct.Name, Image = doProduct.Image, Price = doProduct.Price, ID = doProduct.ID, CategoryP = (BO.Category?)doProduct.CategoryP, InStock = doProduct.InStock  };
             return boProduct;
         }
         /// <summary>
@@ -60,7 +60,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("the amount can not be nagative");
             if (boProduct.Name == "")
                 throw new BO.NotEnoughDetailsException("name");
-            DO.Product doProduct=new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
+            DO.Product doProduct=new DO.Product() { Name = boProduct.Name,Image=boProduct.Image, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
             int id;
             try
             {
@@ -117,7 +117,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("the amount can not be nagative");
             if (boProduct.Name == "")
                 throw new BO.NotEnoughDetailsException("the name can not be empty");
-            DO.Product doProduct = new DO.Product() { Name = boProduct.Name, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
+            DO.Product doProduct = new DO.Product() { Name = boProduct.Name, Image = boProduct?.Image, Price = boProduct.Price, ID = boProduct.ID, InStock = boProduct.InStock, CategoryP = (DO.Category?)boProduct.CategoryP };
             idal?.Product.Update(doProduct);
         }
         /// <summary>
@@ -134,7 +134,7 @@ namespace BlImplementation
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
                 return from prod in doProduct
-                       select new BO.ProductItem { Id = prod?.ID ?? 0, Name = prod?.Name, Price = prod?.Price ?? 0, Amount = prod?.InStock ?? 0, Category = (BO.Category?)prod?.CategoryP ,InStock= prod?.InStock > 0 ?true:false};
+                       select new BO.ProductItem { Id = prod?.ID ?? 0,Image=prod?.Image, Name = prod?.Name, Price = prod?.Price ?? 0, Amount = prod?.InStock ?? 0, Category = (BO.Category?)prod?.CategoryP ,InStock= prod?.InStock > 0 ?true:false};
             ////foreach (DO.Product? item in doProduct)
             ////{
             ////    if (check == null || check(item))
@@ -167,7 +167,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist", ex);
             }
-            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Name = doProduct.Name, Price = doProduct.Price, Amount = doProduct.InStock,Category=(BO.Category?)doProduct.CategoryP };
+            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Image = doProduct.Image, Name = doProduct.Name, Price = doProduct.Price, Amount = doProduct.InStock,Category=(BO.Category?)doProduct.CategoryP };
             if (doProduct.InStock > 0)
             {
                 boProduct.InStock = true;
@@ -182,7 +182,7 @@ namespace BlImplementation
             List<BO.ProductForList> products = new List<BO.ProductForList>();
             //the loop go at all products
             return from prod in product
-                   select new BO.ProductForList() { Name = prod?.Name, Price = prod?.Price ?? 0, Category = (BO.Category?)prod?.CategoryP, ID = prod?.ID ?? 0 };
+                   select new BO.ProductForList() { Name = prod?.Name, Image = prod?.Image ,Price = prod?.Price ?? 0, Category = (BO.Category?)prod?.CategoryP, ID = prod?.ID ?? 0 };
             //foreach (DO.Product? item in prod)
             //{
             //    BO.ProductForList pr = new BO.ProductForList() { Name = item?.Name, Price = item?.Price ?? 0, Category = (BO.Category?)item?.CategoryP, ID = item?.ID ?? 0 };

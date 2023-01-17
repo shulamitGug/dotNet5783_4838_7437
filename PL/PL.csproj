@@ -14,6 +14,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PicturesProduct\blur brush.jpg" />
+    <None Remove="PicturesProduct\blush brush.jpg" />
+    <None Remove="PicturesProduct\blush.jpg" />
+    <None Remove="PicturesProduct\bronzer.jpg" />
+    <None Remove="PicturesProduct\concealer.jpg" />
+    <None Remove="PicturesProduct\eye brush.jpg" />
+    <None Remove="PicturesProduct\eyeliner %281%29.png" />
+    <None Remove="PicturesProduct\hiparonSfataim.jpg" />
+    <None Remove="PicturesProduct\lipstick.jpg" />
+    <None Remove="PicturesProduct\makeup.jpg" />
+    <None Remove="PicturesProduct\mivreshet.jpg" />
+    <None Remove="PicturesProduct\powder.jpg" />
+    <None Remove="PicturesProduct\primer.jpg" />
+    <None Remove="PicturesProduct\rimmel.jpg" />
+    <None Remove="PicturesProduct\sfogit.jpg" />
+    <None Remove="PicturesProduct\shimmer.jpg" />
+    <None Remove="PicturesProduct\silhouettes.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PicturesProduct\blush.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
 
@@ -21,6 +45,24 @@
     <Folder Include="cart\" />
     <Folder Include="order\" />
     <Folder Include="product\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PicturesProduct\blur brush.jpg" />
+    <Resource Include="PicturesProduct\blush brush.jpg" />
+    <Resource Include="PicturesProduct\bronzer.jpg" />
+    <Resource Include="PicturesProduct\concealer.jpg" />
+    <Resource Include="PicturesProduct\eye brush.jpg" />
+    <Resource Include="PicturesProduct\hiparonSfataim.jpg" />
+    <Resource Include="PicturesProduct\lipstick.jpg" />
+    <Resource Include="PicturesProduct\makeup.jpg" />
+    <Resource Include="PicturesProduct\mivreshet.jpg" />
+    <Resource Include="PicturesProduct\powder.jpg" />
+    <Resource Include="PicturesProduct\primer.jpg" />
+    <Resource Include="PicturesProduct\rimmel.jpg" />
+    <Resource Include="PicturesProduct\sfogit.jpg" />
+    <Resource Include="PicturesProduct\shimmer.jpg" />
+    <Resource Include="PicturesProduct\silhouettes.jpg" />
   </ItemGroup>
 
 </Project>

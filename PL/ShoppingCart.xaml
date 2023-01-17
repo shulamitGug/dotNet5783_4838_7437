@@ -54,10 +54,9 @@
                             <DataTemplate>
                                 <Grid >
                                     <TextBox FontWeight="bold" IsEnabled="False" Height="22" Margin="20,10,0,0" Width="20" x:Name="txtNum"  Text="{Binding Amount}" />
-                                    <Button Click="cmdUp_Click" Height="22" Margin="52,10,0,0" Width="20" x:Name="cmdUp"  FontSize="12"  Content="▲"   />
-                                    <Button IsEnabled="{Binding Amount, Converter={StaticResource Positive}}" Click="cmdDown_Click" Height="22" Margin="-15,10,0,0" Width="20" x:Name="cmdDown"  FontSize="12"  Content="▼"   />
+                                    <Button Click="CmdUp_Click" Height="22" Margin="52,10,0,0" Width="20" FontSize="12"  Content="▲"   />
+                                    <Button IsEnabled="{Binding Amount, Converter={StaticResource Positive}}" Click="CmdDown_Click" Height="22" Margin="-15,10,0,0" Width="20"  FontSize="12"  Content="▼"   />
                                 </Grid>
-                                <!--<TextBox Margin="50,10,0,0" Text="{Binding Path=Amount}" x:Name="changeAmountTxt" ></TextBox>-->
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -94,7 +93,8 @@
         <TextBlock Style="{DynamicResource textBlockDesign}" Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}" Foreground="Black" Name="totalPriceTxt" Text="{Binding TotalPrice}" HorizontalAlignment="Left" Margin="611,231,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="32" Width="86" RenderTransformOrigin="0.479,3.06" Grid.Column="1"/>
         <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}"  Name="OrderConfirmation" Click="OrderConfirmation_Click" Content="Order Confirmation" HorizontalAlignment="Left" Margin="569,292,0,0"   VerticalAlignment="Top" RenderTransformOrigin="1.02,0.414" Grid.Column="1"/>
         <TextBlock FontSize="30"  Visibility="{Binding Path=Items.Count, Converter={StaticResource textCon}}" Text="There are no items in the basket" HorizontalAlignment="Left" Margin="100,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Grid.Column="1" Height="56" Width="445"/>
-        <Button Style="{DynamicResource buttonDesign}"  x:Name="backShopping" Click="backShopping_Click" Grid.Column="1" Content="to continue shopping" HorizontalAlignment="Left" Margin="569,347,0,0" VerticalAlignment="Top"  />
+        <Button Style="{DynamicResource buttonDesign}"  x:Name="backShopping" Click="BackShopping_Click" Grid.Column="1" Content="to continue shopping" HorizontalAlignment="Left" Margin="569,347,0,0" VerticalAlignment="Top"  />
         <Label Visibility="{Binding Path=Items,  Converter={StaticResource gridCon}}" Grid.Column="1" Content="total price" HorizontalAlignment="Left" Margin="625,191,0,0" VerticalAlignment="Top" Height="26" Width="72"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="599,25,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -71,25 +71,11 @@ namespace PL
             }
 
         }
-    
 
- }
-   public  class ConvertDate1 : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if(!Help.getX())
-            //    return Visibility.Hidden;
-            if (value == null)
-            return Visibility.Visible;
-            return Visibility.Hidden;
+            this.Close();
         }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 
 }

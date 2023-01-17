@@ -34,6 +34,7 @@
         <TextBox Style="{DynamicResource textBoxDesign}" HorizontalAlignment="Left" Margin="318,236,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top"  RenderTransformOrigin="-0.417,0.261" />
         <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,271,0,0" TextWrapping="Wrap" Text="in stock" VerticalAlignment="Top"/>
         <TextBox Style="{DynamicResource textBoxDesign}" HorizontalAlignment="Left" Margin="318,275,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" RenderTransformOrigin="-1.109,0.376"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="634,23,0,0" VerticalAlignment="Top" Width="131"/>
 
     </Grid>
 </Window>
