@@ -14,6 +14,16 @@
             <Setter Property="Background" Value="SkyBlue" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Height" Value="99"/>
+            <Setter Property="Width" Value="226"/>
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="red"/>
+                    <Setter Property="Height" Value="120"/>
+                    <Setter Property="Width" Value="246"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>
@@ -38,9 +48,10 @@
             </Border>
         </Grid>
         <Grid Panel.ZIndex="2">
-            <Button Style="{DynamicResource buttonsDesign}"   Click="ManagerWindow_Click" Content="Director" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
-            <Button Style="{DynamicResource buttonsDesign}" Click="AddNewOrd_Click"  Content="New order" HorizontalAlignment="Left" Margin="273,0,0,0" VerticalAlignment="Center" Height="99" Width="226"/>
-            <Button Style="{DynamicResource buttonsDesign}"  Click="OrderTracking_Click" Content="Order tracking" HorizontalAlignment="Left" Margin="536,0,0,0" VerticalAlignment="Center" Height="99" Width="235"/>
+            <Button Style="{DynamicResource buttonsDesign}"    Click="ManagerWindow_Click" Content="Director" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
+            </Button>
+            <Button Style="{DynamicResource buttonsDesign}" Click="AddNewOrd_Click"  Content="New order" HorizontalAlignment="Left" Margin="273,0,0,0" VerticalAlignment="Center" />
+            <Button Style="{DynamicResource buttonsDesign}"  Click="OrderTracking_Click" Content="Order tracking" HorizontalAlignment="Left" Margin="536,0,0,0" VerticalAlignment="Center" />
             <Label Foreground="Black" Background="SkyBlue"   FontSize="30" FontWeight="Bold" Content="Welcome to the makeup store"   HorizontalAlignment="Center" Margin="0,61,0,0" HorizontalContentAlignment="Center"  VerticalAlignment="Top" Height="76" Width="800"/>
         </Grid>
     </Grid>

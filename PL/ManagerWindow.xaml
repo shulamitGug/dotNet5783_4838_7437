@@ -16,12 +16,19 @@
             <Setter Property="Width" Value="260" />
             <Setter Property="Height" Value="84" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="red"/>
+                    <Setter Property="Height" Value="120"/>
+                    <Setter Property="Width" Value="246"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>
         <Button Style="{DynamicResource buttonsDesign}" Click="ProductsShow_Click" x:Name="ProductsShow" Content="Product display"  Margin="107,0,0,0"  />
         <Button Style="{DynamicResource buttonsDesign}" Click="OrderShow_Click" x:Name="OrderShow" Content="order display" Margin="427,0,0,0"/>
         <Label FontSize="30" Foreground="SkyBlue" BorderBrush="SkyBlue" BorderThickness="4" Content="Manage what you would like to see?" HorizontalAlignment="Left" Margin="132,53,0,0" VerticalAlignment="Top" Height="60" Width="501" RenderTransformOrigin="0.582,0.462"/>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="663,18,0,0" VerticalAlignment="Top" Width="131"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="663,18,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

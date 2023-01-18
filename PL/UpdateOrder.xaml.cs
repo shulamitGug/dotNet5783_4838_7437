@@ -36,34 +36,36 @@ namespace PL
 
 
 
-
-        public BO.Order? newOrder
+        public BO.Order? NewOrder
         {
-            get { return (BO.Order)GetValue(newOrderProperty); }
-            set { SetValue(newOrderProperty, value); }
+            get { return (BO.Order?)GetValue(NewOrderProperty); }
+            set { SetValue(NewOrderProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for newOrder.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty newOrderProperty =
-            DependencyProperty.Register("newOrder", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for NewOrder.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NewOrderProperty =
+            DependencyProperty.Register("NewOrder", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
+
+
+
+       
 
         public UpdateOrder(int id, string _state)
         {
             InitializeComponent();
             State = _state == "show" ? Visibility.Hidden : Visibility.Visible;
-            newOrder = bl!.Order.GetOrderDetails(id);
-            //Help.setX(state);
+            NewOrder = bl!.Order.GetOrderDetails(id);
         }
         private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
-            newOrder = bl!.Order.updateSendingDate(newOrder!.ID);
+            NewOrder = bl!.Order.updateSendingDate(NewOrder!.ID);
         }
 
         private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                newOrder = bl!.Order.UpdateProvideDate(newOrder!.ID);
+                NewOrder = bl!.Order.UpdateProvideDate(NewOrder!.ID);
             }
             catch(Exception ex)
             {

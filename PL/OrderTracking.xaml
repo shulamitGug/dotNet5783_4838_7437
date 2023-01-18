@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        DataContext="{Binding Path=orderTracking, RelativeSource={RelativeSource self}}"
+        DataContext="{Binding Path=MyOrderTrackng, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="OrderTracking" Height="445" Width="872">
     <Grid Margin="0,0,10,-6">
@@ -12,7 +12,7 @@
         </ListView>
         <TextBox IsEnabled="False" BorderBrush="SkyBlue"  Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="394,42,0,0" TextWrapping="Wrap" x:Name="idTxt" VerticalAlignment="Top" Height="26" Width="88"/>
         <TextBox IsEnabled="False" BorderBrush="SkyBlue" Text="{Binding StatusOrder}"  HorizontalAlignment="Left" Margin="394,73,0,0" TextWrapping="Wrap" Name="statusTxt" VerticalAlignment="Top" Width="88" Height="26" RenderTransformOrigin="0.587,0.096"></TextBox>
-        <Button Background="SkyBlue" FontWeight="Bold" Click="orderDetailsBtn_Click" x:Name="orderDetailsBtn" Content="צפיה בפרטי הזמנה" HorizontalAlignment="Left" Margin="342,308,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.167,0.314" Height="38" Width="140"/>
+        <Button Background="SkyBlue" FontWeight="Bold" Click="OrderDetailsBtn_Click"  Content="צפיה בפרטי הזמנה" HorizontalAlignment="Left" Margin="342,308,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.167,0.314" Height="38" Width="140"/>
         <Label  HorizontalAlignment="Left" Margin="316,43,0,0"  Content="order id" VerticalAlignment="Top" Height="38" Width="52" RenderTransformOrigin="7.31,-0.453"/>
         <TextBlock HorizontalAlignment="Left" Margin="316,79,0,0" TextWrapping="Wrap" Text="status order" VerticalAlignment="Top" RenderTransformOrigin="-0.013,1.606" Height="20"/>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="663,18,0,0" VerticalAlignment="Top" Width="131"/>

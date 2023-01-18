@@ -20,30 +20,52 @@ namespace PL
     /// </summary>
     public partial class OrderTracking : Window
     {
-        public BO.OrderTracking? orderTracking
+
+
+        /// <summary>
+        /// dependancy property of order tracking
+        /// </summary>
+        public BO.OrderTracking? MyOrderTrackng
         {
-            get { return (BO.OrderTracking?)GetValue(orderTrackingProperty); }
-            set { SetValue(orderTrackingProperty,value); }
+            get { return (BO.OrderTracking?)GetValue(MyOrderTrackngProperty); }
+            set { SetValue(MyOrderTrackngProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for orderTracking.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty orderTrackingProperty =
-            DependencyProperty.Register("orderTracking", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
-      
-        BlApi.IBl? bl = BlApi.Factory.Get();
-        //BO.OrderTracking orderTracking;
+        // Using a DependencyProperty as the backing store for MyOrderTrackng.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyOrderTrackngProperty =
+            DependencyProperty.Register("MyOrderTrackng", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
 
+
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
+
+        /// <summary>
+        /// constructor of order tracking window
+        /// </summary>
+        /// <param name="id"></param>
         public OrderTracking(int id)
         {
             InitializeComponent();
-            orderTracking = bl!.Order.StatusOrder(id);
+            MyOrderTrackng = bl!.Order.StatusOrder(id);
         }
 
-        private void orderDetailsBtn_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// show all the details of this order
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OrderDetailsBtn_Click(object sender, RoutedEventArgs e)
         {
-           new UpdateOrder(orderTracking!.ID,"show").Show();
+           new UpdateOrder(MyOrderTrackng!.ID,"show").Show();
         }
 
+
+        /// <summary>
+        /// back to the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();

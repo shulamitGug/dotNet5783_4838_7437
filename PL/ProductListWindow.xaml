@@ -7,7 +7,7 @@
         xmlns:thisEnum="clr-namespace:BO;assembly=BL"
          xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        DataContext="{Binding Path=products,RelativeSource={RelativeSource Self}}"
+        DataContext="{Binding Path=Products,RelativeSource={RelativeSource Self}}"
         Title="ProductListWindow" Height="544" Width="826">
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues"
@@ -35,7 +35,7 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <ListView Background="White" ItemsSource="{Binding}" x:Name="ProductListview" SelectionChanged="ProductListview_SelectionChanged" MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-46" Grid.RowSpan="3">
+        <ListView Background="White" ItemsSource="{Binding}"   MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-46" Grid.RowSpan="3">
             <ListView.View>
                 <GridView x:Name="gridView">
                     <GridViewColumn>
