@@ -124,7 +124,7 @@ namespace BlImplementation
         /// get calaog to patient
         /// </summary>
         /// <returns>list of product to customer</returns>
-        public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null)
+        public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null, BO.Cart? cart = null)
         {
             IEnumerable<DO.Product?> doProduct;
             if (check == null)
@@ -133,8 +133,9 @@ namespace BlImplementation
                 doProduct = idal!.Product.GetAll(check);
             List<BO.ProductItem> list = new List<BO.ProductItem>();
             //create product items
-                return from prod in doProduct
-                       select new BO.ProductItem { Id = prod?.ID ?? 0,Image=prod?.Image, Name = prod?.Name, Price = prod?.Price ?? 0, Amount = prod?.InStock ?? 0, Category = (BO.Category?)prod?.CategoryP ,InStock= prod?.InStock > 0 ?true:false};
+            return from prod in doProduct
+                   let amount = cart == null ? 0 : cart.Items?.FirstOrDefault(x => x?.ProductId == prod?.ID)?.Amount??0
+                       select new BO.ProductItem { Id = prod?.ID ?? 0,Image=prod?.Image, Name = prod?.Name, Price = prod?.Price ?? 0, Amount = amount, Category = (BO.Category?)prod?.CategoryP ,InStock= prod?.InStock > 0 ?true:false};
             ////foreach (DO.Product? item in doProduct)
             ////{
             ////    if (check == null || check(item))
@@ -156,18 +157,23 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id">id of product that want to get the product item</param>
         /// <returns>all the details of this product item</returns>
-        public BO.ProductItem GetProductItemById(int id)
+        public BO.ProductItem GetProductItemById(int id, BO.Cart cart)
         {
             DO.Product doProduct;
+            int amount;
             try
             {
-                doProduct = idal!.Product.Get(id) ;
+                if (id > 0)
+                    doProduct = idal!.Product.Get(id);
+                else
+                    throw new BO.NotValidException("id");
+                amount= cart.Items?.FirstOrDefault(x => x?.ProductId == id)?.Amount??0;
             }
             catch (DO.NotExistException ex)
             {
                 throw new BO.NotExistBlException("product does not exist", ex);
             }
-            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Image = doProduct.Image, Name = doProduct.Name, Price = doProduct.Price, Amount = doProduct.InStock,Category=(BO.Category?)doProduct.CategoryP };
+            BO.ProductItem boProduct = new BO.ProductItem() {Id = id, Image = doProduct.Image, Name = doProduct.Name, Price = doProduct.Price, Amount = amount,Category=(BO.Category?)doProduct.CategoryP };
             if (doProduct.InStock > 0)
             {
                 boProduct.InStock = true;

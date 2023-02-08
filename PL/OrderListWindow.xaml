@@ -7,9 +7,12 @@
                 DataContext="{Binding Path=Orders, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="OrderListWindow" Height="451" Width="849">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="SkyBlue"></Setter>
+            <Setter Property="Background" Value="DeepPink"></Setter>
             <Setter Property="Width" Value="120"></Setter>
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Margin" Value="10,2,0,0"></Setter>
@@ -28,7 +31,10 @@
             <RowDefinition Height="328.088"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding}"  MouseDoubleClick="OrderList_MouseDoubleClick" Margin="10,0,138,0" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding}"  MouseDoubleClick="OrderList_MouseDoubleClick" Margin="30,0,114,10" Grid.RowSpan="2">
+            <ListView.Background>
+                <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
@@ -74,7 +80,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="100" Margin="730,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="100" Margin="730,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
 
     </Grid>
 </Window>

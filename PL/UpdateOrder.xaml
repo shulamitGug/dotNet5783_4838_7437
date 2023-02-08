@@ -7,21 +7,24 @@
         DataContext="{Binding  RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="UpdateOrder" Height="592" Width="1035">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
         <local:ConvertDate1 x:Key="dateCon"/>
         <Style x:Key="textBlockDesign" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="SkyBlue"></Setter>
+            <Setter Property="Foreground" Value="DeepPink"></Setter>
             <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
         </Style>
         <Style x:Key="textBoxDesign" TargetType="TextBox">
             <Setter Property="Width" Value="140"></Setter>
             <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="BorderBrush" Value="DeepPink"></Setter>
             <Setter Property="IsEnabled" Value="False"></Setter>
-            <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
         </Style>
         <Style x:Key="buttonDesign" TargetType="Button">
-            <Setter Property="Background" Value="SkyBlue"/>
+            <Setter Property="Background" Value="DeepPink"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="170"/>
@@ -50,18 +53,18 @@
         <TextBlock Style="{DynamicResource textBlockDesign}" Text="order date" HorizontalAlignment="Left" Margin="94,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.002" Height="24" Width="104"/>
         <TextBlock Style="{DynamicResource textBlockDesign}" Text="ship date" HorizontalAlignment="Left" Margin="94,414,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.66,-0.884" Height="30" Width="92"/>
         <TextBlock Style="{DynamicResource textBlockDesign}" Text="delivery date" HorizontalAlignment="Left" Margin="94,459,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.026,0.156" Height="34" Width="114" />
-        <ListView ItemsSource="{Binding Path=NewOrder.Items}" RenderTransformOrigin="26.05,-6.398" Margin="498,94,125,182" Grid.ColumnSpan="2"/>
+        <ListView ItemsSource="{Binding Path=NewOrder.Items}" RenderTransformOrigin="26.05,-6.398" Margin="498,94,199,197" Grid.ColumnSpan="2"/>
         <TextBox Style="{DynamicResource textBoxDesign}" Text="{Binding Path=NewOrder.CustomerEmail}" HorizontalAlignment="Left" Margin="249,311,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" RenderTransformOrigin="0.488,1.46" />
         <TextBox Style="{DynamicResource textBoxDesign}" Text="{Binding Path=NewOrder.OrderDate}" HorizontalAlignment="Left" Margin="249,364,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBox  Style="{DynamicResource textBoxDesign}" Text="{Binding Path=NewOrder.ShipDate}" HorizontalAlignment="Left" Margin="249,414,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  />
         <TextBox Style="{DynamicResource textBoxDesign}" Text="{Binding Path=NewOrder.DeliveryDate}" HorizontalAlignment="Left" Margin="249,463,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.477,1.968" />
         <TextBox Style="{DynamicResource textBoxDesign}" Text="{Binding Path=NewOrder.CustomerName}" HorizontalAlignment="Left" Margin="249,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" />
         <Grid Visibility="{Binding Path=State}">
-            <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=newOrder.ShipDate , Converter={StaticResource dateCon}}"  Click="updateShipDateBtn_Click"  Content="update" HorizontalAlignment="Left" Margin="403,414,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.045,5.437" Height="30" Width="99"/>
-            <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=newOrder.DeliveryDate , Converter={StaticResource dateCon}}" Click="updateDerliveryDateBtn_Click" Content="update" x:Name="updateDerliveryDateBtn" HorizontalAlignment="Left" Margin="403,465,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.838,0.75" Height="30" Width="99"/>
+            <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=NewOrder.ShipDate , Converter={StaticResource dateCon}}"  Click="UpdateShipDateBtn_Click"  Content="update" HorizontalAlignment="Left" Margin="403,414,0,0" VerticalAlignment="Top" RenderTransformOrigin="7.045,5.437" Height="30" Width="99"/>
+            <Button Style="{DynamicResource buttonDesign}" Visibility="{Binding Path=NewOrder.DeliveryDate , Converter={StaticResource dateCon}}" Click="UpdateDerliveryDateBtn_Click" Content="update" HorizontalAlignment="Left" Margin="403,465,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.838,0.75" Height="30" Width="99"/>
         </Grid>
-        <Label  FontSize="20" BorderBrush="SkyBlue" BorderThickness="4" Foreground="SkyBlue" HorizontalAlignment="Left" Margin="46,28,0,0"  Content="product in this order:" VerticalAlignment="Top" Height="52" Width="216" Grid.Column="1"/>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="399,25,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
+        <Label  FontSize="20" BorderBrush="Pink" BorderThickness="4" Foreground="DeepPink" HorizontalAlignment="Left" Margin="46,28,0,0"  Content="products in this order:" VerticalAlignment="Top" Height="52" Width="216" Grid.Column="1"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="358,22,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
 
     </Grid>
 </Window>

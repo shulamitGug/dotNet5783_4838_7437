@@ -13,34 +13,46 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace PL
-{
-
+{ 
     /// <summary>
     /// Interaction logic for CustomerDetails.xaml
     /// </summary>
     public partial class CustomerDetails : Window
     {
+        BlApi.IBl? bl = BlApi.Factory.Get();
 
         /// <summary>
         /// dependency property of customer's cart 
         /// </summary>
 
-        public BO.Cart CurrentCart
+
+        public BO.Cart MYCurrentCart
         {
-            get { return (BO.Cart)GetValue(CurrentCartProperty); }
-            set { SetValue(CurrentCartProperty, value); }
+            get { return (BO.Cart)GetValue(MYCurrentCartProperty); }
+            set { SetValue(MYCurrentCartProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CurrentCart.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentCartProperty =
-            DependencyProperty.Register("CurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for MYCurrentCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MYCurrentCartProperty =
+            DependencyProperty.Register("MYCurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
+
+        //public BO.Cart MyCurrentCart
+        //{
+        //    get { return (BO.Cart)GetValue(CurrentCartProperty); }
+        //    set { SetValue(MyCurrentCartProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for CurrentCart.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty CurrentCartProperty =
+        //    DependencyProperty.Register("CurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
 
-        public CustomerDetails()
+        public CustomerDetails(BO.Cart cartOut)
         {
             InitializeComponent();
-            CurrentCart = new BO.Cart();
+            MYCurrentCart = cartOut;
         }
 
 
@@ -56,8 +68,24 @@ namespace PL
                 MessageBox.Show("Not enough data has been entered");
             else
             {
-                new AddNewOrderWindow(CurrentCart).Show();
-                this.Close();
+                try
+                {
+                    int id = bl!.Cart.OrderConfirmation(MYCurrentCart);
+                    MessageBox.Show("The order is complete!");
+
+                    new EndOrder(id).Show();
+                    this.Close();
+                }
+                catch (BO.NotInStockException ex)
+                {
+                    MessageBox.Show(ex + "");
+                }
+                catch (BO.NotValidException ex)
+                {
+                    MessageBox.Show(ex + " ");
+                    new CustomerDetails(MYCurrentCart).Show();
+                    this.Close();
+                }
 
             }
         }

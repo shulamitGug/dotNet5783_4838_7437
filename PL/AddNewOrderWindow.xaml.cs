@@ -31,29 +31,44 @@ namespace PL
             set { SetValue(CatalogProductsProperty, value); }
         }
 
+
+        public BO.Cart CurrentCart
+        {
+            get { return (BO.Cart)GetValue(CurrentCartProperty); }
+            set { SetValue(CurrentCartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentCartProperty =
+            DependencyProperty.Register("CurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
+
+
         // Using a DependencyProperty as the backing store for CatalogProducts.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CatalogProductsProperty =
             DependencyProperty.Register("CatalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
  
-        private BO.Cart? currentCart;
+        //private BO.Cart? currentCart;
         
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public AddNewOrderWindow(BO.Cart currentCartOut)
+        public AddNewOrderWindow(BO.Cart? c=null)
         {
             InitializeComponent();
-            currentCart = currentCartOut;
-            var temp = bl!.Product.GetCatalog();
+            if (c == null)
+                CurrentCart = new BO.Cart();
+            else
+                CurrentCart = c;
+            var temp = bl!.Product.GetCatalog(null,c);
             CatalogProducts = temp == null ? new() : new(temp);
-     
         }
 
 
-         /// <summary>
-         /// add product to cart
-         /// </summary>
-         /// <param name="sender">product</param>
-         /// <param name="e"></param>
+        /// <summary>
+        /// add product to cart
+        /// </summary>
+        /// <param name="sender">product</param>
+        /// <param name="e"></param>
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             int id=(((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
@@ -61,7 +76,7 @@ namespace PL
                 MessageBox.Show("The item is out of stock");
             else
             {
-                currentCart = bl!.Cart.AddProduct(currentCart!,id);
+                CurrentCart = bl!.Cart.AddProduct(CurrentCart!,id);
                 MessageBox.Show("the product add to cart");
             }
         }
@@ -77,12 +92,12 @@ namespace PL
             BO.Category categories = (BO.Category)CategorySelector.SelectedItem;
             if (categories == (BO.Category.None))
             {
-                var tmp= bl!.Product.GetCatalog();
+                var tmp= bl!.Product.GetCatalog(null,CurrentCart);
                 CatalogProducts = tmp == null ? new() : new(tmp);
             }
             else
             {
-                var tmp = bl!.Product.GetCatalog(x=>x?.CategoryP==(DO.Category)categories);
+                var tmp = bl!.Product.GetCatalog(x=>x?.CategoryP==(DO.Category)categories,CurrentCart);
                 CatalogProducts = tmp == null ? new() : new(tmp);
             }
 
@@ -96,7 +111,7 @@ namespace PL
         /// <param name="e"></param>
         private void ShopCartBtn_Click(object sender, RoutedEventArgs e)
         {
-            new ShoppingCart(currentCart!).Show();
+            new CustomerDetails(CurrentCart!).Show();
             this.Close();
         }
 
@@ -109,7 +124,7 @@ namespace PL
         private void ListView1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int id = ((BO.ProductItem)((ListView)sender).SelectedItem).Id;
-            new ProductItem(id).ShowDialog();   
+            new ProductItem(id,CurrentCart!).ShowDialog();   
         }
 
 
@@ -148,6 +163,39 @@ namespace PL
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             new MainWindow().Show();
+            this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var prod = (((BO.ProductItem)((FrameworkElement)sender).DataContext));
+            if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
+            {
+                MessageBox.Show("The item is out of stock");
+                var tmp = bl!.Product.GetCatalog(null, CurrentCart);
+                CatalogProducts = tmp == null ? new() : new(tmp);
+            }
+
+            else
+            {
+                //CurrentCart = bl!.Cart.AddProduct(CurrentCart!, prod.Id);
+                //CurrentCart = bl!.Cart.UpdateAmountOfProduct(CurrentCart, prod.Id, prod.Amount);
+                CurrentCart = bl!.Cart.AddAndUpdate(CurrentCart, prod.Id, prod.Amount);
+                MessageBox.Show("the product add to cart");
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            int id = (((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
+                CurrentCart = bl!.Cart.UpdateAmountOfProduct(CurrentCart!, id, ((BO.ProductItem)((FrameworkElement)sender).DataContext).Amount);
+                MessageBox.Show("the product add to cart");
+            }
+
+        private void Image_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            new ShoppingCart(CurrentCart!).Show();
+            //new CustomerDetails(currentCart!).Show();
             this.Close();
         }
     }

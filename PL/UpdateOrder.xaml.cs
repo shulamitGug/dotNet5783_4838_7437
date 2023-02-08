@@ -56,12 +56,12 @@ namespace PL
             State = _state == "show" ? Visibility.Hidden : Visibility.Visible;
             NewOrder = bl!.Order.GetOrderDetails(id);
         }
-        private void updateShipDateBtn_Click(object sender, RoutedEventArgs e)
+        private void UpdateShipDateBtn_Click(object sender, RoutedEventArgs e)
         {
             NewOrder = bl!.Order.updateSendingDate(NewOrder!.ID);
         }
 
-        private void updateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
+        private void UpdateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {

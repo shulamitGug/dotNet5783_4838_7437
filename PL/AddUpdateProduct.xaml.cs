@@ -116,6 +116,10 @@ namespace PL
             {
                 MessageBox.Show($"{ex.InnerException}");
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message+"");
+            }
         }
 
         /// <summary>

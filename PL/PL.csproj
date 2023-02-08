@@ -14,27 +14,74 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PicturesProduct\allWindowBackgroung.jpg" />
+    <None Remove="PicturesProduct\allWindowBackgroung1.jpg" />
+    <None Remove="PicturesProduct\backgroundMain.jpg" />
+    <None Remove="PicturesProduct\backgroundOfMain.jpg" />
     <None Remove="PicturesProduct\blur brush.jpg" />
     <None Remove="PicturesProduct\blush brush.jpg" />
+    <None Remove="PicturesProduct\blush brush.png" />
     <None Remove="PicturesProduct\blush.jpg" />
+    <None Remove="PicturesProduct\blush.png" />
     <None Remove="PicturesProduct\bronzer.jpg" />
+    <None Remove="PicturesProduct\bronzer.png" />
     <None Remove="PicturesProduct\concealer.jpg" />
+    <None Remove="PicturesProduct\concealer.png" />
     <None Remove="PicturesProduct\eye brush.jpg" />
+    <None Remove="PicturesProduct\eye brush.png" />
     <None Remove="PicturesProduct\eyeliner %281%29.png" />
+    <None Remove="PicturesProduct\eyeliner.png" />
     <None Remove="PicturesProduct\hiparonSfataim.jpg" />
+    <None Remove="PicturesProduct\lipstick..png" />
     <None Remove="PicturesProduct\lipstick.jpg" />
+    <None Remove="PicturesProduct\lipstick.png" />
+    <None Remove="PicturesProduct\logo.jpg" />
+    <None Remove="PicturesProduct\logo.png" />
     <None Remove="PicturesProduct\makeup.jpg" />
+    <None Remove="PicturesProduct\makeup.png" />
     <None Remove="PicturesProduct\mivreshet.jpg" />
+    <None Remove="PicturesProduct\mivreshet.png" />
+    <None Remove="PicturesProduct\noImage.png" />
     <None Remove="PicturesProduct\powder.jpg" />
+    <None Remove="PicturesProduct\powder.png" />
     <None Remove="PicturesProduct\primer.jpg" />
+    <None Remove="PicturesProduct\primer.png" />
     <None Remove="PicturesProduct\rimmel.jpg" />
+    <None Remove="PicturesProduct\rimmel.png" />
     <None Remove="PicturesProduct\sfogit.jpg" />
+    <None Remove="PicturesProduct\sfogit.png" />
     <None Remove="PicturesProduct\shimmer.jpg" />
+    <None Remove="PicturesProduct\shimmer.png" />
     <None Remove="PicturesProduct\silhouettes.jpg" />
+    <None Remove="PicturesProduct\silhouettes.png" />
+    <None Remove="PicturesProduct\soppingCart.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="PicturesProduct\blush.jpg" />
+    <Resource Include="PicturesProduct\blush brush.png" />
+    <Resource Include="PicturesProduct\blush.png" />
+    <Resource Include="PicturesProduct\bronzer.png" />
+    <Resource Include="PicturesProduct\eye brush.png" />
+    <Resource Include="PicturesProduct\eyeliner.png" />
+    <Resource Include="PicturesProduct\lipstick.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PicturesProduct\logo.png" />
+    <Resource Include="PicturesProduct\makeup.png" />
+    <Resource Include="PicturesProduct\mivreshet.png" />
+    <Resource Include="PicturesProduct\noImage.png" />
+    <Resource Include="PicturesProduct\powder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PicturesProduct\allWindowBackgroung1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PicturesProduct\allWindowBackgroung.jpg" />
+    <Resource Include="PicturesProduct\backgroundMain.jpg" />
+    <Resource Include="PicturesProduct\backgroundOfMain.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,21 +95,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="PicturesProduct\blur brush.jpg" />
-    <Resource Include="PicturesProduct\blush brush.jpg" />
-    <Resource Include="PicturesProduct\bronzer.jpg" />
-    <Resource Include="PicturesProduct\concealer.jpg" />
-    <Resource Include="PicturesProduct\eye brush.jpg" />
-    <Resource Include="PicturesProduct\hiparonSfataim.jpg" />
-    <Resource Include="PicturesProduct\lipstick.jpg" />
-    <Resource Include="PicturesProduct\makeup.jpg" />
-    <Resource Include="PicturesProduct\mivreshet.jpg" />
-    <Resource Include="PicturesProduct\powder.jpg" />
-    <Resource Include="PicturesProduct\primer.jpg" />
-    <Resource Include="PicturesProduct\rimmel.jpg" />
-    <Resource Include="PicturesProduct\sfogit.jpg" />
-    <Resource Include="PicturesProduct\shimmer.jpg" />
-    <Resource Include="PicturesProduct\silhouettes.jpg" />
+    <Resource Include="PicturesProduct\concealer.png" />
+    <Resource Include="PicturesProduct\primer.png" />
+    <Resource Include="PicturesProduct\rimmel.png" />
+    <Resource Include="PicturesProduct\sfogit.png" />
+    <Resource Include="PicturesProduct\shimmer.png" />
+    <Resource Include="PicturesProduct\silhouettes.png" />
+    <Resource Include="PicturesProduct\soppingCart.png" />
   </ItemGroup>
 
 </Project>

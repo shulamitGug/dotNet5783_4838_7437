@@ -45,39 +45,33 @@ namespace PL
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
-            //MyCart = bl!.Cart.deleteProduct(MyCart,id);
             MyCart = bl!.Cart.UpdateAmountOfProduct(MyCart, id, 0);
 
         }
 
-        //private void changeAmountBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
-        //    int amount = ((BO.OrderItem)((System.Windows.FrameworkElement)sender).DataContext).Amount;
-        //    bl!.Cart.UpdateAmountOfProduct(currentCart, id, amount);
-        //    var temp = currentCart.Items;
-        //    orderItems = temp == null ? new() : new(temp!);
-        //    totalPriceTxt.Text = currentCart.TotalPrice.ToString();
-        //}
 
         private void OrderConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bl!.Cart.OrderConfirmation(MyCart);
-                MessageBox.Show("The order is complete!");
-                this.Close();
-            }
-            catch(BO.NotInStockException ex)
-            {
-                MessageBox.Show(ex+"");
-            }
-            catch (BO.NotValidException ex)
-            { 
-                MessageBox.Show(ex+" ");
-                this.Close();
-                new CustomerDetails().Show();
-            }
+            new CustomerDetails(MyCart).Show();
+            this.Close();
+            //try
+            //{
+            //  int id= bl!.Cart.OrderConfirmation(MyCart);
+            //    MessageBox.Show("The order is complete!");
+
+            //    new EndOrder(id).Show();
+            //    this.Close();
+            //}
+            //catch(BO.NotInStockException ex)
+            //{
+            //    MessageBox.Show(ex+"");
+            //}
+            //catch (BO.NotValidException ex)
+            //{ 
+            //    MessageBox.Show(ex+" ");
+            //    new CustomerDetails(MyCart).Show();
+            //    this.Close();
+            //}
         }
         private void BackShopping_Click(object sender, RoutedEventArgs e)
         {
@@ -101,7 +95,7 @@ namespace PL
             {
                 MyCart = bl!.Cart.UpdateAmountOfProduct(MyCart, id, amount);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("אזל המלאי");
                 MyCart!.Items!.FirstOrDefault(x => x?.ProductId == id)!.Amount--;

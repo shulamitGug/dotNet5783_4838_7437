@@ -1,4 +1,4 @@
-﻿<Window Background="White" x:Class="PL.ProductListWindow"
+﻿<Window  x:Class="PL.ProductListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +9,9 @@
         mc:Ignorable="d"
         DataContext="{Binding Path=Products,RelativeSource={RelativeSource Self}}"
         Title="ProductListWindow" Height="544" Width="826">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues"
                     ObjectType="{x:Type sys:Enum}"
@@ -19,15 +22,18 @@
         </ObjectDataProvider>
         <local:ImageConverter x:Key="imageConverter"/>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="SkyBlue"></Setter>
+            <Setter Property="Background" Value="DeepPink"></Setter>
+            <Setter Property="IsEnabled" Value="false"></Setter>
             <Setter Property="Width" Value="98"></Setter>
             <Setter Property="Margin" Value="5,0,0,0"></Setter>
         </Style>
     </Window.Resources>
     <Grid Name="MainGrid" Margin="-20,0,0,78">
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="685,10,0,0" VerticalAlignment="Top" Width="131" Grid.RowSpan="2"/>
+
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
-            <Label Foreground="SkyBlue" FontWeight="Bold" FontSize="20" Content="choose category" Margin="234,124,17,-141" Grid.Column="1"/>
+            <Label Foreground="DeepPink" FontWeight="Bold" FontSize="20" Content="choose category" Margin="234,124,17,-141" Grid.Column="1"/>
             <ComboBox SelectedItem="{x:Static thisEnum:Category.None }" ItemsSource="{Binding Source={StaticResource allCategories}}" Name="CategoriesSelector"
 Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="250,179,33,-173"/>
             <Grid.ColumnDefinitions>
@@ -35,7 +41,10 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <ListView Background="White" ItemsSource="{Binding}"   MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-46" Grid.RowSpan="3">
+        <ListView  ItemsSource="{Binding}"   MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-71" Grid.RowSpan="3">
+            <ListView.Background>
+                <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+            </ListView.Background>
             <ListView.View>
                 <GridView x:Name="gridView">
                     <GridViewColumn>
@@ -85,12 +94,11 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
             </ListView.View>
         </ListView>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="676,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
-        <Button Background="SkyBlue" BorderBrush="Black" FontWeight="Bold"  Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167" Padding="5" Click="AddProductBtn_Click" Width="140" RenderTransformOrigin="0.534,-0.555"/>
+        <Button Background="pink" BorderBrush="Black" FontWeight="Bold"  Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167" Padding="5" Click="AddProductBtn_Click" Width="140" RenderTransformOrigin="0.534,-0.555"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
     </Grid>
 </Window>

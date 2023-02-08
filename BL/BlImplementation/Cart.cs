@@ -42,7 +42,7 @@ namespace BlImplementation
                     boCart.Items = new List<BO.OrderItem?>();
                 //DO.OrderItem item= new DO.OrderItem() { ProductId = id,Price = doProduct.Price,Amount=1 };
                 //int idOrd = idal.OrderItem.Add(item);
-                BO.OrderItem boItem = new BO.OrderItem() { ProductId = id, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
+                BO.OrderItem boItem = new BO.OrderItem() { ProductId = id,Price=doProduct.Price, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
                 boCart.Items.Add(boItem);
             }
             boCart.TotalPrice += doProduct.Price;
@@ -103,13 +103,16 @@ namespace BlImplementation
             cart.CustomerAdress =boCart.CustomerAdress;
             return cart;
         }
-
+        public BO.Cart AddAndUpdate(BO.Cart boCart, int id, int amount)
+        {
+            return UpdateAmountOfProduct(AddProduct(boCart, id), id, amount);
+        }
         /// <summary>
         /// An action that checks the details of the cart and confirms it
         /// </summary>
         /// <param name="boCart">boCart </param>
         /// <exception cref="Exception"></exception>
-        public void OrderConfirmation(BO.Cart boCart)
+        public int OrderConfirmation(BO.Cart boCart)
         {
             if (boCart.CustomerAdress == null)
                 throw new BO.NotEnoughDetailsException("customerAsress");
@@ -133,6 +136,7 @@ namespace BlImplementation
                         let updateAmount = UpdateAmountDal(newProd)
                         select new DO.OrderItem() { Amount = item!.Amount, ProductId = item.ProductId, OrderId = id, Price = newProd.Price };
                 allItems.All(x => idal.OrderItem.Add(x) > 0 ? true : false);
+                return id;
             }
             catch (DO.AlreadyExistException ex)
             {
@@ -215,5 +219,7 @@ namespace BlImplementation
             idal!.Product.Update(prod);
             return true;
         }
+ 
+
     }
 }

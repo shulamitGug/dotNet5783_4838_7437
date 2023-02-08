@@ -82,7 +82,7 @@ namespace PL
                 return $"pack://application:,,,/PL;component/PicturesProduct/{name}";
 
             }
-            else return null;
+            else return "pack://application:,,,/PL;component/PicturesProduct/noImage.png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -163,5 +163,34 @@ namespace PL
             throw new NotImplementedException();
         }
 
+    }
+    public class ConvertAddToCart : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value<=0)
+                return false;
+            return true;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+    public class AddUpdate : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value == 0)
+                return "add";
+            return "update";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

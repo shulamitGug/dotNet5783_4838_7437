@@ -23,6 +23,10 @@ namespace BO
         /// <summary>
         /// Quantity
         /// </summary>
+        
+        ///price for one
+        public double Price { get; set; }
+
         public int Amount { get; set; }
         /// <summary>
         /// The total price of the orderItems

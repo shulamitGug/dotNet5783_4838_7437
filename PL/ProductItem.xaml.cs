@@ -43,10 +43,10 @@ namespace PL
         /// A constructive action that initializes the product
         /// </summary>
         /// <param name="id"></param>
-        public ProductItem(int id)
+        public ProductItem(int id,BO.Cart cart)
         {
             InitializeComponent();
-            MyProductItem = bl!.Product.GetProductItemById(id);
+            MyProductItem = bl!.Product.GetProductItemById(id,cart);
         }
 
         /// <summary>

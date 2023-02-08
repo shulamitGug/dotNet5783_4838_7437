@@ -86,7 +86,7 @@ namespace PL
         /// <param name="e">A variable of the type of event that happens</param>
         private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int id = ((BO.ProductForList)((System.Windows.Controls.ListView)sender).SelectedItem).ID;
+            int id = ((BO.ProductForList)((ListView)sender).SelectedItem).ID;
             new AddUpdateProduct(id).ShowDialog();
             var tmp = bl!.Product.GetProductForList();
             Products = tmp == null ? new() : new(tmp);

@@ -3,28 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        DataContext="{Binding Path=CurrentCart, RelativeSource={RelativeSource self}}"
+        DataContext="{Binding Path=MYCurrentCart, RelativeSource={RelativeSource self}}"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="CustomerDetails" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
         <Style x:Key="textBlocksDesign" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="SkyBlue" />
+            <Setter Property="Foreground" Value="Orange" />
             <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontFamily" Value="italic" />
         </Style>
     </Window.Resources>
     <Grid>
-        <Label FontSize="30" BorderBrush="SkyBlue" BorderThickness="4" Foreground="SkyBlue" Content="Some details about you" HorizontalAlignment="Left" Margin="227,33,0,0" VerticalAlignment="Top" Height="61" Width="382"/>
+        <Label FontSize="30" BorderBrush="Orange" BorderThickness="4" Foreground="Black" Content="Some details about you" HorizontalAlignment="Left" Margin="227,33,0,0" VerticalAlignment="Top" Height="59" Width="335"/>
         <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="276,114,0,0" TextWrapping="Wrap" Text="full name" VerticalAlignment="Top" RenderTransformOrigin="0.481,0.102" Height="33" Width="101"/>
         <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,155,0,0" TextWrapping="Wrap" Text="adress" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.501,-0.008"/>
         <TextBlock Style="{DynamicResource textBlocksDesign}" HorizontalAlignment="Left" Margin="288,198,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Height="31"/>
         <TextBox x:Name="txtName" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="381,114,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.865,0.201"/>
         <TextBox x:Name="txtAdrss" Text="{Binding CustomerAdress}" HorizontalAlignment="Left" Margin="381,158,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtEmail" Text="{Binding CustomerEmail}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Margin="381,202,0,0"/>
-        <Button FontWeight="Bold" Background="SkyBlue" Click="OkayBtn_Click" Content="okay" HorizontalAlignment="Left" Margin="346,245,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.768,0.714" Height="37" Width="84"/>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="104" Margin="666,12,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="3"/>
-
+        <Button FontWeight="Bold" Background="Orange" Click="OkayBtn_Click" Content="okay" HorizontalAlignment="Left" Margin="346,245,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.768,0.714" Height="37" Width="84"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="129" Margin="644,10,0,0" VerticalAlignment="Top" Width="124"/>
     </Grid>
 </Window>

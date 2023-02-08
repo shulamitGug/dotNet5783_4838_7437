@@ -52,7 +52,7 @@ namespace PL
         /// <param name="e"></param>
         private void AddNewOrd_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerDetails().Show();
+            new AddNewOrderWindow().Show();
             this.Close();
         }
 

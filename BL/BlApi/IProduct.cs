@@ -12,8 +12,8 @@ namespace BlApi
         public int Add(BO.Product product);
         public void Delete(int id);
         public void Update(BO.Product product);
-        public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null);
-        public BO.ProductItem GetProductItemById(int id);
+        public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null,BO.Cart? cart=null);
+        public BO.ProductItem GetProductItemById(int id,BO.Cart cart);
         public IEnumerable<BO.ProductForList?> GetProductForListByCategory(BO.Category? category);
     }
 }

@@ -7,10 +7,13 @@
         DataContext="{Binding Path=MyProductItem, RelativeSource={RelativeSource Mode=Self}}"
         mc:Ignorable="d"
         Title="ProductItem" Height="450" Width="800">
-
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
+        <local:ImageConverter x:Key="imageCon"/>
         <Style x:Key="textBlockDesign" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="SkyBlue"></Setter>
+            <Setter Property="Foreground" Value="DeepPink"></Setter>
             <Setter Property="FontSize" Value="25"></Setter>
             <Setter Property="FontWeight" Value="bold"></Setter>
         </Style>
@@ -21,7 +24,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TextBlock Style="{DynamicResource textBlockDesign}" Text="prodect details" HorizontalAlignment="Left" Margin="245,31,0,0" VerticalAlignment="Top" Height="44" Width="330"/>
+        <TextBlock Style="{DynamicResource textBlockDesign}" Text="prodect details" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top" Height="44" Width="330"/>
         <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="184,76,0,0" TextWrapping="Wrap" Text="product id" VerticalAlignment="Top" RenderTransformOrigin="0.485,-0.315"/>
         <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="184,115,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Height="34" RenderTransformOrigin="0.409,-1.42"/>
         <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="184,154,0,0" TextWrapping="Wrap" Text="price" VerticalAlignment="Top" RenderTransformOrigin="0.51,-0.171"/>
@@ -34,7 +37,7 @@
         <TextBox Style="{DynamicResource textBoxDesign}" HorizontalAlignment="Left" Margin="318,236,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top"  RenderTransformOrigin="-0.417,0.261" />
         <TextBlock Style="{DynamicResource textBlockDesign}" HorizontalAlignment="Left" Margin="186,271,0,0" TextWrapping="Wrap" Text="in stock" VerticalAlignment="Top"/>
         <TextBox Style="{DynamicResource textBoxDesign}" HorizontalAlignment="Left" Margin="318,275,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" RenderTransformOrigin="-1.109,0.376"/>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="634,23,0,0" VerticalAlignment="Top" Width="131"/>
-
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="634,23,0,0" VerticalAlignment="Top" Width="131"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="475,115,0,0" VerticalAlignment="Top" Width="118" Source="{Binding Image,Converter={StaticResource imageCon}}"/>
     </Grid>
 </Window>
