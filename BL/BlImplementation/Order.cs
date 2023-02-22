@@ -93,21 +93,6 @@ namespace BlImplementation
             if(allItems != null)
                 boOrder.Items = allItems.ToList();
                 boOrder.TotalPrice = boOrder.Items.Sum(o => ((BO.OrderItem)o!).TotalPrice);
-            //foreach (DO.OrderItem? item in doItems)
-            //{
-            //    BO.OrderItem boItem = new BO.OrderItem() { OrderItemId = item?.ID ?? 0, ProductId = item?.ProductId ?? 0, TotalPrice = item?.Price * item?.Amount ?? 0, Amount = item?.Amount ?? 0 };
-            //    //A loop that goes through the products in the order and updates the price of the order
-            //    foreach (var product in productsList)
-            //    {
-            //        if (product?.ID == item?.ProductId)
-            //        {
-            //            boItem.ProductName = product?.Name;
-            //            break;
-            //        }
-            //    }
-            //    boOrder.Items.Add(boItem);
-            //    price += boItem.TotalPrice;
-            //}
             return boOrder;
         }
         /// <summary>

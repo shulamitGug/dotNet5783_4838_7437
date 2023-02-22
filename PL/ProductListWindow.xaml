@@ -27,6 +27,13 @@
             <Setter Property="Width" Value="98"></Setter>
             <Setter Property="Margin" Value="5,0,0,0"></Setter>
         </Style>
+        <Style x:Key="buttonViewDesign" TargetType="Button">
+            <Setter Property="Background" Value="pink"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="140"/>
+        </Style>
+
     </Window.Resources>
     <Grid Name="MainGrid" Margin="-20,0,0,78">
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="685,10,0,0" VerticalAlignment="Top" Width="131" Grid.RowSpan="2"/>
@@ -94,7 +101,8 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
             </ListView.View>
         </ListView>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="676,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
-        <Button Background="pink" BorderBrush="Black" FontWeight="Bold"  Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167" Padding="5" Click="AddProductBtn_Click" Width="140" RenderTransformOrigin="0.534,-0.555"/>
+        <Button Style="{DynamicResource buttonViewDesign}" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167"  Click="AddProductBtn_Click"  RenderTransformOrigin="0.534,-0.555"/>
+        <Button Click="Button_Click" Style="{DynamicResource buttonViewDesign}" Content="5 popolar product" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="659,275,0,0" Height="46" />
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>

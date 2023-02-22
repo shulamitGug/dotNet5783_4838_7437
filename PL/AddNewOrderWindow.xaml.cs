@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+
 namespace PL
 {
     /// <summary>
@@ -47,9 +49,7 @@ namespace PL
         // Using a DependencyProperty as the backing store for CatalogProducts.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CatalogProductsProperty =
             DependencyProperty.Register("CatalogProducts", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
- 
-        //private BO.Cart? currentCart;
-        
+         
         BlApi.IBl? bl = BlApi.Factory.Get();
 
         public AddNewOrderWindow(BO.Cart? c=null)
@@ -137,6 +137,7 @@ namespace PL
         {
             var x =
                      from prod in bl!.Product.GetCatalog()
+                     orderby prod.Name 
                      group prod by prod.Category into g
                      select new { Key = g.Key, prod = g };
         }
@@ -175,11 +176,8 @@ namespace PL
                 var tmp = bl!.Product.GetCatalog(null, CurrentCart);
                 CatalogProducts = tmp == null ? new() : new(tmp);
             }
-
             else
             {
-                //CurrentCart = bl!.Cart.AddProduct(CurrentCart!, prod.Id);
-                //CurrentCart = bl!.Cart.UpdateAmountOfProduct(CurrentCart, prod.Id, prod.Amount);
                 CurrentCart = bl!.Cart.AddAndUpdate(CurrentCart, prod.Id, prod.Amount);
                 MessageBox.Show("the product add to cart");
             }
@@ -195,8 +193,12 @@ namespace PL
         private void Image_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
             new ShoppingCart(CurrentCart!).Show();
-            //new CustomerDetails(currentCart!).Show();
             this.Close();
         }
+       private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+       { 
+        Regex regex = new Regex("[^0-9]+");
+        e.Handled = regex.IsMatch(e.Text);
+       }
     }
 }

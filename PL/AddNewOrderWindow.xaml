@@ -116,7 +116,7 @@
                                     <!--<Button IsEnabled="{Binding Amount,Converter={StaticResource addtoCart},UpdateSourceTrigger=PropertyChanged}" Content="{ Binding Amount, Converter={StaticResource addCart},UpdateSourceTrigger=Explicit }" Margin="27,0,0,0" Background="#FFFFD3A7" Click="Button_Click" Height="22"  Width="70" FontSize="12"  >-->
                                     <Button IsEnabled="{Binding Amount,Converter={StaticResource addtoCart}}" Content="add to cart" Margin="27,0,0,0" Background="#FFFFD3A7" Click="Button_Click" Height="22"  Width="70" FontSize="12"  >
                                     </Button>
-                                    <TextBox Margin="-60,0,0,0" FontWeight="bold" Height="22"  Width="20" x:Name="txtNum"  Text="{Binding Amount}" />
+                                    <TextBox PreviewTextInput="PreviewTextInput" Margin="-60,0,0,0" FontWeight="bold" Height="22"  Width="20" x:Name="txtNum"  Text="{Binding Amount}" />
 
                                 </Grid>
                             </DataTemplate>

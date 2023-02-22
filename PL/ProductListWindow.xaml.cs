@@ -93,16 +93,17 @@ namespace PL
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
 
-
-        //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
-
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             new MainWindow().Show();
             this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var tmp = bl!.Product.GetPoupolarProduct();
+            Products = tmp == null ? new() : new(tmp);
+            CategoriesSelector.SelectedItem = (BO.Category)7;
         }
     }
    

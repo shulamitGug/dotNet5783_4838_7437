@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
 using Microsoft.Win32;
+using System.Text.RegularExpressions;
 
 namespace PL
 {
@@ -154,6 +155,11 @@ namespace PL
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
   

@@ -43,7 +43,7 @@
                 VerticalAlignment="Center">
                 <StackPanel>
                     <TextBlock  Margin="5" Text="order id:" FontWeight="Bold" FontFamily="Cambria" />
-                    <TextBox Text="{Binding MyText}" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                    <TextBox PreviewTextInput="PreviewTextInput" Text="{Binding MyText}" MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button  Margin="5" Content="ok" Click="YesButton_Click" Background="{x:Null}" />
                         <Button  Margin="5" Content="cancle" Click="NoButton_Click" Background="{x:Null}" />

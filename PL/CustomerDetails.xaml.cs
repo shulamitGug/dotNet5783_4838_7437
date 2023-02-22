@@ -37,24 +37,11 @@ namespace PL
             DependencyProperty.Register("MYCurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
-        //public BO.Cart MyCurrentCart
-        //{
-        //    get { return (BO.Cart)GetValue(CurrentCartProperty); }
-        //    set { SetValue(MyCurrentCartProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for CurrentCart.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty CurrentCartProperty =
-        //    DependencyProperty.Register("CurrentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
-
-
-
         public CustomerDetails(BO.Cart cartOut)
         {
             InitializeComponent();
             MYCurrentCart = cartOut;
         }
-
 
 
         /// <summary>

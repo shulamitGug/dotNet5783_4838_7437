@@ -54,24 +54,6 @@ namespace PL
         {
             new CustomerDetails(MyCart).Show();
             this.Close();
-            //try
-            //{
-            //  int id= bl!.Cart.OrderConfirmation(MyCart);
-            //    MessageBox.Show("The order is complete!");
-
-            //    new EndOrder(id).Show();
-            //    this.Close();
-            //}
-            //catch(BO.NotInStockException ex)
-            //{
-            //    MessageBox.Show(ex+"");
-            //}
-            //catch (BO.NotValidException ex)
-            //{ 
-            //    MessageBox.Show(ex+" ");
-            //    new CustomerDetails(MyCart).Show();
-            //    this.Close();
-            //}
         }
         private void BackShopping_Click(object sender, RoutedEventArgs e)
         {

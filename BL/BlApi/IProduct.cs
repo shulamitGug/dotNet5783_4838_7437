@@ -15,5 +15,7 @@ namespace BlApi
         public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null,BO.Cart? cart=null);
         public BO.ProductItem GetProductItemById(int id,BO.Cart cart);
         public IEnumerable<BO.ProductForList?> GetProductForListByCategory(BO.Category? category);
+        public IEnumerable<BO.ProductForList?> GetPoupolarProduct();
+
     }
 }

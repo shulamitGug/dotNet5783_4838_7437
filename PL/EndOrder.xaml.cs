@@ -20,9 +20,6 @@ namespace PL
     public partial class EndOrder : Window
     {
 
-
-
-
         public int OrdId
         {
             get { return (int)GetValue(OrdIdProperty); }

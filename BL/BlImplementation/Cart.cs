@@ -40,8 +40,6 @@ namespace BlImplementation
             {
                 if (boCart.Items == null)
                     boCart.Items = new List<BO.OrderItem?>();
-                //DO.OrderItem item= new DO.OrderItem() { ProductId = id,Price = doProduct.Price,Amount=1 };
-                //int idOrd = idal.OrderItem.Add(item);
                 BO.OrderItem boItem = new BO.OrderItem() { ProductId = id,Price=doProduct.Price, ProductName = doProduct.Name, Amount = 1, TotalPrice = doProduct.Price };
                 boCart.Items.Add(boItem);
             }
@@ -146,74 +144,7 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("product does not exist-", ex);
             }
-            //foreach (BO.OrderItem? item in boCart.Items!)
-            //{
-            //    //if (item?.Amount < 0)
-            //    //    throw new BO.NotValidException("amount");
-            //    DO.Product doProduct;
-            //    try
-            //    {
-            //        doProduct = idal!.Product.Get(item!.ProductId);
-            //    }
-            //    catch (DO.NotExistException ex)
-            //    {
-            //        throw new BO.NotExistBlException("product does not exist-", ex);
-            //    }
-            //    if (doProduct.InStock - item?.Amount < 0)
-            //        throw new BO.NotInStockException(doProduct.ID, doProduct.Name!);
-            //}
-            //int id;
-            //try
-            //{
-
-            //}
-            //catch (DO.AlreadyExistException ex)
-            //{
-            //    throw new BO.AlreadyExistBlException("order alredy exist cannot add- ", ex);
-            //}
-            //The loop creates a cart datatype of type do and adds it
-            //boCart.Items.All(idal!.Product.Update(doProduct);
-
-
-
-            //foreach (BO.OrderItem? boItem in boCart.Items)
-            //{
-            //    DO.Product doProduct;
-            //    try
-            //    {
-            //        doProduct = idal!.Product.Get(boItem?.ProductId ?? 0);
-            //    }
-            //    catch (DO.NotExistException ex)
-            //    {
-            //        throw new BO.NotExistBlException("product does not exist-", ex);
-            //    }
-            //    doProduct.InStock -= boItem?.Amount ?? 0;
-            //    try
-            //    {
-            //        idal!.Product.Update(doProduct);
-            //    }
-            //    catch (DO.NotExistException ex)
-            //    {
-            //        throw new BO.NotExistBlException("product does not exist-", ex);
-            //    }
-            //    doOrderItem = new DO.OrderItem() { Amount = boItem!.Amount, ProductId = boItem.ProductId, OrderId = id, Price = doProduct.Price };
-            //    int i1d=idal.OrderItem.Add(doOrderItem);
-
-            //}
         }
-        //public BO.Cart deleteProduct(BO.Cart boCart, int id)
-        //{
-        //    BO.Cart cart = new BO.Cart();
-        //    idal!.OrderItem.Delete(id);
-        //    boCart.TotalPrice -= boCart.Items!.FirstOrDefault(x => x?.OrderItemId == id)!.TotalPrice;
-        //    boCart.Items!.RemoveAll(x => x?.OrderItemId == id);
-        //    cart.TotalPrice = boCart.TotalPrice;
-        //    cart.Items = new(boCart.Items);
-        //    cart.CustomerEmail = boCart.CustomerEmail;
-        //    cart.CustomerName = boCart.CustomerName;
-        //    cart.CustomerAdress = boCart.CustomerAdress;
-        //    return cart;
-        //}
         private bool UpdateAmountDal(DO.Product prod)
         {
             idal!.Product.Update(prod);

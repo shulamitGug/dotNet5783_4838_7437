@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -99,12 +100,6 @@ namespace PL
                 MessageBox.Show($"{ex.InnerException}");
                 MyInput.MyText = String.Empty;
             }
-            catch (Exception)
-            {
-                MessageBox.Show("please enter number");
-                MyInput.MyText = String.Empty;
-
-            }
         }
 
 
@@ -118,7 +113,11 @@ namespace PL
             InputBox.Visibility = Visibility.Collapsed;
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
-
+        }
+        private  void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 
