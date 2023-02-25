@@ -77,9 +77,16 @@ namespace BlImplementation
             itemAmount = orderItem.Amount;
 
             if (amount > itemAmount)//check if there is enough in the stock
-            
+
                 if (amount > doProduct.InStock)
+                {
+                    orderItem.Amount = doProduct.InStock;
+                    boCart.TotalPrice -= orderItem.TotalPrice;
+                    orderItem.TotalPrice = doProduct.InStock * doProduct.Price;
+                    boCart.TotalPrice += orderItem.TotalPrice;
                     throw new BO.NotInStockException(id, doProduct.Name ?? "");
+
+                }
             if(amount==0)
             {
                 boCart.TotalPrice -= orderItem.TotalPrice;

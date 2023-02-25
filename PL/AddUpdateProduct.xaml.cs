@@ -134,7 +134,6 @@ namespace PL
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                p.ID=Product.ID;
                 p.InStock=Product.InStock;
                 p.Name=Product.Name;
                 p.Price=Product.Price;
@@ -142,7 +141,10 @@ namespace PL
                 p.Image = openFileDialog.SafeFileName;
                 
             }
+            int tempId=Product.ID; ;
             Product = p;
+            Product.ID = tempId;    
+
         }
 
 

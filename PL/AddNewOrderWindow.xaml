@@ -147,8 +147,7 @@
         <!--<Button Style="{DynamicResource buttonDesign}"  Click="ShopCartBtn_Click" Content="shopping cart" HorizontalAlignment="Left" Margin="930,360,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.964,-0.37" />-->
         <ComboBox Grid.Column="4" SelectedItem="{x:Static thisEnum:Category.None }" ItemsSource="{Binding Source={StaticResource allCategories}}" BorderBrush="SkyBlue" x:Name="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" HorizontalAlignment="Center" Margin="0,202,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="-1.133,1.686"/>
         <Label  Grid.Column="4"  FontWeight="Bold" Content="Filter by category" HorizontalAlignment="Center" Margin="0,149,0,0" VerticalAlignment="Top" Height="36" Width="120"/>
-        <Button Grid.Column="4" Style="{DynamicResource buttonDesign}"  Click="GroupingBtn_Click" Content="group category" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.11,0.361" Height="48" />
-        <Button  Grid.Column="4" Style="{DynamicResource buttonDesign}"  Click="OrderByPrice_Click" Content="Sort from cheap to expensive" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.315,0.386" Height="48" />
+        <Button  Grid.Column="4" Style="{DynamicResource buttonDesign}"  Click="OrderByPrice_Click" Content="Sort from cheap to expensive" HorizontalAlignment="Center" Margin="0,289,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.315,0.386" Height="48" />
         <Image Grid.Column="4" Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="112" Margin="58,18,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="-5.94,0.543"/>
 
     </Grid>

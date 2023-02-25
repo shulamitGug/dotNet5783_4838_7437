@@ -75,7 +75,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if ((string)value != "" &&value!=null)
             {
                 string name = (string)value;
 

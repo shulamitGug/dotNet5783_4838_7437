@@ -80,8 +80,8 @@ namespace BlImplementation
         public void Delete(int id)
         {
             //check if the product exsist in order
-            var items=idal!.OrderItem.GetAll(x=>x?.ProductId==id);
-            if (items != null)
+            IEnumerable<DO.OrderItem?>? items=idal!.OrderItem.GetAll(x=>x?.ProductId==id);
+            if (items != null&&items.Count()!=0)
                 throw new BO.AlreadyExistBlException("the product is exist in orders so it cannot delete");
                 try
                 {
@@ -190,7 +190,8 @@ namespace BlImplementation
                            ID = prod.ID,
                            Name = prod.Name,
                            Price = prod.Price,
-                           Category = (BO.Category)prod.CategoryP!,
+                           Category= BO.Category.None,
+                           //Category = (BO.Category)prod.CategoryP!,
                            Image= prod.Image
                        };
             }

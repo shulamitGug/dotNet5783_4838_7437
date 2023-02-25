@@ -64,22 +64,20 @@ namespace PL
         }
 
 
-        /// <summary>
-        /// add product to cart
-        /// </summary>
-        /// <param name="sender">product</param>
-        /// <param name="e"></param>
-        private void AddBtn_Click(object sender, RoutedEventArgs e)
-        {
-            int id=(((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
-            if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
-                MessageBox.Show("The item is out of stock");
-            else
-            {
-                CurrentCart = bl!.Cart.AddProduct(CurrentCart!,id);
-                MessageBox.Show("the product add to cart");
-            }
-        }
+        //private void AddBtn_Click(object sender, RoutedEventArgs e)
+        //{
+            
+        //        int id = (((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
+        //        if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
+        //            MessageBox.Show("The item is out of stock");
+        //        else
+        //        {
+        //            CurrentCart = bl!.Cart.AddProduct(CurrentCart!, id);
+        //            MessageBox.Show("the product add to cart");
+        //        }
+            
+
+        //}
 
 
         /// <summary>
@@ -129,21 +127,6 @@ namespace PL
 
 
         /// <summary>
-        /// Sort into groups by category
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GroupingBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var x =
-                     from prod in bl!.Product.GetCatalog()
-                     orderby prod.Name 
-                     group prod by prod.Category into g
-                     select new { Key = g.Key, prod = g };
-        }
-
-
-        /// <summary>
         /// Sort by price
         /// </summary>
         /// <param name="sender"></param>
@@ -167,20 +150,35 @@ namespace PL
             this.Close();
         }
 
+
+        /// <summary>
+        /// add product to cart
+        /// </summary>
+        /// <param name = "sender" > product </ param >
+        /// < param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var prod = (((BO.ProductItem)((FrameworkElement)sender).DataContext));
-            if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
+            try
             {
-                MessageBox.Show("The item is out of stock");
+                var prod = (((BO.ProductItem)((FrameworkElement)sender).DataContext));
+                if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    CurrentCart = bl!.Cart.AddAndUpdate(CurrentCart, prod.Id, prod.Amount);
+                    MessageBox.Show("the product add to cart");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Not enough in stock");
                 var tmp = bl!.Product.GetCatalog(null, CurrentCart);
                 CatalogProducts = tmp == null ? new() : new(tmp);
+
             }
-            else
-            {
-                CurrentCart = bl!.Cart.AddAndUpdate(CurrentCart, prod.Id, prod.Amount);
-                MessageBox.Show("the product add to cart");
-            }
+        
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

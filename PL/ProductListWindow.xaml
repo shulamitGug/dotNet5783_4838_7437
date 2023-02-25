@@ -8,7 +8,7 @@
          xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         DataContext="{Binding Path=Products,RelativeSource={RelativeSource Self}}"
-        Title="ProductListWindow" Height="544" Width="826">
+        Title="ProductListWindow" Height="561" Width="1015">
     <Window.Background>
         <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
     </Window.Background>
@@ -22,13 +22,14 @@
         </ObjectDataProvider>
         <local:ImageConverter x:Key="imageConverter"/>
         <Style x:Key="listViewDesign" TargetType="GridViewColumnHeader">
-            <Setter Property="Background" Value="DeepPink"></Setter>
+            <Setter Property="Background" Value="LightPink"></Setter>
             <Setter Property="IsEnabled" Value="false"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="Width" Value="98"></Setter>
             <Setter Property="Margin" Value="5,0,0,0"></Setter>
         </Style>
         <Style x:Key="buttonViewDesign" TargetType="Button">
-            <Setter Property="Background" Value="pink"/>
+            <Setter Property="Background" Value="HotPink"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Width" Value="140"/>
@@ -36,19 +37,19 @@
 
     </Window.Resources>
     <Grid Name="MainGrid" Margin="-20,0,0,78">
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="685,10,0,0" VerticalAlignment="Top" Width="131" Grid.RowSpan="2"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="874,17,0,0" VerticalAlignment="Top" Width="131" Grid.RowSpan="2"/>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" RenderTransformOrigin="0.506,0.769">
-            <Label Foreground="DeepPink" FontWeight="Bold" FontSize="20" Content="choose category" Margin="234,124,17,-141" Grid.Column="1"/>
+            <Label Foreground="DeepPink" FontWeight="Bold" FontSize="20" Content="choose category" Margin="312,124,-61,-141" Grid.Column="1" RenderTransformOrigin="0.675,0.601"/>
             <ComboBox SelectedItem="{x:Static thisEnum:Category.None }" ItemsSource="{Binding Source={StaticResource allCategories}}" Name="CategoriesSelector"
-Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="250,179,33,-173"/>
+Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="312,181,33,-173"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <ListView  ItemsSource="{Binding}"   MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="60,10,228,-71" Grid.RowSpan="3">
+        <ListView  ItemsSource="{Binding}"   MouseDoubleClick="ProductListview_MouseDoubleClick" Margin="149,14,275,-50" Grid.RowSpan="3">
             <ListView.Background>
                 <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
             </ListView.Background>
@@ -100,9 +101,9 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="2
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="676,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="865,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
         <Button Style="{DynamicResource buttonViewDesign}" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Right" Margin="0,192,30,167"  Click="AddProductBtn_Click"  RenderTransformOrigin="0.534,-0.555"/>
-        <Button Click="Button_Click" Style="{DynamicResource buttonViewDesign}" Content="5 popolar product" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="659,275,0,0" Height="46" />
+        <Button Click="Button_Click" Style="{DynamicResource buttonViewDesign}" Content="5 popolar product" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="865,290,0,0" Height="75" />
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
