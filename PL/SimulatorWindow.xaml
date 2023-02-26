@@ -1,0 +1,23 @@
+﻿<Window x:Class="PL.SimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="SimulatorWindow" Height="450" Width="800">
+    <Grid>
+        <Button Click="Button_Click" Content="start" HorizontalAlignment="Left" Margin="71,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.143,0.268" Height="45" Width="80"/>
+        <Button Click="Button_Click_1" Content="stop" HorizontalAlignment="Left" Margin="74,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.326,-0.67" Height="34" Width="77"/>
+        <Label x:Name="idLbl" Content="Label" HorizontalAlignment="Left" Margin="324,82,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="secLbl" Content="seconds" HorizontalAlignment="Left" Margin="558,85,0,0" VerticalAlignment="Top"/>
+        <Label Name="simulatoLbl" Content="clock" HorizontalAlignment="Left" Margin="93,246,0,0" VerticalAlignment="Top" Height="31" Width="68"/>
+        <Label Content="now we creat order:" HorizontalAlignment="Left" Margin="324,47,0,0" VerticalAlignment="Top" Height="25" Width="132"/>
+        <Label Content="Estimated time for treatment" HorizontalAlignment="Left" Margin="627,85,0,0" VerticalAlignment="Top"/>
+        <Label Content="start time" HorizontalAlignment="Left" Margin="708,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.42,0.054"/>
+        <Label Content="Label" x:Name="startTime" HorizontalAlignment="Left" Margin="573,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,-0.22"/>
+        <Label Content="finish time" HorizontalAlignment="Left" Margin="708,178,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" x:Name="finishTime" HorizontalAlignment="Left" Margin="573,178,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

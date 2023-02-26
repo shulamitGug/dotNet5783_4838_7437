@@ -132,7 +132,7 @@ namespace BlImplementation
                 throw new BO.NotValidException("amount");
             try
             {
-                boCart.Items!.FindAll(x => idal!.Product.Get(x!.ProductId).InStock - x.Amount > 0 ? true : throw new BO.NotInStockException(x.ProductId, x.ProductName!));
+                boCart.Items!.FindAll(x => idal!.Product.Get(x!.ProductId).InStock - x.Amount >= 0 ? true : throw new BO.NotInStockException(x.ProductId, x.ProductName!));
                 DO.Order doOrder = new DO.Order() { CustomerAdress = boCart.CustomerAdress, CustomerName = boCart.CustomerName, CustomerEmail = boCart.CustomerEmail, ShipDate = null, DeliveryDate = null, OrderDate = DateTime.Now };
                 int id = idal!.Order.Add(doOrder);
                 var allItems = from item in boCart.Items

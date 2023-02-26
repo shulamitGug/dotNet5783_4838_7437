@@ -4,7 +4,7 @@ namespace DO;
 /// <summary>
 /// Order description
 /// </summary>
-public struct Order
+public struct Order:IComparable<Order>
 {
     /// <summary>
     /// Specific order id
@@ -35,7 +35,18 @@ public struct Order
     /// </summary>
     public DateTime? DeliveryDate { get; set; }
 
-   public override string ToString() => $@"
+    public int CompareTo(Order o2)
+    {
+        if (ShipDate == null && o2.ShipDate == null)
+            return (int)OrderDate?.CompareTo(o2.OrderDate);
+        if (ShipDate == null)
+            return (int)OrderDate?.CompareTo(o2.ShipDate);
+        if (o2.ShipDate == null)
+            return (int)o2.OrderDate?.CompareTo(ShipDate);
+        return (int)ShipDate?.CompareTo(o2.ShipDate);
+    }
+
+    public override string ToString() => $@"
 order ID={ID}
 order date: {OrderDate}, 
     	Customer Name: {CustomerName}
@@ -45,6 +56,5 @@ OrderDate: {OrderDate}
 Ship Date: {ShipDate}
 DeliveryDate: {DeliveryDate}
 ";
-
 
 }

@@ -15,7 +15,6 @@ internal class Order : IOrder
         addOrder.ID = Config.GetNextOrderNumber();
         Config.SaveNextOrderNumber(addOrder.ID + 1);
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
-
         listOrders.Add(addOrder);
 
         XMLTools.SaveListToXMLSerializer(listOrders, s_Order);

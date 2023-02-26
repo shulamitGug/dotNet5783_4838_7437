@@ -1,68 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>100002</ID>
-    <Name>primer</Name>
-    <CategoryP>FacialMakeup</CategoryP>
-    <Price>316</Price>
-    <InStock>2</InStock>
-    <Image>primer.png</Image>
-  </Product>
-  <Product>
-    <ID>100005</ID>
-    <Name>primer</Name>
-    <CategoryP>FacialMakeup</CategoryP>
-    <Price>316</Price>
-    <InStock>2</InStock>
-    <Image>primer.png</Image>
-  </Product>
-  <Product>
     <ID>100007</ID>
     <Name>primer</Name>
     <CategoryP>FacialMakeup</CategoryP>
     <Price>316</Price>
     <InStock>2</InStock>
     <Image>primer.png</Image>
-  </Product>
-  <Product>
-    <ID>233474</ID>
-    <Name>2</Name>
-    <Price>3</Price>
-    <InStock>30</InStock>
-    <Image />
-    <CategoryP>LipMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>100008</ID>
-    <Name>blush</Name>
-    <Price>1000</Price>
-    <InStock>15</InStock>
-    <Image />
-    <CategoryP />
-  </Product>
-  <Product>
-    <ID>567898</ID>
-    <Name>gh</Name>
-    <Price>2</Price>
-    <InStock>0</InStock>
-    <Image />
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>345676</ID>
-    <Name>gh</Name>
-    <Price>2</Price>
-    <InStock>0</InStock>
-    <Image>bronzer.png</Image>
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>100004</ID>
-    <Name>עי</Name>
-    <Price>316</Price>
-    <InStock>2</InStock>
-    <Image>primer.png</Image>
-    <CategoryP />
   </Product>
   <Product>
     <ID>345678</ID>
@@ -73,28 +17,12 @@
     <CategoryP>EyeMakeup</CategoryP>
   </Product>
   <Product>
-    <ID>100001</ID>
-    <Name>primer</Name>
-    <Price>316</Price>
-    <InStock>256</InStock>
-    <Image>primer.png</Image>
-    <CategoryP />
-  </Product>
-  <Product>
     <ID>100006</ID>
     <Name>primer</Name>
     <Price>316</Price>
     <InStock>1</InStock>
     <Image />
     <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>34564567</ID>
-    <Name>cv</Name>
-    <Price>4</Price>
-    <InStock>0</InStock>
-    <Image>primer.png</Image>
-    <CategoryP>7</CategoryP>
   </Product>
   <Product>
     <ID>2345678</ID>
@@ -119,5 +47,77 @@
     <InStock>0</InStock>
     <Image>bronzer.png</Image>
     <CategoryP>LipMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100002</ID>
+    <Name>primer</Name>
+    <Price>316</Price>
+    <InStock>1</InStock>
+    <Image />
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>233474</ID>
+    <Name>2</Name>
+    <Price>3</Price>
+    <InStock>29</InStock>
+    <Image />
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>345676</ID>
+    <Name>gh</Name>
+    <Price>2</Price>
+    <InStock>100</InStock>
+    <Image>bronzer.png</Image>
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>34564567</ID>
+    <Name>cv</Name>
+    <Price>4</Price>
+    <InStock>200</InStock>
+    <Image>primer.png</Image>
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100008</ID>
+    <Name>blush</Name>
+    <Price>1000</Price>
+    <InStock>293</InStock>
+    <Image></Image>
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>567898</ID>
+    <Name>gh</Name>
+    <Price>2</Price>
+    <InStock>102</InStock>
+    <Image></Image>
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100004</ID>
+    <Name>עי</Name>
+    <Price>316</Price>
+    <InStock>1</InStock>
+    <Image />
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>primer</Name>
+    <Price>316</Price>
+    <InStock>253</InStock>
+    <Image />
+    <CategoryP>EyeMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100005</ID>
+    <Name>primer</Name>
+    <Price>316</Price>
+    <InStock>1</InStock>
+    <Image />
+    <CategoryP>EyeMakeup</CategoryP>
   </Product>
 </ArrayOfProduct>

@@ -13,7 +13,6 @@ namespace BlApi
         public BO.Order updateSendingDate(int id);
         public BO.Order UpdateProvideDate(int id);
         public BO.OrderTracking StatusOrder(int id);
-        //public void UpdateOrder()
-
+        public int? GetOldestOrderId();
     }
 }

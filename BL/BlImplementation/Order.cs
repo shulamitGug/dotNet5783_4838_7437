@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
+using System.Linq;
 namespace BlImplementation
 {
     internal class Order : BlApi.IOrder
@@ -35,26 +36,26 @@ namespace BlImplementation
             {
                 IEnumerable<DO.Order?> orders = idal!.Order.GetAll();
                 var ordersForList = from order in orders
-                        let orderItems = idal.OrderItem.GetAll(orditem => orditem?.OrderId == order?.ID)
-                         let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
-                         let totalPrice = orderItems.Sum(o => ((DO.OrderItem)o!).Amount * ((DO.OrderItem)o!).Price)
-                         select new BO.OrderForList
-                         {
-                          ID = ((DO.Order)order!).ID,
-                          CustomerName = ((DO.Order)order!).CustomerName,
-                          AmountOfItems = amount,
-                          TotalPrice = totalPrice,
-                          Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
-                          BO.OrderStatus.provided : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
-                          BO.OrderStatus.sent : BO.OrderStatus.approved
-                         };
+                                    let orderItems = idal.OrderItem.GetAll(orditem => orditem?.OrderId == order?.ID)
+                                    let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
+                                    let totalPrice = orderItems.Sum(o => ((DO.OrderItem)o!).Amount * ((DO.OrderItem)o!).Price)
+                                    select new BO.OrderForList
+                                    {
+                                        ID = ((DO.Order)order!).ID,
+                                        CustomerName = ((DO.Order)order!).CustomerName,
+                                        AmountOfItems = amount,
+                                        TotalPrice = totalPrice,
+                                        Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
+                                     BO.OrderStatus.provided : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
+                                     BO.OrderStatus.sent : BO.OrderStatus.approved
+                                    };
                 return ordersForList;
             }
             catch (DO.NotExistException ex)
             {
                 throw new BO.NotExistBlException("order doesnot exist", ex);
             }
-        } 
+        }
 
         /// <summary>
         /// The function returns order details according to order id
@@ -69,30 +70,30 @@ namespace BlImplementation
             DO.Order doOrder;
             try
             {
-                 doOrder = idal!.Order.Get(id);
+                doOrder = idal!.Order.Get(id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            BO.Order boOrder = new BO.Order() { ID=doOrder.ID,CustomerName=doOrder.CustomerName,ShipDate=doOrder.ShipDate,DeliveryDate=doOrder.DeliveryDate,OrderDate=doOrder.OrderDate,CustomerEmail=doOrder.CustomerEmail,CustomerAdress=doOrder.CustomerAdress,Status= CheckStatus(doOrder) };
-            boOrder.Items=new List<BO.OrderItem?>();
-            IEnumerable<DO.Product?> productsList=idal!.Product.GetAll();
-            IEnumerable<DO.OrderItem?> doItems = idal!.OrderItem.GetAll(x => x?.OrderId ==id);
+            BO.Order boOrder = new BO.Order() { ID = doOrder.ID, CustomerName = doOrder.CustomerName, ShipDate = doOrder.ShipDate, DeliveryDate = doOrder.DeliveryDate, OrderDate = doOrder.OrderDate, CustomerEmail = doOrder.CustomerEmail, CustomerAdress = doOrder.CustomerAdress, Status = CheckStatus(doOrder) };
+            boOrder.Items = new List<BO.OrderItem?>();
+            IEnumerable<DO.Product?> productsList = idal!.Product.GetAll();
+            IEnumerable<DO.OrderItem?> doItems = idal!.OrderItem.GetAll(x => x?.OrderId == id);
             //A loop that goes through the order details and enters them into the bo data type
             IEnumerable<BO.OrderItem?> allItems = from itemQuery in doItems
-                    let prodName = productsList.FirstOrDefault(x => x?.ID == ((DO.OrderItem)itemQuery!).ProductId)?.Name
-                    select new BO.OrderItem
-                    {
-                        OrderItemId = ((DO.OrderItem)itemQuery!).ID,
-                        ProductId = ((DO.OrderItem)itemQuery!).ProductId,
-                        ProductName = prodName,
-                        TotalPrice = ((DO.OrderItem)itemQuery!).Price * ((DO.OrderItem)itemQuery!).Amount,
-                        Amount = ((DO.OrderItem)itemQuery!).Amount
-                    };
-            if(allItems != null)
+                                                  let prodName = productsList.FirstOrDefault(x => x?.ID == ((DO.OrderItem)itemQuery!).ProductId)?.Name
+                                                  select new BO.OrderItem
+                                                  {
+                                                      OrderItemId = ((DO.OrderItem)itemQuery!).ID,
+                                                      ProductId = ((DO.OrderItem)itemQuery!).ProductId,
+                                                      ProductName = prodName,
+                                                      TotalPrice = ((DO.OrderItem)itemQuery!).Price * ((DO.OrderItem)itemQuery!).Amount,
+                                                      Amount = ((DO.OrderItem)itemQuery!).Amount
+                                                  };
+            if (allItems != null)
                 boOrder.Items = allItems.ToList();
-                boOrder.TotalPrice = boOrder.Items.Sum(o => ((BO.OrderItem)o!).TotalPrice);
+            boOrder.TotalPrice = boOrder.Items.Sum(o => ((BO.OrderItem)o!).TotalPrice);
             return boOrder;
         }
         /// <summary>
@@ -103,7 +104,7 @@ namespace BlImplementation
         /// <exception cref="Exception"> If the id is negative an exception is thrown</exception>
         public BO.Order updateSendingDate(int id)
         {
-            if(id<0)
+            if (id < 0)
                 throw new BO.NotValidException("ID cannot be negative");
             DO.Order doOrder;
             try
@@ -114,13 +115,13 @@ namespace BlImplementation
             {
                 throw new BO.NotExistBlException("notExist ", ex);
             }
-            if (doOrder.ShipDate==null)
+            if (doOrder.ShipDate == null)
             {
-                doOrder.ShipDate=DateTime.Now;
+                doOrder.ShipDate = DateTime.Now;
                 idal.Order.Update(doOrder);
             }
             BO.Order newOrder = GetOrderDetails(id);
-            newOrder.Status =(BO.OrderStatus)2;
+            newOrder.Status = (BO.OrderStatus)2;
             return newOrder;
         }
         /// <summary>
@@ -138,11 +139,11 @@ namespace BlImplementation
             {
                 doOrder = idal!.Order.Get(id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new BO.NotExistBlException("order not exist", ex);
             }
-            if (doOrder.DeliveryDate==null&&doOrder.ShipDate!=null)
+            if (doOrder.DeliveryDate == null && doOrder.ShipDate != null)
             {
                 doOrder.DeliveryDate = DateTime.Now;
                 idal.Order.Update(doOrder);
@@ -176,12 +177,12 @@ namespace BlImplementation
             trackingOrder.Tracking = new List<Tuple<DateTime?, string?>>();
             Tuple<DateTime?, string?> newTuple = new Tuple<DateTime?, string?>(doOrder.OrderDate, "approved");
             trackingOrder.Tracking.Add(newTuple);
-            if (doOrder.ShipDate!=null)
+            if (doOrder.ShipDate != null)
             {
                 newTuple = new Tuple<DateTime?, string?>(doOrder.ShipDate, "sent");
                 trackingOrder.Tracking.Add(newTuple);
             }
-             if (doOrder.DeliveryDate!=null)
+            if (doOrder.DeliveryDate != null)
             {
                 newTuple = new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "provided");
                 trackingOrder.Tracking.Add(newTuple);
@@ -189,6 +190,12 @@ namespace BlImplementation
             return trackingOrder;
         }
 
+
+        public int? GetOldestOrderId()
+        {
+            var allOrders =idal!.Order.GetAll(x=>x?.DeliveryDate==null);
+           return allOrders.MinBy(x => x?.ShipDate == null ? x?.OrderDate : x?.ShipDate)?.ID;
+        }
 
     }
 }

@@ -32,7 +32,8 @@
     </Window.Resources>
     <Grid>
         <Grid  Panel.ZIndex="3" x:Name="InputBox" Visibility="{Binding Path=Myvisibility,Mode=TwoWay}">
-            <Grid Background="Black" Opacity="0.5"/>
+            <Grid Background="Black" Opacity="0.5">
+            </Grid>
             <Border
                 MinWidth="250"
                 Background="AntiqueWhite" 
@@ -67,6 +68,8 @@
             </Button>
             <Button  Grid.Row="2" Grid.Column="1" Style="{DynamicResource buttonsDesign}" Click="AddNewOrd_Click"  Content="New order"   VerticalAlignment="Center" />
             <Button  Grid.Row="2" Grid.Column="2" Style="{DynamicResource buttonsDesign}"  Click="OrderTracking_Click" Content="Order tracking"  VerticalAlignment="Center" />
+            <Button Style="{DynamicResource buttonsDesign}" Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="226,0,0,0" VerticalAlignment="Top"/>
+
         </Grid>
     </Grid>
 </Window>
