@@ -91,4 +91,11 @@
     <Amount>3</Amount>
     <Price>90</Price>
   </OrderItem>
+  <OrderItem>
+    <ID>14</ID>
+    <OrderId>9</OrderId>
+    <ProductId>100004</ProductId>
+    <Amount>1</Amount>
+    <Price>316</Price>
+  </OrderItem>
 </ArrayOfOrderItem>

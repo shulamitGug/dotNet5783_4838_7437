@@ -12,11 +12,11 @@ using System.Windows.Data;
 /// </summary>
 namespace PL
 {
-    /// <summary>
-    /// class to convert the okay button text if add or update
-    /// </summary>
+    ///// <summary>
+    ///// class to convert the okay button text if add or update
+    ///// </summary>
     public class ConvertStatus : IValueConverter
-    { 
+    {
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -164,6 +164,9 @@ namespace PL
         }
 
     }
+    /// <summary>
+    /// check if there is in the stock 
+    /// </summary>
     public class ConvertAddToCart : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -179,20 +182,10 @@ namespace PL
         }
 
     }
-    public class AddUpdate : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((int)value == 0)
-                return "add";
-            return "update";
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    /// <summary>
+    /// if there is no orders to treat in the simulator so hide
+    /// </summary>
     public class HideNull : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -206,7 +199,12 @@ namespace PL
         {
             throw new NotImplementedException();
         }
-    }    public class VisibleMessege : IValueConverter
+    }
+
+    /// <summary>
+    /// if there is no orders to treat in the simulator so visible
+    /// </summary>
+    public class VisibleMessege : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

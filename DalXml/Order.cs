@@ -10,8 +10,15 @@ namespace Dal;
 
 internal class Order : IOrder
 {
-    const string s_Order = @"Order";
+    const string s_Order = @"Order";    
     [MethodImpl(MethodImplOptions.Synchronized)]
+    
+    /// <summary>
+    /// add order to the array
+    /// </summary>
+    /// <param name="order">get order object</param>
+    /// <returns>if add return the id of this order</returns>
+    /// <exception cref="Exception">id there is no place</exception>
     public int Add(DO.Order addOrder)
     {
         addOrder.ID = Config.GetNextOrderNumber();
@@ -24,6 +31,13 @@ internal class Order : IOrder
         return addOrder.ID;
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
+
+
+    /// <summary>
+    /// the function delete order from arr
+    /// </summary>
+    /// <param name="id">id of order</param>
+    /// <exception cref="Exception">the order is not exist</exception>
     public void Delete(int id)
     {
         List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -34,7 +48,15 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrder, s_Order);
     }
 
+
+
     [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <summary>
+    /// return all the details of order by order id
+    /// </summary>
+    /// <param name="id">order id</param>
+    /// <returns>order object</returns>
+    /// <exception cref="Exception">if the order is not exist </exception>
     public DO.Order Get(int id)
     {
         List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -42,7 +64,13 @@ internal class Order : IOrder
         return listOrder.FirstOrDefault(ord => ord?.ID == id) ??
             throw new DO.NotExistException(id,"order");
     }
+
+
     [MethodImpl(MethodImplOptions.Synchronized)]
+    /// <summary>
+    /// return all the orders in the array
+    /// </summary>
+    /// <returns>array of orders</returns>
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? check = null)
     {
         List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -52,12 +80,27 @@ internal class Order : IOrder
         else
             return listOrder.Where(x=>check(x)).OrderBy(ord => ord?.ID);
     }
+
+
+    /// <summary>
+    /// get by condition
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.NotExistException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order GetByCondition(Func<DO.Order?, bool>? check)
     {
         List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
         return listOrder.FirstOrDefault(x => check!(x)) ?? throw new DO.NotExistException(0, "order");
     }
+
+
+    /// <summary>
+    /// update order
+    /// </summary>
+    /// <param name="order">order object</param>
+    /// <exception cref="Exception">the order is not exist</exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order updateObject)
     {

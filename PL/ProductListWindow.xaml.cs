@@ -92,14 +92,23 @@ namespace PL
             Products = tmp == null ? new() : new(tmp);
             CategoriesSelector.SelectedItem = (BO.Category)7;
         }
-
+        /// <summary>
+        /// back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             new MainWindow().Show();
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// pouplar product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Poupolar_click(object sender, RoutedEventArgs e)
         {
             var tmp = bl!.Product.GetPoupolarProduct();
             Products = tmp == null ? new() : new(tmp);

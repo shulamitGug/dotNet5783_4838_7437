@@ -103,7 +103,7 @@ Grid.Column="1" SelectionChanged="CategoriesSelector_SelectionChanged" Margin="3
         </ListView>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/makeup.jpg" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="109" Margin="865,17,0,0" VerticalAlignment="Top" Width="132" Grid.RowSpan="2"/>
         <Button Style="{DynamicResource buttonViewDesign}" Content="Add new Product" Grid.Row="1"  Margin="800,176,49,163"  Click="AddProductBtn_Click"  />
-        <Button Click="Button_Click" Style="{DynamicResource buttonViewDesign}" Content="5 popolar product" Grid.Row="1"  Margin="800,220,49,0" />
+        <Button Click="Poupolar_click" Style="{DynamicResource buttonViewDesign}" Content="5 popolar product" Grid.Row="1"  Margin="800,220,49,0" />
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>

@@ -45,7 +45,9 @@ namespace PL
         public static readonly DependencyProperty MytimeProperty =
             DependencyProperty.Register("Mytime", typeof(MyTime), typeof(Window), new PropertyMetadata(null));
 
-
+        /// <summary>
+        /// thread
+        /// </summary>
         BackgroundWorker back=new BackgroundWorker();
         
         public SimulatorWindow()
@@ -60,29 +62,37 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// finish
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Back_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// ecery change update the wpf
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void B_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             switch(e.ProgressPercentage)
             {
                 case 1:
 
-                    { //simulatoLbl.Content = DateTime.Now.ToString("h:mm:ss");
+                    {                        
                         Mytime = new MyTime(Mytime?.seconds, Mytime?.begin, Mytime?.end, Mytime?.st, Mytime?.endTime, DateTime.Now.ToString("h:mm:ss"));
                         pbOrder.Value++;
                     }
                     break;
-               //עדכון פקדים
                 case 0:
                     {
                         Mytime = new MyTime(((Simulator.OurEventArgs)e.UserState!).seconds, DateTime.Now.ToString("h:mm:ss"), DateTime.Now.AddSeconds(((Simulator.OurEventArgs)e.UserState!).seconds).ToString("h:mm:ss"), ((Simulator.OurEventArgs)e.UserState!).order.Status==BO.OrderStatus.sent?BO.OrderStatus.provided: BO.OrderStatus.sent, DateTime.Now.AddSeconds(((Simulator.OurEventArgs)e.UserState!).seconds), DateTime.Now.ToString("h:mm:ss"));
                         Order = ((Simulator.OurEventArgs)e.UserState!).order;
                         pbOrder.Value=0;
-                        //pbOrder.Minimum = 0;
                         pbOrder.Maximum = (int)(Mytime.seconds);
                     }
                     break;
@@ -90,6 +100,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// do work func
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void B_DoWork(object? sender, DoWorkEventArgs e)
         {
             Simulator.Simulator.Active();
@@ -102,27 +117,38 @@ namespace PL
             }
         }
 
-        private  void Simulator_propertiesChanged(object? sender,Simulator.OurEventArgs e)
+        /// <summary>
+        /// Report changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Simulator_propertiesChanged(object? sender,Simulator.OurEventArgs e)
         {
             back.ReportProgress(0, e);
         }
+       /// <summary>
+       /// stop thee thread
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private  void Simulator_stopThread(object? sender, EventArgs e)
         {
             back.CancelAsync();
             Simulator.Simulator.RemoveEventStop(Simulator_stopThread);
             Simulator.Simulator.RemoveEventPropertiesChanged(Simulator_propertiesChanged);
         }
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    back.RunWorkerAsync();
-        //}
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+
+
+        private void stop_Click(object sender, RoutedEventArgs e)
         {
             Simulator.Simulator.StopActive();
         }
 
     }
+    /// <summary>
+    /// new object
+    /// </summary>
     public class MyTime
     {
         public int? seconds { get; set; }

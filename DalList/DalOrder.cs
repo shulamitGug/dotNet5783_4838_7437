@@ -82,8 +82,14 @@ internal class DalOrder:IOrder
 
         DataSource.OrdersList.Add(order);
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    /// <summary>
+    /// get by condition
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.NotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order GetByCondition(Func<Order?, bool>? check)
     {
         return DataSource.OrdersList.Find(x => check!(x)) ??

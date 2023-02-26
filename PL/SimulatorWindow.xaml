@@ -28,7 +28,7 @@
     </Window.Resources>
     <Grid>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png"  HorizontalAlignment="Left" Height="109" Margin="599,25,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
-        <Button Style="{DynamicResource buttonDesign}" Click="Button_Click_1" Content="stop" HorizontalAlignment="Left" Margin="84,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-1.326,-0.67" Height="46" Width="104"/>
+        <Button Style="{DynamicResource buttonDesign}" Click="stop_Click" Content="stop" HorizontalAlignment="Left" Margin="84,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-1.326,-0.67" Height="46" Width="104"/>
         <Grid Visibility="{Binding Mytime.endTime, Converter={StaticResource hide}}" Margin="0,-10,0,10">
             <Label Style="{DynamicResource LabelDesign}" x:Name="idLbl" Content="{Binding Order.ID}" HorizontalAlignment="Left" Margin="530,260,0,0" VerticalAlignment="Top"/>
             <Label Style="{DynamicResource LabelDesign}" x:Name="secLbl" Content="{Binding Mytime.seconds}" HorizontalAlignment="Left" Margin="535,111,0,0" VerticalAlignment="Top"/>

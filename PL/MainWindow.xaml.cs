@@ -115,20 +115,29 @@ namespace PL
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
         }
-        private  void PreviewTextInput(object sender, TextCompositionEventArgs e)
+
+        /// <summary>
+        /// Force user to enter numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open simulator window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenSimulatorWindow(object sender, RoutedEventArgs e)
         {
             simBtn.IsEnabled = false;
             new SimulatorWindow().Show();
         }
     }
-
-
 
 
     /// <summary>

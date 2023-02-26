@@ -15,7 +15,7 @@
         <Label FontSize="20" Content="{Binding }" HorizontalAlignment="Left" Margin="598,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="11.873,-5.488"/>
         <Label FontSize="20" Content="We would love to see you again!" HorizontalAlignment="Left" Margin="204,127,0,0" VerticalAlignment="Top" Height="44" Width="472"/>
         <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="104" Margin="666,12,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="3"/>
-        <Button Click="Button_Click" Background="DeepPink" Content="back to the main window" Margin="267,177,360,202"/>
+        <Button Click="BackToMain" Background="DeepPink" Content="back to the main window" Margin="267,177,360,202"/>
 
     </Grid>
 </Window>

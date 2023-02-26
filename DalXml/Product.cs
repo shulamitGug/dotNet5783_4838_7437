@@ -9,10 +9,17 @@ using System.Xml.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Dal;
-
+/// <summary>
+/// product function
+/// </summary>
 internal class Product : IProduct
 {
     const string s_product = @"Product";
+    /// <summary>
+    /// convert from xelement to product
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
     static DO.Product? createProductfromXElement(XElement s)
     {
         return new DO.Product()
@@ -25,8 +32,13 @@ internal class Product : IProduct
             CategoryP = convertFromStringToCategory(s.Element("CategoryP").Value)
         };
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    /// <summary>
+    /// add product to the array
+    /// </summary>
+    /// <param name="product">get product object</param>
+    /// <returns>if add return the id of this product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product product)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -52,8 +64,13 @@ internal class Product : IProduct
 
         return product.ID; ;
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    /// <summary>
+    /// the function delete product from arr
+    /// </summary>
+    /// <param name="id">id of product</param>
+    /// <exception cref="Exception">the product is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -66,8 +83,15 @@ internal class Product : IProduct
 
         XMLTools.SaveListToXMLElement(productsRootElem, s_product);
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+
+    /// <summary>
+    /// return all the details of product by product id
+    /// </summary>
+    /// <param name="id">product id</param>
+    /// <returns>product object</returns>
+    /// <exception cref="Exception">if the product is not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(int id)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -77,8 +101,12 @@ internal class Product : IProduct
                 select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
                 ?? throw new DO.NotExistException(id,"product"); 
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    /// <summary>
+    /// return all the product in the array
+    /// </summary>
+    /// <returns>array of product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? check = null)
     {
         XElement? productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -96,8 +124,15 @@ internal class Product : IProduct
                    select createProductfromXElement(s);
         }
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+
+    /// <summary>
+    /// get by condition
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.NotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product GetByCondition(Func<DO.Product?, bool>? check)
     {
         XElement? productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -106,8 +141,14 @@ internal class Product : IProduct
                 where check!(doProd)
                 select (DO.Product?)doProd).FirstOrDefault()??throw new DO.NotExistException(0,"product");
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+
+    /// <summary>
+    /// update product
+    /// </summary>
+    /// <param name="product">product object</param>
+    /// <exception cref="Exception">the product is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product updateProduct)
     {
         Delete(updateProduct.ID);

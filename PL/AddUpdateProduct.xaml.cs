@@ -57,7 +57,6 @@ namespace PL
             InitializeComponent();
             update = true;
             Product = bl!.Product.GetProductById(id);
-            //CategoryProd_selector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
 
@@ -160,6 +159,12 @@ namespace PL
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Force user to enter numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

@@ -67,7 +67,7 @@
             </Button>
             <Button  Grid.Row="2" Grid.Column="1" Style="{DynamicResource buttonsDesign}" Click="AddNewOrd_Click"  Content="New order"   VerticalAlignment="Center" />
             <Button  Grid.Row="2" Grid.Column="2" Style="{DynamicResource buttonsDesign}"  Click="OrderTracking_Click" Content="Order tracking"  VerticalAlignment="Center" />
-            <Button x:Name="simBtn" Style="{DynamicResource buttonsDesign}" Height="50" Width="100" Click="Button_Click" Content="simulator" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+            <Button x:Name="simBtn" Style="{DynamicResource buttonsDesign}" Height="50" Width="100" Click="OpenSimulatorWindow" Content="simulator" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>

@@ -36,12 +36,13 @@ internal class DalProducts:IProduct
         //look for the product with the same id
       return DataSource.ProductsList.FirstOrDefault(x => x?.ID ==id)??throw new NotExistException(id, "product", "alreadyExsist");
     }
+
+
     /// <summary>
     /// return all the product in the array
     /// </summary>
     /// <returns>array of product</returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? check = null)
     {
         //copy to new arr all the products that exist the arr
@@ -53,6 +54,8 @@ internal class DalProducts:IProduct
             return from prod in DataSource.ProductsList
                    select prod; 
     }
+
+
     /// <summary>
     /// the function delete product from arr
     /// </summary>
@@ -82,13 +85,25 @@ internal class DalProducts:IProduct
         DataSource.ProductsList.Add(product);
         //Go through the database until the requested order
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    /// <summary>
+    /// get by condition
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.NotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product GetByCondition(Func<Product?, bool>? check)
     {
         return DataSource.ProductsList.Find(x=>check!(x))??  
         throw new DO.NotExistException(1,"product does not exist");
     }
+
+    /// <summary>
+    /// check if exsist
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     private bool CheckProduct(int id)
     {
         return DataSource.ProductsList.Any(prod => prod?.ID == id);

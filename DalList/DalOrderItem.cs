@@ -23,6 +23,8 @@ internal class DalOrderItem:IOrderItem
             return itemOrder.ID;
 
     }
+
+
     /// <summary>
     /// The function returns the item data in the order with the received id
     /// </summary>
@@ -38,6 +40,8 @@ internal class DalOrderItem:IOrderItem
         return DataSource.OrderItemList.FirstOrDefault(x => x?.ID == id)??
         throw new NotExistException(id,"orderItem");
     }
+
+
     /// <summary>
     /// The function returns an array with all the items in the orders
     /// </summary>
@@ -53,6 +57,8 @@ internal class DalOrderItem:IOrderItem
         return from ordItem in DataSource.OrderItemList
                select ordItem; ;
     }
+
+
     /// <summary>
     /// The operation deletes an item in the order according to the id received
     /// </summary>
@@ -66,6 +72,8 @@ internal class DalOrderItem:IOrderItem
         if (count == 0)
             throw new NotExistException(id, "orderItem");
     }
+
+
     /// <summary>
     /// the function update order item 
     /// </summary>

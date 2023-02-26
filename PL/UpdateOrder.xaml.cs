@@ -48,8 +48,11 @@ namespace PL
 
 
 
-       
-
+        /// <summary>
+        /// update ship date of current date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public UpdateOrder(int id, string _state)
         {
             InitializeComponent();
@@ -61,6 +64,11 @@ namespace PL
             NewOrder = bl!.Order.updateSendingDate(NewOrder!.ID);
         }
 
+        /// <summary>
+        /// update delivery date of current date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateDerliveryDateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -74,6 +82,11 @@ namespace PL
 
         }
 
+       /// <summary>
+       /// back to all orders
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();

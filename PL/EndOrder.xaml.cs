@@ -42,8 +42,12 @@ namespace PL
             new MainWindow().Show();
             this.Close();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackToMain(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
             this.Close();

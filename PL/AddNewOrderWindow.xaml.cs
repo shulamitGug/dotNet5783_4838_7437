@@ -64,22 +64,6 @@ namespace PL
         }
 
 
-        //private void AddBtn_Click(object sender, RoutedEventArgs e)
-        //{
-            
-        //        int id = (((BO.ProductItem)((FrameworkElement)sender).DataContext).Id);
-        //        if (!((BO.ProductItem)((FrameworkElement)sender).DataContext).InStock)
-        //            MessageBox.Show("The item is out of stock");
-        //        else
-        //        {
-        //            CurrentCart = bl!.Cart.AddProduct(CurrentCart!, id);
-        //            MessageBox.Show("the product add to cart");
-        //        }
-            
-
-        //}
-
-
         /// <summary>
         /// filter products by category
         /// </summary>

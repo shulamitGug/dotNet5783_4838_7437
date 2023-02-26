@@ -42,6 +42,11 @@ namespace PL
             MyCart = currentCartOut;
         }
 
+        /// <summary>
+        /// delete product from cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
@@ -49,12 +54,22 @@ namespace PL
 
         }
 
-
+        /// <summary>
+        /// finish order
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OrderConfirmation_Click(object sender, RoutedEventArgs e)
         {
             new CustomerDetails(MyCart).Show();
             this.Close();
         }
+
+        /// <summary>
+        /// continue buying
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackShopping_Click(object sender, RoutedEventArgs e)
         {
             new AddNewOrderWindow(MyCart).Show();
@@ -62,6 +77,11 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// at least one of the product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CmdDown_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
@@ -69,6 +89,12 @@ namespace PL
            MyCart=bl!.Cart.UpdateAmountOfProduct(MyCart, id, amount);
         }
 
+
+        /// <summary>
+        /// add one of the product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CmdUp_Click(object sender, RoutedEventArgs e)
         {
             int id = (((BO.OrderItem)((FrameworkElement)sender).DataContext).ProductId);
@@ -84,6 +110,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             new MainWindow().Show();

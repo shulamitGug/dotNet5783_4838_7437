@@ -14,6 +14,10 @@ namespace Simulator
         public static int open = 0;
         private static event EventHandler? stopThread;
         private static event EventHandler<OurEventArgs>? propertiesChanged;
+
+        /// <summary>
+        /// start the thread
+        /// </summary>
         public static void Active()
         {
             open = 1;
@@ -38,8 +42,6 @@ namespace Simulator
                             bl.Order.UpdateProvideDate(boOrd.ID);
                         else
                             bl!.Order.updateSendingDate(boOrd.ID);
-
-                        //Thread.Sleep(secs);
                     }
                     else
                     {
@@ -48,33 +50,59 @@ namespace Simulator
 
                 }
                 stopThread?.Invoke(null,EventArgs.Empty);
-            }).Start();
-            
+            }).Start();   
         }
+
+        /// <summary>
+        /// stop
+        /// </summary>
         public static void StopActive()
         {
             flagActive = false;
             open = 0;
         }
+
+        /// <summary>
+        /// add event
+        /// </summary>
+        /// <param name="e"></param>
         public static void AddEventStop(EventHandler e)
         {
             stopThread += e;
         }
 
+
+        /// <summary>
+        /// add event
+        /// </summary>
+        /// <param name="e"></param>
         public static void AddEventPropertiesChanged(EventHandler<OurEventArgs> e)
         {
             propertiesChanged += e;
         }
+
+        /// <summary>
+        /// remove the event
+        /// </summary>
+        /// <param name="e"></param>
         public static void  RemoveEventStop(EventHandler e)
         {
             stopThread -= e;
         }
         
+        /// <summary>
+        /// remove the event
+        /// </summary>
+        /// <param name="e"></param>
         public static void RemoveEventPropertiesChanged(EventHandler<OurEventArgs> e)
         {
             propertiesChanged -= e;
         }
     }
+
+    /// <summary>
+    /// new class to save the details
+    /// </summary>
     public class OurEventArgs : EventArgs
     {
         public BO.Order order;
