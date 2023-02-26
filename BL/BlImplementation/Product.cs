@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BlImplementation
 {
     internal class Product:BlApi.IProduct
@@ -14,6 +16,8 @@ namespace BlImplementation
         /// this function build products of bo and copy the details of do product and return list
         /// </summary>
         /// <returns>list of bo product for list</returns>
+           [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductForList?> GetProductForList()
         {
             //new list
@@ -27,6 +31,8 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id">id of spetific product</param>
         /// <returns>return bo product</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Product GetProductById(int id)
         {
             DO.Product doProduct;
@@ -47,6 +53,8 @@ namespace BlImplementation
         /// <param name="boProduct"></param>
         /// <returns>the new id</returns>
         /// <exception cref="Exception">check the details</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public int Add(BO.Product boProduct)
         {
             //check the details
@@ -77,6 +85,8 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id">the product id that want to delete</param>
         /// <exception cref="Exception"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void Delete(int id)
         {
             //check if the product exsist in order
@@ -97,6 +107,8 @@ namespace BlImplementation
         /// </summary>
         /// <param name="boProduct">get new bo product</param>
         /// <exception cref="Exception"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void Update(BO.Product boProduct)
         {
             if (boProduct.ID < 0)
@@ -114,6 +126,8 @@ namespace BlImplementation
         /// get calaog to patient
         /// </summary>
         /// <returns>list of product to customer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductItem?> GetCatalog(Func<DO.Product?, bool>? check = null, BO.Cart? cart = null)
         {
             IEnumerable<DO.Product?> doProduct;
@@ -132,6 +146,8 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id">id of product that want to get the product item</param>
         /// <returns>all the details of this product item</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.ProductItem GetProductItemById(int id, BO.Cart cart)
         {
             DO.Product doProduct;
@@ -157,6 +173,8 @@ namespace BlImplementation
                 boProduct.InStock = false;
             return boProduct;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductForList?> GetProductForListByCategory(BO.Category? category)
         {
            IEnumerable<DO.Product?> product= idal!.Product.GetAll(x => x?.CategoryP == (DO.Category?)category);
@@ -165,13 +183,8 @@ namespace BlImplementation
             return from prod in product
                    select new BO.ProductForList() { Name = prod?.Name, Image = prod?.Image ,Price = prod?.Price ?? 0, Category = (BO.Category?)prod?.CategoryP, ID = prod?.ID ?? 0 };
         }
-        //public IEnumerable<BO.ProductForList?> GetPoupolarProduct()
-        //{
-        //   var x= from prod in GetCatalog()
-        //    orderby prod.Name
-        //    group prod by prod.Category into g
-        //    select new { Key = g.Key, prod = g };
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductForList?> GetPoupolarProduct()
         {
             //create a list of groups of items that appear in order, by ID
@@ -190,8 +203,7 @@ namespace BlImplementation
                            ID = prod.ID,
                            Name = prod.Name,
                            Price = prod.Price,
-                           Category= BO.Category.None,
-                           //Category = (BO.Category)prod.CategoryP!,
+                           Category = (BO.Category)prod.CategoryP!,
                            Image= prod.Image
                        };
             }

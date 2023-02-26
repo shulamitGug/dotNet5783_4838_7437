@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -15,6 +16,8 @@ namespace BlImplementation
         /// <param name="boCart">cart</param>
         /// <param name="id">id of product that we want to add</param>
         /// <returns>the cart after update</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Cart AddProduct(BO.Cart boCart, int id)
         {
             DO.Product doProduct;
@@ -53,6 +56,8 @@ namespace BlImplementation
         /// <param name="id">product id</param>
         /// <param name="amount"></param>
         /// <exception cref="Exception">if the produnt does not exist in cart</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Cart UpdateAmountOfProduct(BO.Cart boCart, int id, int amount)
         {
             BO.Cart cart = new BO.Cart();
@@ -108,6 +113,7 @@ namespace BlImplementation
             cart.CustomerAdress =boCart.CustomerAdress;
             return cart;
         }
+
         public BO.Cart AddAndUpdate(BO.Cart boCart, int id, int amount)
         {
             return UpdateAmountOfProduct(AddProduct(boCart, id), id, amount);
@@ -117,6 +123,8 @@ namespace BlImplementation
         /// </summary>
         /// <param name="boCart">boCart </param>
         /// <exception cref="Exception"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public int OrderConfirmation(BO.Cart boCart)
         {
             if (boCart.CustomerAdress == null)
@@ -152,6 +160,11 @@ namespace BlImplementation
                 throw new BO.NotExistBlException("product does not exist-", ex);
             }
         }
+        /// <summary>
+        /// help function to add to cart and update amount
+        /// </summary>
+        /// <param name="prod"></param>
+        /// <returns></returns>
         private bool UpdateAmountDal(DO.Product prod)
         {
             idal!.Product.Update(prod);

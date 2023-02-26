@@ -2,6 +2,8 @@
 using DO;
 namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 /// <summary>
 /// product function
 /// </summary>
@@ -12,6 +14,8 @@ internal class DalProducts:IProduct
     /// </summary>
     /// <param name="product">get product object</param>
     /// <returns>if add return the id of this product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Add(Product product)
     {
         if (CheckProduct(product.ID) )
@@ -25,6 +29,8 @@ internal class DalProducts:IProduct
     /// <param name="id">product id</param>
     /// <returns>product object</returns>
     /// <exception cref="Exception">if the product is not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Product Get(int id)
     {
         //look for the product with the same id
@@ -34,6 +40,8 @@ internal class DalProducts:IProduct
     /// return all the product in the array
     /// </summary>
     /// <returns>array of product</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? check = null)
     {
         //copy to new arr all the products that exist the arr
@@ -50,6 +58,8 @@ internal class DalProducts:IProduct
     /// </summary>
     /// <param name="id">id of product</param>
     /// <exception cref="Exception">the product is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         int count = DataSource.ProductsList.RemoveAll(prod => prod?.ID == id);
@@ -61,6 +71,8 @@ internal class DalProducts:IProduct
     /// </summary>
     /// <param name="product">product object</param>
     /// <exception cref="Exception">the product is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(Product product)
     {
         int count = DataSource.ProductsList.RemoveAll(prod => product.ID == prod?.ID);
@@ -70,6 +82,8 @@ internal class DalProducts:IProduct
         DataSource.ProductsList.Add(product);
         //Go through the database until the requested order
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Product GetByCondition(Func<Product?, bool>? check)
     {
         return DataSource.ProductsList.Find(x=>check!(x))??  

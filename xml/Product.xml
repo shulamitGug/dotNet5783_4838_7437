@@ -1,123 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>100007</ID>
-    <Name>primer</Name>
-    <CategoryP>FacialMakeup</CategoryP>
+    <ID>100005</ID>
+    <Name>brush</Name>
     <Price>316</Price>
-    <InStock>2</InStock>
-    <Image>primer.png</Image>
-  </Product>
-  <Product>
-    <ID>345678</ID>
-    <Name>fghj</Name>
-    <Price>2</Price>
-    <InStock>0</InStock>
-    <Image />
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>100006</ID>
-    <Name>primer</Name>
-    <Price>316</Price>
-    <InStock>1</InStock>
-    <Image />
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>2345678</ID>
-    <Name>dfg</Name>
-    <Price>9</Price>
-    <InStock>0</InStock>
-    <Image>bronzer.png</Image>
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>111111111</ID>
-    <Name>gh</Name>
-    <Price>2</Price>
-    <InStock>0</InStock>
-    <Image>bronzer.png</Image>
-    <CategoryP>7</CategoryP>
+    <InStock>12</InStock>
+    <Image>blush brush.png</Image>
+    <CategoryP>makeUpBrushes</CategoryP>
   </Product>
   <Product>
     <ID>34567890</ID>
-    <Name>vbn</Name>
-    <Price>22</Price>
+    <Name>shimmer</Name>
+    <Price>112</Price>
     <InStock>0</InStock>
-    <Image>bronzer.png</Image>
+    <Image>shimmer.png</Image>
+    <CategoryP>cultivation</CategoryP>
+  </Product>
+  <Product>
+    <ID>1234567</ID>
+    <Name>sfogit</Name>
+    <Price>50</Price>
+    <InStock>0</InStock>
+    <Image>sfogit.png</Image>
+    <CategoryP>makeUpBrushes</CategoryP>
+  </Product>
+  <Product>
+    <ID>12345678</ID>
+    <Name>earings</Name>
+    <Price>59</Price>
+    <InStock>33</InStock>
+    <Image />
+    <CategoryP>None</CategoryP>
+  </Product>
+  <Product>
+    <ID>111111111</ID>
+    <Name>powder</Name>
+    <Price>138</Price>
+    <InStock>20</InStock>
+    <Image />
+    <CategoryP>None</CategoryP>
+  </Product>
+  <Product>
+    <ID>1122358</ID>
+    <Name>lipstick</Name>
+    <Price>100</Price>
+    <InStock>17</InStock>
+    <Image />
     <CategoryP>LipMakeup</CategoryP>
   </Product>
   <Product>
-    <ID>100002</ID>
-    <Name>primer</Name>
+    <ID>345678</ID>
+    <Name>makeup</Name>
+    <Price>200</Price>
+    <InStock>188</InStock>
+    <Image />
+    <CategoryP>FacialMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>100004</ID>
+    <Name>rimmel</Name>
     <Price>316</Price>
-    <InStock>1</InStock>
+    <InStock>18</InStock>
     <Image />
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>233474</ID>
-    <Name>2</Name>
-    <Price>3</Price>
-    <InStock>29</InStock>
-    <Image />
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>345676</ID>
-    <Name>gh</Name>
-    <Price>2</Price>
-    <InStock>100</InStock>
-    <Image>bronzer.png</Image>
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>34564567</ID>
-    <Name>cv</Name>
-    <Price>4</Price>
-    <InStock>200</InStock>
-    <Image>primer.png</Image>
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>100008</ID>
-    <Name>blush</Name>
-    <Price>1000</Price>
-    <InStock>293</InStock>
-    <Image></Image>
     <CategoryP>EyeMakeup</CategoryP>
   </Product>
   <Product>
     <ID>567898</ID>
-    <Name>gh</Name>
-    <Price>2</Price>
-    <InStock>102</InStock>
-    <Image></Image>
-    <CategoryP>EyeMakeup</CategoryP>
-  </Product>
-  <Product>
-    <ID>100004</ID>
-    <Name>עי</Name>
-    <Price>316</Price>
-    <InStock>1</InStock>
+    <Name>blush</Name>
+    <Price>230</Price>
+    <InStock>98</InStock>
     <Image />
-    <CategoryP>EyeMakeup</CategoryP>
+    <CategoryP>FacialMakeup</CategoryP>
   </Product>
   <Product>
     <ID>100001</ID>
     <Name>primer</Name>
     <Price>316</Price>
-    <InStock>253</InStock>
+    <InStock>247</InStock>
+    <Image />
+    <CategoryP>FacialMakeup</CategoryP>
+  </Product>
+  <Product>
+    <ID>11111111</ID>
+    <Name>silhouettes</Name>
+    <Price>200</Price>
+    <InStock>42</InStock>
     <Image />
     <CategoryP>EyeMakeup</CategoryP>
   </Product>
   <Product>
-    <ID>100005</ID>
-    <Name>primer</Name>
-    <Price>316</Price>
-    <InStock>1</InStock>
+    <ID>2345678</ID>
+    <Name>bronzer</Name>
+    <Price>90</Price>
+    <InStock>35</InStock>
     <Image />
-    <CategoryP>EyeMakeup</CategoryP>
+    <CategoryP>FacialMakeup</CategoryP>
   </Product>
 </ArrayOfProduct>

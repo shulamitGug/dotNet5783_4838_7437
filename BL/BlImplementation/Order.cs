@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 namespace BlImplementation
 {
     internal class Order : BlApi.IOrder
@@ -15,6 +17,7 @@ namespace BlImplementation
         /// </summary>
         /// <param name="order"> The order we would like to check</param>
         /// <returns>order status</returns>
+       
         private BO.OrderStatus CheckStatus(DO.Order order)
         {
             if (order.DeliveryDate != null)
@@ -30,6 +33,8 @@ namespace BlImplementation
         /// Adding a product to the order
         /// </summary>
         /// <returns>List of ordered orders</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.OrderForList> GetOrders()
         {
             try
@@ -63,6 +68,8 @@ namespace BlImplementation
         /// <param name="id">order id</param>
         /// <returns> A data type that contains the order details</returns>
         /// <exception cref="Exception"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order GetOrderDetails(int id)
         {
             if (id < 0)
@@ -88,6 +95,7 @@ namespace BlImplementation
                                                       OrderItemId = ((DO.OrderItem)itemQuery!).ID,
                                                       ProductId = ((DO.OrderItem)itemQuery!).ProductId,
                                                       ProductName = prodName,
+                                                      Price=((DO.OrderItem)itemQuery!).Price,
                                                       TotalPrice = ((DO.OrderItem)itemQuery!).Price * ((DO.OrderItem)itemQuery!).Amount,
                                                       Amount = ((DO.OrderItem)itemQuery!).Amount
                                                   };
@@ -102,6 +110,8 @@ namespace BlImplementation
         /// <param name="id"> order id</param>
         /// <returns>Order with updated status </returns>
         /// <exception cref="Exception"> If the id is negative an exception is thrown</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order updateSendingDate(int id)
         {
             if (id < 0)
@@ -130,38 +140,46 @@ namespace BlImplementation
         /// <param name="id"> order id</param>
         /// <returns>Returns an order with an updated status </returns>
         /// <exception cref="Exception">If the id is negative an exception is thrown</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order UpdateProvideDate(int id)
         {
             if (id < 0)
                 throw new Exception("canot be negative");
             DO.Order doOrder;
-            try
+            lock (idal!)
             {
-                doOrder = idal!.Order.Get(id);
-            }
-            catch (Exception ex)
-            {
-                throw new BO.NotExistBlException("order not exist", ex);
-            }
-            if (doOrder.DeliveryDate == null && doOrder.ShipDate != null)
-            {
-                doOrder.DeliveryDate = DateTime.Now;
-                idal.Order.Update(doOrder);
-            }
-            else
-            {
+                try
+                {
+                    doOrder = idal!.Order.Get(id);
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.NotExistBlException("order not exist", ex);
+                }
+                if (doOrder.DeliveryDate == null && doOrder.ShipDate != null)
+                {
+                    doOrder.DeliveryDate = DateTime.Now;
+                    idal.Order.Update(doOrder);
+                }
+                else
+                {
 
-                throw new BO.CannotUpdateDate("cannot update delivery date before ship date");
+                    throw new BO.CannotUpdateDate("cannot update delivery date before ship date");
+                }
+                BO.Order newOrder = GetOrderDetails(id);
+
+                newOrder.Status = (BO.OrderStatus)3;
+                return newOrder;
             }
-            BO.Order newOrder = GetOrderDetails(id);
-            newOrder.Status = (BO.OrderStatus)3;
-            return newOrder;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"> order id</param>
         /// <returns> </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.OrderTracking StatusOrder(int id)
         {
             DO.Order doOrder;
@@ -190,6 +208,7 @@ namespace BlImplementation
             return trackingOrder;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public int? GetOldestOrderId()
         {

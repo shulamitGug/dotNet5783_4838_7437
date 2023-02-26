@@ -3,21 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SimulatorWindow" Height="450" Width="800">
+        Title="SimulatorWindow" Height="450" Width="800"
+        WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/PL;component/PicturesProduct/allWindowBackgroung.jpg"></ImageBrush>
+    </Window.Background>
+    <Window.Resources>
+        <local:HideNull x:Key="hide"/>
+        <local:VisibleMessege  x:Key="visible"/>
+        <Style x:Key="buttonDesign" TargetType="Button">
+            <Setter Property="Background" Value="#FFFFD3A7"></Setter>
+            <Setter Property="BorderBrush" Value="DeepPink"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="170"/>
+        </Style>
+        <Style x:Key="LabelDesign" TargetType="Label">
+            <Setter Property="Foreground" Value="DeepPink"/>
+            <Setter Property="BorderBrush" Value="#FFFFD3A7"/>
+            <Setter Property="FontWeight" Value="bold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button Click="Button_Click" Content="start" HorizontalAlignment="Left" Margin="71,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.143,0.268" Height="45" Width="80"/>
-        <Button Click="Button_Click_1" Content="stop" HorizontalAlignment="Left" Margin="74,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.326,-0.67" Height="34" Width="77"/>
-        <Label x:Name="idLbl" Content="Label" HorizontalAlignment="Left" Margin="324,82,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="secLbl" Content="seconds" HorizontalAlignment="Left" Margin="558,85,0,0" VerticalAlignment="Top"/>
-        <Label Name="simulatoLbl" Content="clock" HorizontalAlignment="Left" Margin="93,246,0,0" VerticalAlignment="Top" Height="31" Width="68"/>
-        <Label Content="now we creat order:" HorizontalAlignment="Left" Margin="324,47,0,0" VerticalAlignment="Top" Height="25" Width="132"/>
-        <Label Content="Estimated time for treatment" HorizontalAlignment="Left" Margin="627,85,0,0" VerticalAlignment="Top"/>
-        <Label Content="start time" HorizontalAlignment="Left" Margin="708,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.42,0.054"/>
-        <Label Content="Label" x:Name="startTime" HorizontalAlignment="Left" Margin="573,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,-0.22"/>
-        <Label Content="finish time" HorizontalAlignment="Left" Margin="708,178,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" x:Name="finishTime" HorizontalAlignment="Left" Margin="573,178,0,0" VerticalAlignment="Top"/>
+        <Image Source="pack://application:,,,/PL;component/PicturesProduct/logo.png"  HorizontalAlignment="Left" Height="109" Margin="599,25,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
+        <Button Style="{DynamicResource buttonDesign}" Click="Button_Click_1" Content="stop" HorizontalAlignment="Left" Margin="84,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-1.326,-0.67" Height="46" Width="104"/>
+        <Grid Visibility="{Binding Mytime.endTime, Converter={StaticResource hide}}" Margin="0,-10,0,10">
+            <Label Style="{DynamicResource LabelDesign}" x:Name="idLbl" Content="{Binding Order.ID}" HorizontalAlignment="Left" Margin="530,260,0,0" VerticalAlignment="Top"/>
+            <Label Style="{DynamicResource LabelDesign}" x:Name="secLbl" Content="{Binding Mytime.seconds}" HorizontalAlignment="Left" Margin="535,111,0,0" VerticalAlignment="Top"/>
+            <Label Content="now we creat order:" HorizontalAlignment="Left" Margin="357,259,0,0" VerticalAlignment="Top" Height="25" Width="132"/>
+            <Label Content="Estimated time for treatment" HorizontalAlignment="Left" Margin="357,108,0,0" VerticalAlignment="Top"/>
+            <Label Content="start time" HorizontalAlignment="Left" Margin="357,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.42,0.054"/>
+            <Label Style="{DynamicResource LabelDesign}" Content="{Binding Mytime.begin}"  x:Name="startTime" HorizontalAlignment="Left" Margin="530,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,-0.22"/>
+            <Label Content="finish time" HorizontalAlignment="Left" Margin="357,163,0,0" VerticalAlignment="Top"/>
+            <Label Style="{DynamicResource LabelDesign}" Content="{Binding Mytime.end}" x:Name="finishTime" HorizontalAlignment="Left" Margin="530,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.452,1.493"/>
+            <Label  Content="status" HorizontalAlignment="Left" Margin="358,194,0,0" VerticalAlignment="Top"/>
+            <Label Style="{DynamicResource LabelDesign}" x:Name="lblStatus" Content="{Binding Order.Status}" HorizontalAlignment="Left" Margin="530,191,0,0" VerticalAlignment="Top"/>
+            <Label Content="next status" HorizontalAlignment="Left" Margin="357,225,0,0" VerticalAlignment="Top"/>
+            <Label Style="{DynamicResource LabelDesign}" x:Name="lblNextStatus" Content="{Binding Mytime.st}" HorizontalAlignment="Left" Margin="530,230,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.359,0.746"/>
+            <Label Content="simulator"  FontSize="24" Foreground="HotPink" HorizontalAlignment="Left" Margin="365,27,0,0" VerticalAlignment="Top" Height="43" Width="119"/>
+            <ProgressBar HorizontalAlignment="Left" Height="19" Name="pbOrder" Margin="149,141,0,0" VerticalAlignment="Top" Width="100"/>
+        </Grid>
+        <Label Style="{DynamicResource LabelDesign}" Name="simulatoLbl" Content="{Binding Mytime.clock}" HorizontalAlignment="Left" Margin="54,39,0,0" VerticalAlignment="Top" Height="31" Width="68"/>
+        <Label   Visibility="{Binding Mytime.endTime, Converter={StaticResource visible}}" Content="no orders to treat" FontSize="20" HorizontalAlignment="Left" Margin="317,182,0,0" VerticalAlignment="Top" Height="45" Width="201"/>
 
     </Grid>
 </Window>

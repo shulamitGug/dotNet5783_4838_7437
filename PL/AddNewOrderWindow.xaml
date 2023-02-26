@@ -28,7 +28,8 @@
             <Setter Property="Width" Value="100"></Setter>
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="IsEnabled" Value="False"></Setter>
-            <Setter Property="Margin" Value="3,2,0,0"></Setter>
+            <Setter Property="Margin" Value="4,3,0,0"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
         </Style>
         <Style x:Key="textBlockDesign" TargetType="TextBlock">
             <Setter Property="FontSize" Value="15"></Setter>
@@ -73,7 +74,7 @@
                         <GridViewColumnHeader Style="{DynamicResource listViewDesign}" Tag="inStock" >In stock</GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox BorderBrush="SkyBlue"  Margin="30,1,0,0" IsEnabled="False" IsChecked="{Binding InStock}"/>
+                                <CheckBox BorderBrush="DeepPink"  Margin="30,1,0,0" IsEnabled="False" IsChecked="{Binding InStock}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -148,7 +149,16 @@
         <ComboBox Grid.Column="4" SelectedItem="{x:Static thisEnum:Category.None }" ItemsSource="{Binding Source={StaticResource allCategories}}" BorderBrush="SkyBlue" x:Name="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" HorizontalAlignment="Center" Margin="0,202,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="-1.133,1.686"/>
         <Label  Grid.Column="4"  FontWeight="Bold" Content="Filter by category" HorizontalAlignment="Center" Margin="0,149,0,0" VerticalAlignment="Top" Height="36" Width="120"/>
         <Button  Grid.Column="4" Style="{DynamicResource buttonDesign}"  Click="OrderByPrice_Click" Content="Sort from cheap to expensive" HorizontalAlignment="Center" Margin="0,289,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.315,0.386" Height="48" />
-        <Image Grid.Column="4" Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="112" Margin="58,18,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="-5.94,0.543"/>
+        <Image Grid.Column="4" Source="pack://application:,,,/PL;component/PicturesProduct/logo.png" MouseDown="Image_MouseDown" HorizontalAlignment="Left" Height="112" Margin="58,18,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="-5.94,0.543">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.178"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
 
     </Grid>
 </Window>

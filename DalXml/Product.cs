@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DalApi;
 using DO;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
+
 namespace Dal;
 
 internal class Product : IProduct
@@ -20,10 +22,11 @@ internal class Product : IProduct
             Price = Convert.ToInt32(s.Element("Price").Value),
             Image = s.Element("Image").Value,
             InStock = Convert.ToInt32(s.Element("InStock").Value),
-            CategoryP=DO.Category.EyeMakeup
-            //CategoryP = convertFromStringToCategory(s.Element("CategoryP").Value)
+            CategoryP = convertFromStringToCategory(s.Element("CategoryP").Value)
         };
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Add(DO.Product product)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_product);
@@ -49,6 +52,7 @@ internal class Product : IProduct
 
         return product.ID; ;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Delete(int id)
     {
@@ -62,6 +66,7 @@ internal class Product : IProduct
 
         XMLTools.SaveListToXMLElement(productsRootElem, s_product);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public DO.Product Get(int id)
     {
@@ -72,6 +77,7 @@ internal class Product : IProduct
                 select (DO.Product?)createProductfromXElement(s)).FirstOrDefault()
                 ?? throw new DO.NotExistException(id,"product"); 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? check = null)
     {
@@ -90,6 +96,7 @@ internal class Product : IProduct
                    select createProductfromXElement(s);
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public DO.Product GetByCondition(Func<DO.Product?, bool>? check)
     {
@@ -99,6 +106,7 @@ internal class Product : IProduct
                 where check!(doProd)
                 select (DO.Product?)doProd).FirstOrDefault()??throw new DO.NotExistException(0,"product");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(DO.Product updateProduct)
     {

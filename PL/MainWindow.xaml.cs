@@ -36,6 +36,7 @@ namespace PL
             DependencyProperty.Register("MyInput", typeof(InputBox), typeof(Window), new PropertyMetadata(null));
 
 
+
         /// <summary>
         /// Constructor action for mainWindow
         /// </summary>
@@ -122,6 +123,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            simBtn.IsEnabled = false;
             new SimulatorWindow().Show();
         }
     }

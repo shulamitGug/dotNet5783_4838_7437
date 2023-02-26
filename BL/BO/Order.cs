@@ -26,11 +26,14 @@ namespace BO
         /// Residential address of the ordering customer
         /// </summary>
         public OrderStatus? Status { get; set; }
-      
         public DateTime? PaymentDate { get; set; }
-        
+        /// <summary>
+        /// items in the order
+        /// </summary>
         public List<OrderItem?>? Items { get; set; }
-        
+        /// <summary>
+        /// total price of order
+        /// </summary>
         public double TotalPrice { get; set; }  
         
         public string? CustomerAdress { get; set; } 

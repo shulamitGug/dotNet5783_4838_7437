@@ -141,6 +141,8 @@ namespace PL
                 p.Image = openFileDialog.SafeFileName;
                 
             }
+            if (update)
+                p.ID = Product.ID;
             int tempId=Product.ID; ;
             Product = p;
             Product.ID = tempId;    

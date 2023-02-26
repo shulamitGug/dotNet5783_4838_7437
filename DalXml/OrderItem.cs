@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 using DalApi;
@@ -11,7 +12,7 @@ using DO;
 internal class OrderItem : IOrderItem
 {
     const string s_OrderItem = @"OrderItem";
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem addObject)
     {
         List<DO.OrderItem?> listitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItem);
@@ -23,7 +24,7 @@ internal class OrderItem : IOrderItem
 
         return addObject.ID;
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItem);
@@ -33,6 +34,7 @@ internal class OrderItem : IOrderItem
 
         XMLTools.SaveListToXMLSerializer(listOrderItem, s_OrderItem);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public DO.OrderItem Get(int id)
     {
@@ -41,6 +43,7 @@ internal class OrderItem : IOrderItem
         return listOrderItem.FirstOrDefault(ordItem => ordItem?.ID == id) ??
             throw new DO.NotExistException(id, "orderItem");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? check = null)
     {
@@ -50,6 +53,7 @@ internal class OrderItem : IOrderItem
         else
             return listOrderItem.Where(x=>check(x)).OrderBy(ordItem => ordItem?.ID);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public DO.OrderItem GetByCondition(Func<DO.OrderItem?, bool>? check)
     {
@@ -57,12 +61,14 @@ internal class OrderItem : IOrderItem
 
         return listOrderItem.FirstOrDefault(x=>check!(x)) ?? throw new DO.NotExistException(0, "ordItem");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public DO.OrderItem GetOrderItemByTwoValues(int product_id, int order_id)
     {
         List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItem);
         return listOrderItem.FindAll(ordItem => ordItem?.OrderId == order_id && ordItem?.ProductId == product_id).FirstOrDefault()??throw new DO.NotExistException(product_id,"orderItem") ;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(DO.OrderItem updateObject)
     {

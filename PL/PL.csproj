@@ -90,12 +90,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="cart\" />
-    <Folder Include="order\" />
-    <Folder Include="product\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="PicturesProduct\concealer.png" />
     <Resource Include="PicturesProduct\primer.png" />
     <Resource Include="PicturesProduct\rimmel.png" />

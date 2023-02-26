@@ -98,6 +98,9 @@ namespace BO
         public override string ToString() =>
             $"product number {id} name: {name} does not have enough in stock";
     }
+    /// <summary>
+    /// empty input
+    /// </summary>
     public class EmptyInputBlException:Exception
     {
         string field;
@@ -116,6 +119,9 @@ namespace BO
         public override string ToString() =>
         $"No values have been entered in the field {field}";
     }
+    /// <summary>
+    /// cannot update delivery date before ship date
+    /// </summary>
     public class CannotUpdateDate : Exception
     {
 

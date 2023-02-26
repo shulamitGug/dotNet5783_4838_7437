@@ -6,29 +6,48 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Dal;
-    internal class Config
+    /// <summary>
+    /// read the values from config.xml
+    /// </summary>
+   internal class Config
     {
+        //path
         static string s_config = "config";
+        /// <summary>
+        /// find teh next key
+        /// </summary>
+        /// <returns>next key</returns>
         internal static int GetNextOrderNumber()
         {
-            return (int)XMLTools.LoadListFromXMLElement(s_config).Element("NextOrderNumber");
+            return (int)XMLTools.LoadListFromXMLElement(s_config).Element("NextOrderNumber")!;
         }
+    /// <summary>
+    /// save the next- key+1
+    /// </summary>
+    /// <param name="number">next key</param>
         internal static void SaveNextOrderNumber(int number)
         {
             XElement root = XMLTools.LoadListFromXMLElement(s_config);
-            root.Element("NextOrderNumber").SetValue(number.ToString());
+            root.Element("NextOrderNumber")!.SetValue(number.ToString());
             XMLTools.SaveListToXMLElement(root, s_config);
         }
 
-
-        internal static int GetNextOrderItemNumber()
+    /// <summary>
+    /// find teh next key
+    /// </summary>
+    /// <returns>next key</returns>
+    internal static int GetNextOrderItemNumber()
         {
-            return (int)XMLTools.LoadListFromXMLElement(s_config).Element("NextOrderItemNumber");
+            return (int)XMLTools.LoadListFromXMLElement(s_config).Element("NextOrderItemNumber")!;
         }
-        internal static void SaveNextOrderItemNumber(int number)
+    /// <summary>
+    /// save the next- key+1
+    /// </summary>
+    /// <param name="number">next key</param>
+    internal static void SaveNextOrderItemNumber(int number)
         {
             XElement root = XMLTools.LoadListFromXMLElement(s_config);
-            root.Element("NextOrderItemNumber").SetValue(number.ToString());
+            root.Element("NextOrderItemNumber")!.SetValue(number.ToString());
             XMLTools.SaveListToXMLElement(root, s_config);
         }
     }

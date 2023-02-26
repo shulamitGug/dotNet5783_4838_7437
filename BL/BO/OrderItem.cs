@@ -17,14 +17,6 @@ namespace BO
         /// Product ID number
         /// </summary>
         public int ProductId { get; set; }
-        /// <summary>
-        /// Price per unit
-        /// </summary>
-        /// <summary>
-        /// Quantity
-        /// </summary>
-        
-        ///price for one
         public double Price { get; set; }
 
         public int Amount { get; set; }

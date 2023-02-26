@@ -2,6 +2,8 @@
 namespace Dal;
 using DalApi;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 /// <summary>
 /// order function
 /// </summary>
@@ -13,6 +15,8 @@ internal class DalOrder:IOrder
     /// <param name="order">get order object</param>
     /// <returns>if add return the id of this order</returns>
     /// <exception cref="Exception">id there is no place</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Add(Order order)
     {
         order.ID = DataSource.Config.GetNextOrderNumber();
@@ -25,6 +29,8 @@ internal class DalOrder:IOrder
     /// <param name="id">order id</param>
     /// <returns>order object</returns>
     /// <exception cref="Exception">if the order is not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Order Get(int id)
     {
         //look for the order with the same id
@@ -35,6 +41,8 @@ internal class DalOrder:IOrder
     /// return all the orders in the array
     /// </summary>
     /// <returns>array of orders</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? check = null)
     {
         if (check != null)
@@ -49,6 +57,8 @@ internal class DalOrder:IOrder
     /// </summary>
     /// <param name="id">id of order</param>
     /// <exception cref="Exception">the order is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         int count = DataSource.OrdersList.RemoveAll(ord => ord?.ID == id);
@@ -62,6 +72,8 @@ internal class DalOrder:IOrder
     /// </summary>
     /// <param name="order">order object</param>
     /// <exception cref="Exception">the order is not exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(Order order)
     {
         int count = DataSource.OrdersList.RemoveAll(ord => order.ID == ord?.ID);
@@ -70,6 +82,8 @@ internal class DalOrder:IOrder
 
         DataSource.OrdersList.Add(order);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Order GetByCondition(Func<Order?, bool>? check)
     {
         return DataSource.OrdersList.Find(x => check!(x)) ??

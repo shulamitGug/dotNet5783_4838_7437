@@ -11,10 +11,12 @@ namespace Simulator
 
         static volatile bool flagActive;
        static BlApi.IBl? bl = BlApi.Factory.Get();
+        public static int open = 0;
         private static event EventHandler? stopThread;
         private static event EventHandler<OurEventArgs>? propertiesChanged;
         public static void Active()
         {
+            open = 1;
             Random random = new Random();
             new Thread(() =>
             {
@@ -37,7 +39,7 @@ namespace Simulator
                         else
                             bl!.Order.updateSendingDate(boOrd.ID);
 
-                        Thread.Sleep(secs);
+                        //Thread.Sleep(secs);
                     }
                     else
                     {
@@ -52,6 +54,7 @@ namespace Simulator
         public static void StopActive()
         {
             flagActive = false;
+            open = 0;
         }
         public static void AddEventStop(EventHandler e)
         {
@@ -66,7 +69,7 @@ namespace Simulator
         {
             stopThread -= e;
         }
-
+        
         public static void RemoveEventPropertiesChanged(EventHandler<OurEventArgs> e)
         {
             propertiesChanged -= e;
